@@ -1,0 +1,18 @@
+Component Class,Component Name,Manufacturer Part Number,Core Technical Ratings,Operating Frequency / Tolerance,Remediation Function within Project Cool Power
+Intake Generation,Ultrasonic Transducer Module,TDK NB-59S-01S,24V DC / 30 Watts Max,1.6 MHz to 2.4 MHz,Vibrates incoming liquid or water vapor into 1-3 micron mist droplets
+Plasma Front-End,Switching Transistors,IXYS IXFX44N100,1000V / 44A / Low Rds-on,10 kHz to 50 kHz,Acts as the high-speed switch for ZVS driver to shape pulsed field
+Plasma Front-End,Resonant Capacitors,WIMA FKP1 Series,1200V DC / 0.33uF,High dV/dt Resonant,Maintains low-loss tank oscillation for continuous plasma firing
+Plasma Front-End,Ferrite U-Core,TDK UU 60/61/21,High Permeability N27 Grade,Optimized for 50 kHz,Forms primary core of 1000x step-up to generate 4200V AC
+Plasma Front-End,High-Speed Diodes,Dean Tech UX-FOB,16kV / 500mA,50ns Ultra-Fast Recovery,Directs energy blocks through Cockcroft-Walton ladder stages
+Plasma Front-End,Ceramic Capacitors,Vishay 715C Series,20kV DC / 4.7nF,Low Dissipation Factor,Builds static charge to output 33.6kV field for molecular shearing
+Power Core,Cylinder Sleeve,Amperit 827 YSZ,Solid Yttria-Stabilized Zirconia,3000°C Thermal Peak / ±0.5 um,Frictionless air-bearing sleeve; handles high-altitude and abyssal thermal shocks
+Power Core,Piston Crown Lining,Amperit 827 YSZ,Solid Yttria-Stabilized Zirconia,Near-Zero Thermal Expansion,Protects piston faces from high-heat particulate and soot incineration
+Power Core,Exhaust Manifold Shell,Hot-Pressed Boron Nitride,Inert Structural Ceramic,Corrosive Vapor Resistant,Prevents structural erosion from passing high-velocity nitric acid or space-vacuum cycles
+Kinetic Generator,Shaft Ring Magnets,N52H Neodymium,Radial Magnetization,120°C Thermal Limit,Translates mechanical expansion force into magnetic flux movement during cycling
+Kinetic Generator,Stator Magnet Wire,24 AWG Heavy Formvar,High-Insulation Copper,50 Hz Piston Cycle,Harvests electric current as an abundant byproduct of piston kinetic movement
+Harvesting Loops,Piezo Kinetic Stack,PZT-5H Lead Zirconate,50 MPa Compressive Limit,Impulse Shockwave Responsive,Converts high-pressure exhaust valve shocks or sub-sea compression pops into electricity
+Harvesting Loops,Ion Capture Grids,Braided Tungsten-Rhenium,3110°C Melting Point,Direct Electron Stripping,Strips plasma ions from jet exhaust velocity and acts as electrostatic ash trap
+Harvesting Loops,Seebeck Heat Blocks,Skutterudite & Bi2Te₃,600°C Hot-Side Max,Continuous Thermal Gradient,Absorbs core block heat bleed to power internal computer and ECU logic
+Harvesting Loops,Tesla Steam Disk Pack,316L Stainless Steel,0.5mm Thickness / 0.3mm Gap,Frictionless Ceramic Bearings,Harvests high-altitude or deep-sea vapor expansion from reservoir thermal storage
+Fluid Handling,Insulated Thermal Tank,Aerogel-Jacketed Titanium,2.5 Liter Internal Volume,Phase-Change Thermal Battery,Acts as a thermal cushion for acceleration spikes and holds fluid loops hermetically
+Emissions Control,SCR Catalyst Core,Honeycomb Extruded TiO₂/V₂O₅,280°C to 400°C Target,99.2% NOx Reduction Efficiency,Collapses nitrogen oxide smog bonds back into pure N₂ and O₂ gases
