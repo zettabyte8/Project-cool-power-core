@@ -96,7 +96,7 @@
     "non_interruptible_operational_allocations": {
       "founder_living_stipend": "8,000 USD / USDC per month continuous payment lock",
       "geographic_safe_harbor_clause": "Protected from regional logistical timelines or infrastructure gaps"
-"Recipient_Wallet_Address": "[0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37]"
+"Recipient_Wallet_Address": "0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37"
     }
   },
   "automated_manufacturing_interface": {
