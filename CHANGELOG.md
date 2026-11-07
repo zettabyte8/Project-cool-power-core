@@ -22,3 +22,11 @@
 - "zero-input" (DEF is a consumable)
 - "megawatt-scale" for ion thrusters
 - "3000 °C chamber" → "3000 °C arc core"
+
+-  ## [2.2] — Reduce Electric Waste
+
+-  ### Added
+-  Touch Screen Monitor for control and monitoring of the system
+-  Lights and fans as needed to reduce Electric byproduct close to Zero so as not to disrupt the global energy economy
+
+yyalnergy energyconomy 
