@@ -1,0 +1,299 @@
+# PROJECT COOL POWER CORE
+## Rev 4.0 — Headless Autonomous
+### Designer: Thomas G. Coleman
+
+Adopts V9 architecture. Adds the thermal cracking stage V9 omits. Restores core geometry.
+
+**Not a generator.** Net ≥ 0 is a requirement; surplus is dumped as light and airflow.
+
+---
+
+## 1. How and why it works
+
+Water is not fuel. But if you crack it with **waste heat** rather than electricity, the cycle returns more than it costs, because most of the cracking enthalpy is heat you were throwing away.
+
+At 3000 °C the Gibbs term is 27% of enthalpy. 73% comes free from the previous cycle's exhaust. That is the whole machine. Below 2500 °C it stops.
+
+**The electrical share must stay under 0.5 or net goes negative.** Arc: 0.27, works. Electrolysis: 1.18, never. NTP: ~1.0, never alone.
+
+So: **arc cracks, NTP destroys, electrolyser guarantees ignition.** Three jobs, three devices, not one.
+
+### 1.1 Stage by stage
+
+| Stage | Why |
+|---|---|
+| LIG intake grid, 40 kHz self-clean | Charges and holds PM; ultrasonically sheds it |
+| Intake orifice 20° | 45 m/s, no separation |
+| EGR 20%, high leg | Returns hot vapour and radicals; −100 W vaporisation, −45 g/h draw |
+| Cavitator σ 0.2 | 5000 K bubble collapse pre-splits the water |
+| **Thermal arc 193 W, 3000 °C** | **Supplies 73% of cracking enthalpy as heat** |
+| NTP 22 kV / 35 ns / DBD | ·OH, H·, O₃; destroys VOCs without heating |
+| 30:1 compression | 861 K on a steam charge — three kelvin under autoignition |
+| Electrolyser pilot, 30 W | Guaranteed H₂ for the kernel; the three kelvin of margin |
+| Opposed free pistons, air bearings | No crank, no side load, no oil |
+| Pyro + TEG + PZT | Thermal pulse, gradient, pressure pulses |
+| Turbine | Pressure recovery, 25 W compound |
+| 45° Y split | Hot leg to intake, cold leg to cleaning |
+| SCR + DEF + ASC | Machine is a net NOx source |
+| Tesla, vane heater, recuperator | Second stage, last heat, preheat closure |
+| Condenser 25 °C | 58% recovery |
+| Ti₄O₇ + UV-C + MnO₂ | Polish, sterilise, quench O₃ to <0.005 ppm |
+
+### 1.2 Fanless
+
+The pistons are a 118 L/min pump. Flow never came from the fan. The fan supplies pressure for mixture and quench velocity. Lose it and quench moves to the bearing compressor, frequency drops to 25 Hz, output falls ~35%, machine keeps cleaning. Tach loss for 500 ms latches non-critical FAULT to Passive Fallback.
+
+---
+
+## 2. Specification
+
+| Parameter | Value |
+|---|---|
+| Bore × stroke | 25.000 × 40.000 mm |
+| Compression ratio | 30:1, V_c 1.354 cm³, TDC gap 2.759 mm |
+| Frequency | 25 Hz fallback / 50 Hz nominal |
+| Throughput | 59–88 / 118–177 L/min |
+| Chamber dwell | 1.4 / 0.69 ms |
+| Water feed | 0.54 L/h |
+| Reservoir | 5 L @ 90 °C, in plinth |
+| EGR | 20%, high-temp leg, 40° into intake |
+| Arc | 193 W thermal, 3000 °C |
+| NTP | 22 kV, 35 ns, 15–30 kHz, DBD |
+| Electrolyser pilot | 30 W, 0.09 mmol/s H₂ |
+| Corona | 20 W, 100 ppm |
+| Quench | 0.25 g/s, 60 m/s, 1.8 mm |
+| Condensing | 25 °C |
+| Core envelope | 380 × 260 × 230 mm (22.7 L) |
+| Plinth | 380 × 260 × 60 mm, 5 L reservoir |
+| Mass dry | 9.2 kg |
+| Net | 105 W, band −45 to 250 |
+| Water | gross 0.31 L/h, net −0.22 L/h |
+
+---
+
+## 3. Core geometry — the hole in V9
+
+| Item | Value |
+|---|---|
+| Bore | 25.000 +0.005 |
+| Stroke (each piston) | 40.000 |
+| Total swept | 39.270 cm³ |
+| Clearance | 1.3541 cm³ |
+| TDC gap | 2.759 mm |
+| Barrel length | 150 mm |
+| Bearing lands | 2 per piston, 12 mm long, at the cold third |
+| Piston tail | 55 mm behind the crown, thermal break at 20 mm |
+| Alternator stack | 70 mm, outboard of the tail |
+| Port timing | exhaust opens 78° before BDC-equivalent |
+
+---
+
+## 4. Angles
+
+Functional, not decorative. ±5° loses measurable performance.
+
+| Feature | Value | Why |
+|---|---|---|
+| Inlet bellmouth | R6 | No vena contracta |
+| Orifice convergence | **20° incl.** | 45 m/s, no separation |
+| Orifice throat | 8.0 mm | 3.1 g/s at 45 m/s |
+| LIG grid pitch | 4 mm, 0.3 mm wire, 90° | Charge without blockage |
+| Cavitator inlet | **60° incl.**, 0.8 mm, L/D 2.0 | σ drop over short length |
+| Cavitator outlet | **20° incl.** | Pressure recovery without separation |
+| Orifice to arc | 6 mm | Collapse completes first |
+| Quench cone | **60° incl.** | Spreads in 1.8 mm |
+| Quench impingement | **15°** | Breaks boundary layer, no head-on erosion |
+| NTP gap | 4.0 mm, DBD barrier 0.6 mm | 22 kV |
+| NTP tangential swirl | **30°** | Residence and electrode cooling |
+| Mixing throat | 12 mm, **12° incl.** divergence | Non-separating |
+| Port axis to bore | **30°** | Swirl, no piston impingement |
+| Turbine volute A/R | 0.22, nozzle **72°** | — |
+| Y split | **45°** | Low loss; vortex optional |
+| High-leg re-entry | **40°**, 60 mm upstream of orifice | Mixes before the throat |
+| DEF injection | **15°**, 30° cone, 150 mm | — |
+| Condenser divergence | **14°** | Drainage |
+
+**Do not change:** 20° orifice, 60° cavitator, 15° quench, 30° port, 45° Y, 15° DEF.
+
+---
+
+## 5. Materials
+
+| Node | Material |
+|---|---|
+| Barrel | Inconel 625 + YSZ 0.4 mm, porosity <8% |
+| Crown | YSZ, replaceable, consumable |
+| Magnets | NdFeB **N52SH** (150 °C, not H) |
+| Turbine | Inconel 713C, HIP |
+| Compressor | Ti-6Al-4V |
+| All acid-wet | **316L only** |
+| Condenser | Al, epoxy both faces |
+| Reservoir, plinth, bottle | HDPE |
+| Insulation | Aerogel 6 mm, encapsulated |
+| NTP barrier | Al₂O₃ 0.6 mm, dielectric-covered electrodes |
+| **Pyroelectric** | **PMN-PT, behind 0.15 mm Inconel diaphragm, <100 °C** |
+| PZT | PZT-8 stacks |
+| O₃ quench | α-MnO₂ mesh |
+| Polishing | Ti₄O₇ membrane, biased |
+| Sterilisation | UV-C LED 265 nm |
+| Housing | Al-SiC MMC |
+| Fluidic bodies | 17-4PH, graphene on wet cold paths only |
+
+**PMN-PT Curie is 130–150 °C.** It cannot touch the block. Mount on a diaphragm that sees the pressure pulse but sits behind insulation.
+
+**Receiving:** molybdenum spot test every fitting. A magnet cannot tell 304 from 316.
+
+---
+
+## 6. Architecture
+
+```mermaid
+flowchart TB
+    A["Polluted humid air"] --> LIG["LIG grid 40 kHz self-clean"]
+    LIG --> OR["Orifice 20 deg"]
+    EG["EGR 20% high leg"] --> OR
+    R["5L reservoir 90C"] --> PU["3 bar pump"]
+    PU --> CV["Cavitator 60/20 deg"]
+    OR --> CV
+    CV --> AR["Thermal arc 193W 3000C"]
+    AR --> NT["NTP 22kV 35ns DBD"]
+    NT --> MX["Mixing throat 12 deg"]
+    EL["Electrolyser pilot 30W"] --> MX
+    MX --> CH["Chamber 30:1"]
+    CH --> LA["Alternators"]
+    CH --> PY["PMN-PT on diaphragm"]
+    CH --> TG["TEG"]
+    CH --> PZ["PZT-8 exhaust"]
+    LA --> B48["48V"]
+    LA --> B12["12V dump"]
+    LA --> B42["4.2V"]
+    CH --> TB["Turbine"]
+    TB --> SP{"45 deg Y"}
+    SP -->|"hot"| EG
+    SP -->|"cold"| SCR["SCR + DEF"]
+    SCR --> ASC["ASC"]
+    ASC --> TS["Tesla"]
+    TS --> VH["Vane heater"]
+    VH --> RC["Recuperator"]
+    RC --> CD["Condenser 25C"]
+    CD --> TP["Ti4O7 + UV-C + MnO2"]
+    TP --> FN["Fan"]
+    FN --> OUT["Clean air"]
+    CD --> PR["Product water"]
+    BC["Bearing compressor"] --> QJ["Quench"]
+    QJ --> MX
+    SW["3-pos switch"] --> ECU["ECU"]
+    ECU --> LED["Tri-colour halo"]
+    ECU --> NFC["NFC/BLE tap"]
+    ECU --> FA["Fluidics"]
+```
+
+Normative: corona before mixing, arc before NTP, SCR before any cooling, fan last, quench from bearing air in fallback.
+
+---
+
+## 7. Controls
+
+**No screen. One armoured 3-position rotary switch.**
+
+| Position | Action |
+|---|---|
+| OFF / LOCKOUT | Bleed supercap bus, vent bounce chamber, unlock ash drawer |
+| ON — AUTO | Full closed loop, no user input |
+| PASSIVE FALLBACK | Fan off, 25 Hz, natural aspiration |
+
+**Halo:** solid cyan = nominal. Pulsing amber = 500 h self-clean running. Solid white = ash trap full.
+
+**Self-clean:** 40 kHz transducer sweep + steam purge, 15 min every 500 h. Inaudible carrier; the hiss is audible.
+
+**NFC/BLE:** read-only, encrypted, for service and for spacecraft/submarine buses.
+
+Interlocks live in firmware and cannot be overridden from any control.
+
+---
+
+## 8. Build
+
+1. Barrel: YSZ 0.4 mm, hone 25.000 +0.005, air gauge 3 stations, jets 12 × 0.3 mm, ultrasonic clean, 1.5 NL/min ±15%, jacket 2 bar zero drop.
+2. Pistons: crown 0.02 mm proud, magnets 200 °C epoxy, gauss 1.2–1.35 T, balance 0.05 g·mm, **thermal break at 20 mm**.
+3. Alternators: 42T class H, varnish, >100 MΩ, gap 0.6 mm.
+4. Turbo: balance 0.2 mg·mm, tip 0.15 mm, spin to 240 000, **coast-down >25 s**, prove accumulator.
+5. Cavitator and arc: 0.8 mm at 60°/20°, σ 0.2, arc gap 1.5 mm.
+6. **NTP: DBD barrier fitted, 4 mm gap, 22 kV, 35 ns, 10/10 at 20 kHz.**
+7. Quench: 1.8 mm, 60° cone, 15°, 8 mm standoff.
+8. Exhaust: 45° Y, high leg up, SCR no bypass, ASC behind, Tesla gaps free.
+9. Recuperator: braze, 2 bar both sides, drainable, counterflow.
+10. Polish train: Ti₄O₇ biased, UV-C, MnO₂ mesh.
+11. Aerogel 6 mm encapsulated on hot nodes. Not over fan or condenser.
+12. Final: TDC 2.759 mm ±0.05, bore-scope, 6 bar decay <0.1 bar/min.
+
+---
+
+## 9. Commissioning
+
+Dry crank 50 strokes · turbo coast-down >25 s · cold water σ and AN-1 baseline · corona 10/10 · **arc without corona, confirm misfire** · arc with corona, confirm fire · NTP 10/10 · electrolyser 30 W · first fire fallback mode · EGR 0→20% over 10 min · VOC challenge 1 ppm isobutylene, reject <90% DE · water balance at 30/58/75% RH · baseline all sensors and AN-1.
+
+---
+
+## 10. Maintenance
+
+| Interval | Action |
+|---|---|
+| Daily | Water >40%, net water to spec |
+| 25 h | Log, paired air quality, AN-1, pH |
+| 100 h | Accumulator precharge, product bottle |
+| **250 h** | **Descale, softener, coalescing filter, conductivity** |
+| 500 h | NTP barrier inspect, arc electrode, SCR activity, aerogel |
+| 1000 h | Orifice, bore-scope, insulation test, Mo spot test 5 fittings |
+| 2000 h | Crown inserts, reservoir descale, tip clearance |
+| 4000 h | Orifice replace, recuperator flow test |
+| 8000 h | Teardown, SCR, rotor, seals, re-baseline |
+
+Ash drawer: 12–18 months. Self-clean runs automatically at 500 h.
+
+---
+
+## 11. Failure modes, top six
+
+Recuperator perforation · piston contact · wrong alloy acid attack · **spent softener** · crown liberation · SCR below light-off.
+
+Detection gaps that must close first: conductivity cell (300 µS/cm), barrel accelerometer 12–18 kHz, continuous DE estimate, pressure-trace insert signature.
+
+---
+
+## 12. Scaling
+
+$$f = 50/\lambda,\quad P = 105\lambda^2\ \text{W},\quad \dot m_w = 1.5\ \text{L/h per kW}$$
+
+| Tier | λ | Envelope | Throughput | Net |
+|---|---|---|---|---|
+| 0.5× micro | 0.7 | 220 × 140 × 160 | 60 L/min | 20 W |
+| 1.0× base | 1.0 | 380 × 260 × 230 + plinth | 118 L/min | 105 W |
+| 2.5× mobile | 1.6 | 680 × 420 × 460 | 300 L/min | 270 W |
+| 10× macro | 3.2 | 1 850 × 1 150 × 1 250 | 1 200 L/min | 1.1 kW |
+
+V9's tiers overstate throughput and understate envelope. 10× is λ3.2, not λ10.
+
+---
+
+## 13. Environments
+
+**Deep sea:** 2–4 °C sink raises condenser sub-cooling 38%, cuts draw. Works inside a 1 atm hull. Pressure-equalised pod limited to ~50 m.
+
+**Space:** 0 g needs the fluorographene wicking condenser. 100% closed water. N₂ for bearings. Radiator 1.0 m²/kW at 400 K.
+
+---
+
+## 14. Honest limits
+
+**105 W base, band −45 to 250.** f unmeasured. Below 0.15 the halo goes dark.
+
+**Water is a consumable: 4.7–5.2 L/day** at fallback throughput. Gross condensate is 0.31 L/h; the engine eats it.
+
+**Net NOx source.** Catalyst must not go cold.
+
+**$210 at 10 M units, not $88.** Inconel barrel, turbo and paired gas sensors set the floor.
+
+**45 000 h is a target, not a claim.** 8 000 h MTBO until measured. NTP electrode life is the real limiter at 20 kHz — 3.2 × 10¹² pulses.
+
+Three physical limiters: piston tail film, crown inserts, turbo bearing. Air bearings only, accumulator mandatory.
