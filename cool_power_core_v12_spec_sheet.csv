@@ -1,0 +1,44 @@
+Category,Parameter,Value,Units,Engineering Notes
+General Architecture,System Designation,Cool Power Core V12 (Independent Thermodynamic Revision),—,Base 1.0x Chassis
+General Architecture,Physical Dimensions (L x W x H),340 x 210 x 240,mm,Compact portable footprint
+General Architecture,Dry Mass,7.2,kg,Includes Si3N4 core & N52SH stators
+General Architecture,Total System Airflow,750 (45.0),L/min (m³/hr),180 L/min Primary + 570 L/min Secondary
+General Architecture,HCCI Operating Frequency,"65 (3,900)",Hz (cycles/min),Free-opposed oil-free linear pistons
+General Architecture,Compression Ratio,18:1,Ratio,Auto-ignition on reformed H2+CO syngas
+General Architecture,N52SH Magnet Max Temp Limit,< 120 (150 Curie limit),°C,Active liquid/air thermal barrier required
+General Architecture,Stage 4B Cracker Operating Temp,480 – 650,°C,SiC/Ni-Graphene catalytic reformer
+General Architecture,Maintenance Interval,"15,000 – 20,000",Hours,Zero disposable filter cartridges
+General Architecture,Target Prototype / Mass BOM Cost,"$3,800 / $480–$650",USD,Reflects ceramic & rare-earth tooling
+Mode A: REMEDIATE,Feedstock / Fuel Requirement,Clean Ambient Air (0% Fuel),Vol % CH4-eq,"25 °C, 60% RH reference baseline"
+Mode A: REMEDIATE,Chemical Fuel Enthalpy Input,0,W (thermal),No external combustible fuel
+Mode A: REMEDIATE,External Electrical Input,210 (180 – 240 range),W (electric),Grid / battery DC or AC supply
+Mode A: REMEDIATE,Gross Electrical Generation,0,W (electric),HCCI engine idle / bypassed
+Mode A: REMEDIATE,Internal Parasitic Load,210,W (electric),"Blower 45W, NTP 35W, Condenser 115W, UV/Ctrl 15W"
+Mode A: REMEDIATE,Net Electrical Output,-210 (Net Draw),W (electric),External power required to harvest water
+Mode A: REMEDIATE,Ambient Water Vapor Inflow,622.4,g/hr,"45.0 m³/hr @ 13.83 g/m³ (25 °C, 60% RH)"
+Mode A: REMEDIATE,Combustion Water Generated,0.0,g/hr,No hydrocarbon oxidation
+Mode A: REMEDIATE,Exhaust & Uncondensed Slip,-172.4,g/hr,72.3% overall moisture recovery efficiency
+Mode A: REMEDIATE,Net Potable Water Output,450.0 (0.45),g/hr (L/hr),Ti4O7 + UV-C polished potable grade
+Mode A: REMEDIATE,Air Scrubbing Efficiency,99.85,%,"PM2.5, VOCs, O3, and bio-aerosols"
+Mode B: HYBRID,Feedstock / Fuel Requirement,Lean Methane / Biogas (>= 1.5%),Vol % CH4-eq,2.70 L/min CH4 in 180 L/min primary core
+Mode B: HYBRID,Chemical Fuel Enthalpy Input,"1,610",W (thermal),Based on CH4 LHV = 35.8 MJ/m³
+Mode B: HYBRID,External Electrical Input,0,W (electric),Self-sustaining after cold-start
+Mode B: HYBRID,Gross Electrical Generation,495,W (electric),445 W Linear Alternator + 50 W TEG/Pyro
+Mode B: HYBRID,Internal Parasitic Load,75,W (electric),"Blower 35W, NTP 20W, Pumps/Ctrl 20W"
+Mode B: HYBRID,Net Electrical Output,"+420 (2,400 surge)",W (electric),26.1% net fuel-to-electric efficiency
+Mode B: HYBRID,Ambient Water Vapor Inflow,622.4,g/hr,"45.0 m³/hr @ 25 °C, 60% RH"
+Mode B: HYBRID,Combustion Water Generated,+238.8,g/hr,Stoichiometric H2O from 2.70 L/min CH4
+Mode B: HYBRID,Exhaust & Uncondensed Slip,-641.2,g/hr,Higher exhaust temp reduces ambient capture
+Mode B: HYBRID,Net Potable Water Output,220.0 (0.22),g/hr (L/hr),Balanced power + water recovery
+Mode B: HYBRID,Air / Exhaust Scrubbing Efficiency,99.85,%,Catalytic syngas oxidation + α-MnO2 quench
+Mode C: MAX POWER,Feedstock / Fuel Requirement,Rich Biogas / VOC Exhaust (3.5–4.5%),Vol % CH4-eq,7.20 L/min CH4 nominal (4.0% vol)
+Mode C: MAX POWER,Chemical Fuel Enthalpy Input,"4,300 (3,760 – 4,840)",W (thermal),Based on CH4 LHV = 35.8 MJ/m³
+Mode C: MAX POWER,External Electrical Input,0,W (electric),Self-sustaining continuous power
+Mode C: MAX POWER,Gross Electrical Generation,"1,415",W (electric),"1,265 W Linear Alternator + 150 W TEG/Pyro"
+Mode C: MAX POWER,Internal Parasitic Load,115,W (electric),"Blower 50W, NTP 25W, Cooling/Ctrl 40W"
+Mode C: MAX POWER,Net Electrical Output,"+1,300 (1,150 – 1,450)",W (electric),30.2% net fuel-to-electric efficiency
+Mode C: MAX POWER,Ambient Water Vapor Inflow,622.4,g/hr,"45.0 m³/hr @ 25 °C, 60% RH"
+Mode C: MAX POWER,Combustion Water Generated,+636.6,g/hr,Stoichiometric H2O from 7.20 L/min CH4
+Mode C: MAX POWER,Exhaust & Uncondensed Slip,-409.0,g/hr,Thermosyphon condenser recovers combustion H2O
+Mode C: MAX POWER,Net Potable Water Output,850.0 (0.85),g/hr (L/hr),High water yield from fuel combustion
+Mode C: MAX POWER,Air / Exhaust Scrubbing Efficiency,99.85,%,Full thermal-catalytic PFAS/VOC destruction
