@@ -1,9 +1,9 @@
-<!-- README.md -->
+onn!-- README.md -->
 # Project Cool Power Core
 
 **A quiet, self-powered air purifier and water harvester.** Destroys VOCs, CO, O₃, NO₂ and PM by plasma-thermal oxidation, condenses drinking water out of the airstream, and makes enough electricity to run itself with a small surplus dumped as light and airflow.
 
-Designed by Thomas G. Coleman. Engineered on Venice.ai.
+Designed by Thomas G. Coleman. Engineered on Gemini & Venice.ai.
 
 ## Priority order
 
