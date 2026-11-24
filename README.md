@@ -2,7 +2,7 @@
 ### Self-Powered Atmospheric Air Scrubbing, Polluted Water Remediation & Regenerative Kinetic-Thermal Energy Harvester
 
 **Principal Inventor & System Architect:** Thomas Gabriel Coleman  
-**Location:** Corona, California, USA  
+**Location:** *, USA  
 **Document Version:** `v3.1` (PLL-Tracked GaN-ZVS Air-Core Slayer Baseline)  
 **Last Updated:** November 24, 2026  
 
@@ -24,7 +24,7 @@
 | Channel | Details / Link |
 | :--- | :--- |
 | **Principal Inventor** | **Thomas Gabriel Coleman** |
-| **Direct Licensing & Engineering Inquiries** | `[Insert Email Address — e.g., thomas.coleman@example.com]` |
+| **Direct Licensing & Engineering Inquiries** | `contact me via Facebook links in my GitHub profile ` |
 | **Sponsorship & Direct Financial Support** | `[Insert GitHub Sponsors / Patreon / GoFundMe / Ko-fi URL]` |
 | **Public Timestamped Repository** | `[Insert GitHub / OSF / Zenodo Repository URL]` |
 | **Intellectual Property Status** | **Original System Architecture by Thomas Gabriel Coleman** — *Prior Art Timestamped / Provisional Patent Pending* |
