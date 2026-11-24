@@ -26,7 +26,7 @@
 | **Principal Inventor** | **Thomas Gabriel Coleman** |
 | **Direct Licensing & Engineering Inquiries** | `contact me via Facebook links in my GitHub profile ` |
 | **Sponsorship & Direct Financial Support** | `[Insert GitHub Sponsors / Patreon / GoFundMe / Ko-fi URL]` |
-| **Public Timestamped Repository** | `[Insert GitHub / OSF / Zenodo Repository URL]` |
+| **Public Timestamped Repository** | `https://github.com/zettabyte8/Project-cool-power-core` |
 | **Intellectual Property Status** | **Original System Architecture by Thomas Gabriel Coleman** — *Prior Art Timestamped / Provisional Patent Pending* |
 
 *For commercial licensing, prototyping grants, joint-venture R&D, or direct inventor support, please contact **Thomas Gabriel Coleman** prior to commercial deployment.*
