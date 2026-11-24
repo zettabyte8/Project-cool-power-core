@@ -46,3 +46,6 @@ Water −1.4 L/day. One mineral cartridge a year. One softener per 250 h. Ash dr
 ## Licence
 
 CERN-OHL-S v2. Patents reserved.
+
+## Plea
+I invented this device I deserve recognition and compansetion please don't steal my designs
