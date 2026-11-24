@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 680" width="1120" height="680">
+  <defs>
+    <style>
+      .title { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; fill: #475569; }
+      .sec-hdr { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; fill: #1e293b; letter-spacing: 0.5px; }
+      .lbl { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 600; fill: #0f172a; }
+      .sublbl { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 8.5px; fill: #334155; }
+      .pipe-hot { stroke: #dc2626; stroke-width: 4; fill: none; }
+      .pipe-warm { stroke: #f97316; stroke-width: 3; fill: none; }
+      .pipe-cool { stroke: #0284c7; stroke-width: 3; fill: none; }
+      .pipe-water { stroke: #0ea5e9; stroke-width: 2.5; stroke-dasharray: 5,3; fill: none; }
+      .bus-hv { stroke: #7c3aed; stroke-width: 3.5; fill: none; }
+      .bus-can { stroke: #10b981; stroke-width: 2; stroke-dasharray: 4,2; fill: none; }
+      .box-core { fill: #f8fafc; stroke: #334155; stroke-width: 1.5; rx: 4; }
+      .box-sub { fill: #ffffff; stroke: #64748b; stroke-width: 1.2; rx: 4; }
+    </style>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-org" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f97316"/>
+    </marker>
+    <marker id="arr-blu" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arr-pur" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- Background & Frame -->
+  <rect x="0" y="0" width="1120" height="680" fill="#ffffff"/>
+  <rect x="12" y="12" width="1096" height="656" fill="none" stroke="#cbd5e1" stroke-width="1.5" rx="6"/>
+
+  <!-- Header Block -->
+  <text x="28" y="38" class="title">COOL POWER CORE — 16-CORE CLASS 8 SEMI-TRUCK SLIPSTREAM RACK ARCHITECTURE</text>
+  <text x="28" y="55" class="subtitle">CFG-08 Dual-Flywheel + 876 kHz PLL-Tracked Burst-Mode GaN-ZVS Air-Core Slayer Exciter | 22.5° Phase Interleaving | +11.44 kW Net Output</text>
+  <line x1="28" y1="66" x2="1092" y2="66" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- ZONE 1: CLASS 8 EXHAUST SLIPSTREAM & PRE-FILTRATION (LEFT) -->
+  <rect x="28" y="80" width="215" height="450" fill="#fef2f2" stroke="#fecaca" stroke-width="1.2" rx="6"/>
+  <text x="40" y="100" class="sec-hdr">1. EXHAUST TAP &amp; SCRUB</text>
+
+  <!-- Main Class 8 Exhaust Stack -->
+  <rect x="44" y="115" width="44" height="395" fill="#fee2e2" stroke="#dc2626" stroke-width="2" rx="4"/>
+  <text x="66" y="310" class="lbl" text-anchor="middle" transform="rotate(-90 66 310)">CLASS 8 EXHAUST (380°C | 185 kW THERMAL)</text>
+
+  <!-- Slipstream Tap Valve (6.1% flow) -->
+  <path d="M 88 165 L 122 165" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <rect x="124" y="140" width="104" height="52" class="box-sub"/>
+  <text x="176" y="158" class="lbl" text-anchor="middle">Proportional Tap</text>
+  <text x="176" y="171" class="sublbl" text-anchor="middle">6.1% Slipstream</text>
+  <text x="176" y="183" class="sublbl" text-anchor="middle">(11.2 kWth | 142 g/s)</text>
+
+  <!-- Cyclonic + ESP Soot Guard -->
+  <path d="M 176 192 L 176 225" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <rect x="124" y="227" width="104" height="68" class="box-sub"/>
+  <text x="176" y="245" class="lbl" text-anchor="middle">Cyclonic + ESP</text>
+  <text x="176" y="258" class="sublbl" text-anchor="middle">Soot/Ash Pre-Filter</text>
+  <text x="176" y="270" class="sublbl" text-anchor="middle">&lt;1.0 µm Cut-off</text>
+  <text x="176" y="282" class="sublbl" text-anchor="middle">(5 µm Bearing Guard)</text>
+
+  <!-- Fluidic Vortex Amplifier Splitter -->
+  <path d="M 176 295 L 176 328" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <rect x="124" y="330" width="104" height="72" class="box-sub"/>
+  <text x="176" y="348" class="lbl" text-anchor="middle">Graphene Vortex</text>
+  <text x="176" y="361" class="lbl" text-anchor="middle">Amplifier Splitter</text>
+  <text x="176" y="374" class="sublbl" text-anchor="middle">No-Moving-Parts</text>
+  <text x="176" y="386" class="sublbl" text-anchor="middle">Clamps N52H &lt;105°C</text>
+
+  <!-- Preheated 90 C Water Reservoir -->
+  <path d="M 176 402 L 176 435" class="pipe-warm" marker-end="url(#arr-org)"/>
+  <rect x="124" y="437" width="104" height="72" class="box-sub"/>
+  <text x="176" y="455" class="lbl" text-anchor="middle">Thermal Reservoir</text>
+  <text x="176" y="468" class="sublbl" text-anchor="middle">Preheated to 90°C</text>
+  <text x="176" y="480" class="sublbl" text-anchor="middle">8.64 L/hr Feed Rate</text>
+  <text x="176" y="492" class="sublbl" text-anchor="middle">(16 x 0.54 L/hr)</text>
+
+  <!-- ZONE 2: 16-CORE INTERLEAVED ARRAY MATRIX (CENTER) -->
+  <rect x="260" y="80" width="560" height="450" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" rx="6"/>
+  <text x="275" y="100" class="sec-hdr">2. 16-CORE MODULAR MATRIX (4 BANKS x 4 CORES | 22.5° PHASE-INTERLEAVED @ 50 Hz)</text>
+
+  <!-- Distribution Headers -->
+  <line x1="280" y1="122" x2="800" y2="122" class="pipe-hot"/>
+  <text x="540" y="116" class="sublbl" text-anchor="middle" fill="#dc2626">HOT EXHAUST &amp; 90°C CAVITATED MIST SUPPLY RAIL (80% RH)</text>
+
+  <line x1="280" y1="478" x2="800" y2="478" class="pipe-warm"/>
+  <text x="540" y="472" class="sublbl" text-anchor="middle" fill="#ea580c">SCRUBBED EXHAUST &amp; MICRO-STEAM COLLECTION HEADER</text>
+
+  <line x1="280" y1="508" x2="800" y2="508" class="bus-hv"/>
+  <text x="540" y="522" class="sublbl" text-anchor="middle" fill="#7c3aed">SHARED 400 V SiC DC POWER BUS (+11.44 kW NET | &lt;0.8% RIPPLE)</text>
+
+  <!-- Draw 4x4 Core Grid via explicit clean blocks -->
+  <!-- Bank 1 (Cores 1-4) -->
+  <g transform="translate(285, 138)">
+    <rect x="0" y="0" width="115" height="72" class="box-core"/>
+    <text x="57" y="16" class="lbl" text-anchor="middle">CORE 01 (0.0°)</text>
+    <text x="57" y="29" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="41" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="53" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="65" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="82" width="115" height="72" class="box-core"/>
+    <text x="57" y="98" class="lbl" text-anchor="middle">CORE 02 (22.5°)</text>
+    <text x="57" y="111" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="123" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="135" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="147" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="164" width="115" height="72" class="box-core"/>
+    <text x="57" y="180" class="lbl" text-anchor="middle">CORE 03 (45.0°)</text>
+    <text x="57" y="193" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="205" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="217" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="229" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="246" width="115" height="72" class="box-core"/>
+    <text x="57" y="262" class="lbl" text-anchor="middle">CORE 04 (67.5°)</text>
+    <text x="57" y="275" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="287" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="299" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="311" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+  </g>
+
+  <!-- Bank 2 (Cores 5-8) -->
+  <g transform="translate(418, 138)">
+    <rect x="0" y="0" width="115" height="72" class="box-core"/>
+    <text x="57" y="16" class="lbl" text-anchor="middle">CORE 05 (90.0°)</text>
+    <text x="57" y="29" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="41" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="53" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="65" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="82" width="115" height="72" class="box-core"/>
+    <text x="57" y="98" class="lbl" text-anchor="middle">CORE 06 (112.5°)</text>
+    <text x="57" y="111" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="123" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="135" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="147" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="164" width="115" height="72" class="box-core"/>
+    <text x="57" y="180" class="lbl" text-anchor="middle">CORE 07 (135.0°)</text>
+    <text x="57" y="193" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="205" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="217" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="229" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="246" width="115" height="72" class="box-core"/>
+    <text x="57" y="262" class="lbl" text-anchor="middle">CORE 08 (157.5°)</text>
+    <text x="57" y="275" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="287" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="299" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="311" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+  </g>
+
+  <!-- Bank 3 (Cores 9-12) -->
+  <g transform="translate(551, 138)">
+    <rect x="0" y="0" width="115" height="72" class="box-core"/>
+    <text x="57" y="16" class="lbl" text-anchor="middle">CORE 09 (180.0°)</text>
+    <text x="57" y="29" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="41" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="53" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="65" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="82" width="115" height="72" class="box-core"/>
+    <text x="57" y="98" class="lbl" text-anchor="middle">CORE 10 (202.5°)</text>
+    <text x="57" y="111" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="123" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="135" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="147" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="164" width="115" height="72" class="box-core"/>
+    <text x="57" y="180" class="lbl" text-anchor="middle">CORE 11 (225.0°)</text>
+    <text x="57" y="193" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="205" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="217" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="229" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="246" width="115" height="72" class="box-core"/>
+    <text x="57" y="262" class="lbl" text-anchor="middle">CORE 12 (247.5°)</text>
+    <text x="57" y="275" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="287" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="299" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="311" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+  </g>
+
+  <!-- Bank 4 (Cores 13-16) -->
+  <g transform="translate(684, 138)">
+    <rect x="0" y="0" width="115" height="72" class="box-core"/>
+    <text x="57" y="16" class="lbl" text-anchor="middle">CORE 13 (270.0°)</text>
+    <text x="57" y="29" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="41" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="53" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="65" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="82" width="115" height="72" class="box-core"/>
+    <text x="57" y="98" class="lbl" text-anchor="middle">CORE 14 (292.5°)</text>
+    <text x="57" y="111" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="123" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="135" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="147" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="164" width="115" height="72" class="box-core"/>
+    <text x="57" y="180" class="lbl" text-anchor="middle">CORE 15 (315.0°)</text>
+    <text x="57" y="193" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="205" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="217" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="229" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+
+    <rect x="0" y="246" width="115" height="72" class="box-core"/>
+    <text x="57" y="262" class="lbl" text-anchor="middle">CORE 16 (337.5°)</text>
+    <text x="57" y="275" class="sublbl" text-anchor="middle">876 kHz GaN Slayer</text>
+    <text x="57" y="287" class="sublbl" text-anchor="middle">30:1 Opposed YSZ</text>
+    <text x="57" y="299" class="sublbl" text-anchor="middle">45k RPM Turbine FW</text>
+    <text x="57" y="311" class="sublbl" text-anchor="middle" fill="#059669">+715 W Net</text>
+  </g>
+
+  <!-- ZONE 3: SHARED QUENCH MANIFOLD, CONDENSER & 400V POWER EXPORT (RIGHT) -->
+  <rect x="838" y="80" width="254" height="450" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" rx="6"/>
+  <text x="852" y="100" class="sec-hdr">3. QUENCH &amp; POWER EXPORT</text>
+
+  <!-- Shared alpha-MnO2 Ozone Quench Manifold -->
+  <rect x="854" y="120" width="222" height="86" class="box-sub"/>
+  <text x="965" y="138" class="lbl" text-anchor="middle">Shared α-MnO₂ Quench Bed</text>
+  <text x="965" y="151" class="sublbl" text-anchor="middle">400 CPSI Cordierite Monolith (2.35 L)</text>
+  <text x="965" y="164" class="sublbl" text-anchor="middle">Inlet: 18.4 ppm O₃ → Outlet: &lt;0.04 ppm</text>
+  <text x="965" y="177" class="sublbl" text-anchor="middle">28 W Shared PTC Dew-Point Trim</text>
+  <text x="965" y="190" class="sublbl" text-anchor="middle">Backpressure Drop: 34 Pa</text>
+
+  <!-- Condenser & Distilled Water Recovery -->
+  <path d="M 965 206 L 965 234" class="pipe-cool" marker-end="url(#arr-blu)"/>
+  <rect x="854" y="236" width="222" height="82" class="box-sub"/>
+  <text x="965" y="254" class="lbl" text-anchor="middle">Condenser &amp; pH Neutralizer</text>
+  <text x="965" y="267" class="sublbl" text-anchor="middle">Recovers 10.56 L/hr Exhaust H₂O</text>
+  <text x="965" y="280" class="sublbl" text-anchor="middle">8.64 L/hr Loop + 1.92 L/hr Surplus</text>
+  <text x="965" y="293" class="sublbl" text-anchor="middle">O₂-Enriched Clean Air to SCR Stack</text>
+
+  <!-- Fast-SCR NO2 Slipstream Return -->
+  <rect x="854" y="334" width="222" height="72" class="box-sub"/>
+  <text x="965" y="352" class="lbl" text-anchor="middle">Fast-SCR NO→NO₂ Injector</text>
+  <text x="965" y="365" class="sublbl" text-anchor="middle">Feeds Truck Aftertreatment Box</text>
+  <text x="965" y="378" class="sublbl" text-anchor="middle">Cuts DEF Consumption by 22.0%</text>
+  <text x="965" y="391" class="sublbl" text-anchor="middle">Extends DPF Regen Interval +19%</text>
+
+  <!-- Master 400 V SiC Inverter & FDCAN Master ECU -->
+  <rect x="854" y="422" width="222" height="94" class="box-sub" stroke="#7c3aed"/>
+  <text x="965" y="440" class="lbl" text-anchor="middle" fill="#6d28d9">Master SiC Inverter &amp; FDCAN ECU</text>
+  <text x="965" y="453" class="sublbl" text-anchor="middle">400 V DC Bus + 419 J Virtual FW</text>
+  <text x="965" y="466" class="sublbl" text-anchor="middle">24 V / 48 V Truck e-Axle &amp; Hotel Export</text>
+  <text x="965" y="479" class="sublbl" text-anchor="middle">Net Output: +11.44 kW (55.8% Eff.)</text>
+  <text x="965" y="492" class="sublbl" text-anchor="middle">Fuel Saved: 2.74 L/hr Diesel</text>
+
+  <!-- Connecting Flow Lines Between Zones -->
+  <path d="M 228 366 L 250 366 L 250 122 L 280 122" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <path d="M 228 473 L 265 473 L 265 122" class="pipe-water"/>
+  <path d="M 800 478 L 822 478 L 822 163 L 854 163" class="pipe-warm" marker-end="url(#arr-org)"/>
+  <path d="M 800 508 L 854 508" class="bus-hv" marker-end="url(#arr-pur)"/>
+  <path d="M 854 468 L 828 468 L 828 548 L 176 548 L 176 509" class="pipe-water"/>
+
+  <!-- BOTTOM SUMMARY KPI BAR -->
+  <rect x="28" y="562" width="1064" height="92" fill="#0f172a" rx="6"/>
+  <text x="48" y="586" class="sec-hdr" fill="#38bdf8">16-CORE RACK SPECIFICATION SUMMARY (CHASSIS RAIL-MOUNTED ENCLOSURE: 1,180 mm L × 460 mm W × 390 mm H | 164.8 kg)</text>
+  <line x1="48" y1="595" x2="1072" y2="595" stroke="#334155" stroke-width="1"/>
+
+  <text x="48" y="616" class="lbl" fill="#f8fafc">• NTP Driver: 16× 876 kHz PLL-Tracked Burst GaN-ZVS Air-Core Slayer (9.80 W/core)</text>
+  <text x="48" y="636" class="lbl" fill="#f8fafc">• Mechanical: 16× 50 Hz Opposed 25 mm YSZ Pistons + 45k RPM Turbine Flywheels</text>
+
+  <text x="460" y="616" class="lbl" fill="#34d399">• Gross Generation: 11.83 kW (Alternators + TEG/Pyro + Turbine)</text>
+  <text x="460" y="636" class="lbl" fill="#34d399">• Total Parasitic Draw: 392 W (24.5 W/core shared bus optimization)</text>
+
+  <text x="820" y="616" class="lbl" fill="#fbbf24">• Net Electrical Export: +11.44 kW</text>
+  <text x="820" y="636" class="lbl" fill="#fbbf24">• Net Distilled H₂O: +1.92 L/hr</text>
+</svg>
