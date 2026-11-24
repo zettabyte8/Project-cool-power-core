@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: bold; fill: #0f172a; }
+      .subtitle { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #475569; }
+      .box { fill: #ffffff; stroke: #1e293b; stroke-width: 2; rx: 8; }
+      .box-blue { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 2; rx: 8; }
+      .box-amber { fill: #fffbeb; stroke: #b45309; stroke-width: 2; rx: 8; }
+      .box-purple { fill: #f5f3ff; stroke: #6d28d9; stroke-width: 2; rx: 8; }
+      .box-green { fill: #f0fdf4; stroke: #15803d; stroke-width: 2; rx: 8; }
+      .box-red { fill: #fef2f2; stroke: #b91c1c; stroke-width: 2; rx: 8; }
+      .hdr { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; fill: #0f172a; }
+      .txt { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #334155; }
+      .val { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #0f172a; }
+      .pipe-water { stroke: #2563eb; stroke-width: 3; fill: none; }
+      .pipe-hot { stroke: #dc2626; stroke-width: 3; fill: none; }
+      .pipe-gas { stroke: #7c3aed; stroke-width: 2.5; stroke-dasharray: 6,3; fill: none; }
+      .pipe-clean { stroke: #16a34a; stroke-width: 3; fill: none; }
+      .pipe-brine { stroke: #92400e; stroke-width: 2.5; fill: none; }
+      .elec { stroke: #eab308; stroke-width: 2.5; stroke-dasharray: 4,2; fill: none; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-brine" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#92400e"/>
+    </marker>
+    <marker id="arr-yellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#eab308"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="760" class="bg"/>
+
+  <!-- Header -->
+  <text x="30" y="38" class="title">COOL POWER CORE — WATER REMEDIATION &amp; DISTILLATION PROCESS FLOW (PFD)</text>
+  <text x="30" y="58" class="subtitle">PLL-Tracked Burst-Mode GaN-ZVS Air-Core Slayer Exciter (876 kHz, 9.80 W) | 50 Hz Dual-Flywheel Opposed Free-Piston Core (0.54 L/hr/Core)</text>
+
+  <!-- Step 1: Polluted Feedwater Intake -->
+  <rect x="30" y="100" width="185" height="115" class="box-blue"/>
+  <text x="42" y="122" class="hdr">1. POLLUTED FEEDWATER</text>
+  <text x="42" y="142" class="txt">• Flow: 0.540 L/hr per core</text>
+  <text x="42" y="158" class="txt">• PFAS, VOCs, Pathogens, TDS</text>
+  <text x="42" y="174" class="txt">• 10 µm Stainless Pre-Screen</text>
+  <text x="42" y="194" class="val">Grade 2 Ti / Graphene Wetted</text>
+
+  <!-- Step 2: 90C Thermal Reservoir & Brine Separator -->
+  <rect x="265" y="90" width="215" height="145" class="box-amber"/>
+  <text x="277" y="112" class="hdr">2. 90°C RESERVOIR &amp; BRINE</text>
+  <text x="277" y="132" class="txt">• Regenerative Exhaust Heated</text>
+  <text x="277" y="148" class="txt">• Viscosity reduced by 64.7%</text>
+  <text x="277" y="164" class="txt">• Conductivity Guard (&lt;4,500 µS)</text>
+  <text x="277" y="180" class="txt">• Flash/Cyclonic Salt Rejection</text>
+  <text x="277" y="202" class="val">Protects 5 µm Air Bearings</text>
+
+  <!-- Brine Blowdown Tank -->
+  <rect x="285" y="280" width="175" height="80" class="box-red"/>
+  <text x="297" y="302" class="hdr">CONCENTRATED BRINE</text>
+  <text x="297" y="320" class="txt">• 5%–16% Blowdown (0.027–0.086 L/h)</text>
+  <text x="297" y="336" class="txt">• Heavy Metals &amp; Inorganic Salts</text>
+  <text x="297" y="352" class="val">Zero Aerosol Carryover to Core</text>
+
+  <!-- Step 3: 90C Ultrasonic + Vortex Cavitator -->
+  <rect x="530" y="90" width="205" height="135" class="box-blue"/>
+  <text x="542" y="112" class="hdr">3. 90°C STAGE-1 CAVITATOR</text>
+  <text x="542" y="132" class="txt">• 15 W Piezo + Vortex Shear</text>
+  <text x="542" y="148" class="txt">• &gt;4,000 K Bubble Collapse</text>
+  <text x="542" y="164" class="txt">• Cleaves PFAS C-F &amp; VOCs</text>
+  <text x="542" y="180" class="txt">• 80% RH Cold-Steam Mist</text>
+  <text x="542" y="202" class="val">Saves 24.5% Cavitation Power</text>
+
+  <!-- Step 4: 50 Hz GaN-Slayer Plasma & Free-Piston Core -->
+  <rect x="785" y="80" width="245" height="185" class="box-purple"/>
+  <text x="797" y="102" class="hdr">4. 50 Hz COOL POWER CORE</text>
+  <text x="797" y="122" class="txt">• 30:1 Compression (90 bar, YSZ Liner)</text>
+  <text x="797" y="138" class="txt">• 876 kHz GaN-ZVS Air-Core Slayer</text>
+  <text x="797" y="154" class="txt">• 34.2 kV Burst (3.48e17 radicals/J)</text>
+  <text x="797" y="170" class="txt">• &gt;99.9% Mineralization &amp; Sterilization</text>
+  <text x="797" y="186" class="txt">• Dual Flywheel + N52H Alternator</text>
+  <text x="797" y="202" class="txt">• 45k RPM Tesla Turbine + TEG</text>
+  <text x="797" y="226" class="val">Net Power: +283.9 to +519.9 W/core</text>
+  <text x="797" y="244" class="val">Parasitic Draw: 28.5 W (140.6 ppm BE)</text>
+
+  <!-- Step 5: Dual-Bed Catalytic Gas Scrubber -->
+  <rect x="785" y="330" width="245" height="135" class="box-amber"/>
+  <text x="797" y="352" class="hdr">5. DUAL-BED GAS SCRUBBER</text>
+  <text x="797" y="372" class="txt">• Bed A: α-MnO₂ Monolith (0.162 L)</text>
+  <text x="797" y="388" class="txt">  Quenches 18.4 ppm O₃ → &lt;0.04 ppm</text>
+  <text x="797" y="404" class="txt">• Bed B: CaCO₃ / MgO Neutralizer</text>
+  <text x="797" y="420" class="txt">  Captures trace HF/HCl → CaF₂/CaCl₂</text>
+  <text x="797" y="444" class="val">O₂-Enriched Clean Gas Vent</text>
+
+  <!-- Step 6: Condenser & Inline Quality Verification -->
+  <rect x="500" y="490" width="265" height="145" class="box-green"/>
+  <text x="512" y="512" class="hdr">6. CONDENSER &amp; QA POLISHER</text>
+  <text x="512" y="532" class="txt">• Latent Heat Recirculated to Step 2</text>
+  <text x="512" y="548" class="txt">• Trace Mineral Remineralization Bed</text>
+  <text x="512" y="564" class="txt">• Inline ORP, pH (6.8–7.4) &amp; TDS Check</text>
+  <text x="512" y="580" class="txt">• Auto-Divert Valve if ORP/TDS drifts</text>
+  <text x="512" y="604" class="val">Clean Distillate: 0.454–0.513 L/hr</text>
+  <text x="512" y="620" class="val">TDS &lt; 15 mg/L | &gt;6-Log Sterile</text>
+
+  <!-- Step 7: 400V SiC Bus & ECU -->
+  <rect x="150" y="490" width="280" height="145" class="box"/>
+  <text x="162" y="512" class="hdr">7. 400V SiC BUS &amp; STM32G4 ECU</text>
+  <text x="162" y="532" class="txt">• Virtual Electronic Flywheel Shaping</text>
+  <text x="162" y="548" class="txt">• PLL Dielectric Tracking (&lt;3.5 µs lock)</text>
+  <text x="162" y="564" class="txt">• 15 µs Droplet Arc-Quench Foldback</text>
+  <text x="162" y="580" class="txt">• Automated Brine Blowdown Control</text>
+  <text x="162" y="604" class="val">64-Core Skid: 788 L/day + 436 kWh/day</text>
+
+  <!-- Piping & Connections -->
+  <!-- Feedwater to Reservoir -->
+  <path d="M 215 155 L 265 155" class="pipe-water" marker-end="url(#arr-blue)"/>
+  <!-- Reservoir to Brine -->
+  <path d="M 372 235 L 372 280" class="pipe-brine" marker-end="url(#arr-brine)"/>
+  <!-- Reservoir to Cavitator -->
+  <path d="M 480 155 L 530 155" class="pipe-water" marker-end="url(#arr-blue)"/>
+  <!-- Cavitator to Core -->
+  <path d="M 735 155 L 785 155" class="pipe-gas" marker-end="url(#arr-purple)"/>
+  <!-- Core Exhaust to Scrubber -->
+  <path d="M 907 265 L 907 330" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <!-- Scrubber to Condenser -->
+  <path d="M 785 410 L 660 410 L 660 490" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <!-- Condenser Heat Recovery back to Reservoir -->
+  <path d="M 580 490 L 580 395 L 235 395 L 235 190 L 265 190" class="pipe-hot" marker-end="url(#arr-red)"/>
+  <text x="345" y="388" class="txt" fill="#dc2626">Regenerative Waste Heat Loop (90°C Preheat + Vaporization)</text>
+  <!-- Clean Water Output -->
+  <path d="M 765 565 L 1045 565" class="pipe-clean" marker-end="url(#arr-green)"/>
+  <text x="780" y="555" class="val" fill="#15803d">POTABLE / INDUSTRIAL DISTILLATE OUT</text>
+  <!-- Clean O2 Vent -->
+  <path d="M 1030 395 L 1140 395" class="pipe-clean" marker-end="url(#arr-green)"/>
+  <text x="1038" y="385" class="txt" fill="#15803d">O₂-Rich Scrubbed Air</text>
+  <!-- Electrical Bus -->
+  <path d="M 1030 180 L 1120 180 L 1120 680 L 290 680 L 290 635" class="elec" marker-end="url(#arr-yellow)"/>
+  <text x="640" y="672" class="val" fill="#b45309">400V SiC HV Bus Export &amp; 28.5W Parasitic Feedback</text>
+
+  <!-- Legend -->
+  <rect x="30" y="698" width="1140" height="44" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" rx="6"/>
+  <line x1="50" y1="720" x2="90" y2="720" class="pipe-water"/>
+  <text x="98" y="724" class="txt">Polluted Feedwater</text>
+  <line x1="220" y1="720" x2="260" y2="720" class="pipe-brine"/>
+  <text x="268" y="724" class="txt">Rejected Brine</text>
+  <line x1="370" y1="720" x2="410" y2="720" class="pipe-gas"/>
+  <text x="418" y="724" class="txt">Cavitated 80% RH Mist</text>
+  <line x1="560" y1="720" x2="600" y2="720" class="pipe-hot"/>
+  <text x="608" y="724" class="txt">Hot Exhaust / Steam Loop</text>
+  <line x1="765" y1="720" x2="805" y2="720" class="pipe-clean"/>
+  <text x="813" y="724" class="txt">Clean Distillate / Scrubbed O₂</text>
+  <line x1="990" y1="720" x2="1030" y2="720" class="elec"/>
+  <text x="1038" y="724" class="txt">400V HV Bus</text>
+</svg>
