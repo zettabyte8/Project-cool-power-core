@@ -1,0 +1,147 @@
+================================================================================
+PARAMETRIC CAD SPECIFICATION (OPENSCAD) & ECU FLUIDIC VALVE STATE LOGIC
+Subsystem: Coanda Vortex Exhaust-Driven Hydrodynamic Cavitator, 90C Reservoir
+           Interface, ZVS Plasma Reactor & 50Hz Linear Alternator Assembly
+================================================================================
+
+--------------------------------------------------------------------------------
+PART 1: PARAMETRIC OPENSCAD CAD MODEL (Copy into OpenSCAD .scad to render/STL)
+--------------------------------------------------------------------------------
+
+// Parametric Dimensions (mm) - Scaled for Single-Bank Module (0.54 L/hr Unit)
+// Multiply cross-sectional areas by 760x (or deploy 8-bank modular manifold) for 4,400 HP
+
+$fn = 96;
+
+// --- Module 1: Coanda Vortex Fluidic Amplifier & Hydrodynamic Cavitator ---
+module coanda_vortex_cavitator(
+    inlet_d = 38.0,
+    throat_d = 12.5,
+    vortex_chamber_d = 84.0,
+    vortex_height = 22.0,
+    exhaust_jet_d = 6.4,
+    water_nozzle_d = 1.8
+) {
+    difference() {
+        union() {
+            // Main Vortex Swirl Chamber (Graphene-lined interior)
+            cylinder(h = vortex_height, d = vortex_chamber_d, center = true);
+            
+            // Tangential High-Temp Shaped Exhaust Jet Nozzle (Coanda Driver)
+            translate([vortex_chamber_d/2 - 4, 18, 0])
+                rotate([0, 90, -15])
+                cylinder(h = 45, d1 = exhaust_jet_d * 1.8, d2 = exhaust_jet_d, center = true);
+                
+            // Tangential 90C Water Injection Port (ECU Fluidic Valve Feed)
+            translate([vortex_chamber_d/2 - 4, -18, 0])
+                rotate([0, 90, 15])
+                cylinder(h = 40, d1 = water_nozzle_d * 2.5, d2 = water_nozzle_d, center = true);
+                
+            // Axial Ambient Air Intake Bellmouth
+            translate([0, 0, -vortex_height/2 - 18])
+                cylinder(h = 36, d1 = inlet_d * 1.4, d2 = inlet_d, center = true);
+                
+            // Venturi Cavitation Throat & Diffuser Cone to Plasma Reactor
+            translate([0, 0, vortex_height/2 + 25])
+                cylinder(h = 50, d1 = throat_d, d2 = inlet_d * 1.1, center = true);
+        }
+        
+        // Hollow Internal Fluidic Flow Path
+        union() {
+            cylinder(h = vortex_height - 4, d = vortex_chamber_d - 6, center = true);
+            translate([vortex_chamber_d/2 - 4, 18, 0])
+                rotate([0, 90, -15])
+                cylinder(h = 50, d1 = exhaust_jet_d * 1.4, d2 = exhaust_jet_d * 0.75, center = true);
+            translate([vortex_chamber_d/2 - 4, -18, 0])
+                rotate([0, 90, 15])
+                cylinder(h = 45, d1 = water_nozzle_d * 1.8, d2 = water_nozzle_d * 0.7, center = true);
+            translate([0, 0, -vortex_height/2 - 18])
+                cylinder(h = 42, d1 = inlet_d * 1.25, d2 = inlet_d - 4, center = true);
+            translate([0, 0, vortex_height/2 + 25])
+                cylinder(h = 56, d1 = throat_d - 2.5, d2 = inlet_d - 2, center = true);
+        }
+    }
+}
+
+// --- Module 2: Opposed Free-Piston Linear Alternator (25mm Bore, 40mm Stroke) ---
+module opposed_linear_alternator(
+    bore_d = 25.0,
+    stroke_l = 40.0,
+    ysz_liner_t = 3.0,
+    aerogel_t = 12.0,
+    stator_od = 110.0
+) {
+    total_len = (stroke_l * 2) + 60;
+    
+    difference() {
+        union() {
+            // Outer Structural Housing & N52H Radial Stator Shell (Kept < 95C)
+            cylinder(h = total_len, d = stator_od, center = true);
+        }
+        union() {
+            // Central 25mm Combustion/Expansion Cylinder Bore
+            cylinder(h = total_len + 2, d = bore_d, center = true);
+            
+            // YSZ Ceramic Thermal Barrier Liner Cavity
+            cylinder(h = stroke_l * 1.6, d = bore_d + (ysz_liner_t * 2), center = true);
+            
+            // Argon Aerogel Thermal Isolation Annulus (Protects N52H Magnets)
+            cylinder(h = stroke_l * 1.8, d = bore_d + (ysz_liner_t * 2) + (aerogel_t * 2), center = true);
+        }
+    }
+    
+    // Opposed Pistons at Mid-Stroke (25mm OD, 5-micron Air Bearing Clearance)
+    for (dir = [-1, 1]) {
+        translate([0, 0, dir * (stroke_l * 0.55)])
+            color("Silver")
+            cylinder(h = 28, d = bore_d - 0.01, center = true);
+    }
+}
+
+// Render Assembly Offset
+translate([-75, 0, 0]) coanda_vortex_cavitator();
+translate([75, 0, 0])  opposed_linear_alternator();
+
+
+--------------------------------------------------------------------------------
+PART 2: ECU CLOSED-LOOP CONTROL & FLUIDIC VALVE STATE MACHINE (15W BUDGET)
+--------------------------------------------------------------------------------
+
+1. SENSOR INPUTS & SAMPLE RATES (1 kHz Control Loop)
+   - T_res   : Water reservoir thermistor (Target: 90.0°C ± 1.5°C)
+   - RH_in   : Intake manifold capacitive humidity & dew-point sensor
+   - P_cav   : Venturi throat piezo-pressure transducer (Cavitation intensity)
+   - T_mag   : N52H stator thermocouple (Hard thermal trip: 105.0°C)
+   - NOx_out : Post-SCR Zirconia NOx/O2 sensor
+   - N_notch : Locomotive throttle notch (Idle, Notch 1–8)
+
+2. FLUIDIC VORTEX AMPLIFIER & WATER INJECTION PID LOGIC
+   - Objective: Maintain optimal intake steam volume fraction (8.5% – 10.5% v/v)
+     for maximum OH•/O3 plasma yield without liquid wall wetting or arc quench.
+   - Control Law:
+       m_dot_H2O_target = k_notch * m_dot_air * (RH_opt - RH_ambient)
+   - Actuation (No Moving Parts in Hot Zone):
+       * High-Temp Exhaust Control Port (Coanda Jet): Modulates swirl ratio (S)
+         from S = 0.2 (Notch 1–2) to S = 1.4 (Notch 6–8) to hold Venturi throat
+         static pressure below vapor saturation pressure (P_throat < 70.1 kPa at 90°C).
+       * Piezo-Microvalve (90°C Water Feed): PWM duty cycle 10–100% at 250 Hz,
+         drawing < 3.5 W average.
+
+3. ZVS NANOSECOND PLASMA MODULATION (20W Unit / Scaled 9.8 kW Bank)
+   - Gate Drive: 4.2V–24V ZVS resonant push-pull into 1000:1 MnZn ferrite U-core
+     + 8-stage Cockcroft-Walton multiplier (33.6 kV peak, 45 ns pulse width).
+   - Arc-to-Glow Prevention: If dI/dt > threshold (spark breakdown), ECU skips
+     2 cycles to preserve non-thermal corona regime and prevent electrode erosion.
+
+4. OPERATING STATE TABLE
+   +--------------+------------------+-------------------+--------------------+------------------+
+   | ECU State    | Trigger          | Exhaust Splitter  | 90C Water Valve    | ZVS Plasma Duty  |
+   +--------------+------------------+-------------------+--------------------+------------------+
+   | S0_COLD_BOOT | T_res < 75°C     | 100% Jacket Heat  | 0% (Closed)        | 15% (O3 Warmup)  |
+   | S1_IDLE_LOW  | Notch 0–2        | 30% Vortex Cav.   | PID (4% Steam v/v) | 40% Burst Mode   |
+   | S2_CRUISE    | Notch 3–6        | 75% Vortex Cav.   | PID (9.5% Steam)   | 85% Continuous   |
+   | S3_MAX_HAUL  | Notch 7–8        | 100% Vortex Cav.  | PID (10.5% Steam)  | 100% Rated       |
+   | S4_SAFE_TRIP | T_mag > 105°C or | 100% Bypass to    | 0% (Purge Line)    | 0% (HV Lockout)  |
+   |              | Condenser Full   | Exhaust Stack     |                    |                  |
+   +--------------+------------------+-------------------+--------------------+------------------+
+================================================================================
