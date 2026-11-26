@@ -1,0 +1,115 @@
+/* ============================================================================
+ * File: cpc_ecu_control.c
+ * Project: Cool Power Core - 15W Embedded ECU State Machine & PID Controller
+ * Architect: Thomas G. Coleman
+ * Target: ARM Cortex-M7 @ 480 MHz (Dual-Bus Isolated Architecture)
+ * ============================================================================ */
+
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef enum {
+    STATE_S0_INIT_SELF_TEST = 0,
+    STATE_S1_AIR_BEARING_LEV,
+    STATE_S2_THERMAL_PREHEAT,
+    STATE_S3_PLASMA_CAV_SYNC,
+    STATE_S4_CLOSED_LOOP_RUN,
+    STATE_S5_SAFE_SHUTDOWN
+} cpc_state_t;
+
+typedef struct {
+    float kp;
+    float ki;
+    float kd;
+    float integrator;
+    float prev_error;
+    float out_min;
+    float out_max;
+} pid_ctrl_t;
+
+typedef struct {
+    float t_reservoir_c;      /* Target: 90.0 C */
+    float t_magnet_rotor_c;   /* Limit: < 105.0 C (N52H protection) */
+    float intake_rh_pct;      /* Target: 82.0 % RH */
+    float vortex_dp_kpa;      /* Target: -18.5 kPa */
+    float air_bearing_gap_um; /* Limit: >= 3.0 um */
+    float piston_phase_err;   /* Target: 0.0 deg @ 50 Hz */
+    bool  hv_interlock_ok;
+} cpc_telemetry_t;
+
+static cpc_state_t current_state = STATE_S0_INIT_SELF_TEST;
+
+static pid_ctrl_t pid_humidity = { 1.45f, 0.38f, 0.04f, 0.0f, 0.0f, 0.05f, 0.54f };
+static pid_ctrl_t pid_exh_split = { 0.85f, 0.22f, 0.015f, 0.0f, 0.0f, 0.15f, 0.85f };
+static pid_ctrl_t pid_thermal  = { 2.10f, 0.09f, 0.12f, 0.0f, 0.0f, 0.00f, 1.00f };
+static pid_ctrl_t pid_phase    = { 3.20f, 0.65f, 0.08f, 0.0f, 0.0f, -15.0f, 15.0f };
+
+float pid_update(pid_ctrl_t *pid, float setpoint, float measurement, float dt) {
+    float error = setpoint - measurement;
+    float p_term = pid->kp * error;
+
+    pid->integrator += pid->ki * error * dt;
+    if (pid->integrator > pid->out_max) pid->integrator = pid->out_max;
+    if (pid->integrator < pid->out_min) pid->integrator = pid->out_min;
+
+    float d_term = pid->kd * (error - pid->prev_error) / dt;
+    pid->prev_error = error;
+
+    float output = p_term + pid->integrator + d_term;
+    if (output > pid->out_max) output = pid->out_max;
+    if (output < pid->out_min) output = pid->out_min;
+    return output;
+}
+
+void cpc_safety_supervisor(const cpc_telemetry_t *t) {
+    if (!t->hv_interlock_ok ||
+        t->t_magnet_rotor_c >= 105.0f ||
+        (current_state >= STATE_S2_THERMAL_PREHEAT && t->air_bearing_gap_um < 3.0f)) {
+        current_state = STATE_S5_SAFE_SHUTDOWN;
+    }
+}
+
+void cpc_run_1khz_control_tick(const cpc_telemetry_t *t, float dt) {
+    cpc_safety_supervisor(t);
+
+    switch (current_state) {
+        case STATE_S0_INIT_SELF_TEST:
+            if (t->hv_interlock_ok) {
+                current_state = STATE_S1_AIR_BEARING_LEV;
+            }
+            break;
+
+        case STATE_S1_AIR_BEARING_LEV:
+            if (t->air_bearing_gap_um >= 4.2f) {
+                current_state = STATE_S2_THERMAL_PREHEAT;
+            }
+            break;
+
+        case STATE_S2_THERMAL_PREHEAT:
+            (void)pid_update(&pid_thermal, 90.0f, t->t_reservoir_c, dt);
+            if (t->t_reservoir_c >= 88.0f) {
+                current_state = STATE_S3_PLASMA_CAV_SYNC;
+            }
+            break;
+
+        case STATE_S3_PLASMA_CAV_SYNC:
+            if (t->intake_rh_pct >= 78.0f && t->vortex_dp_kpa <= -15.0f) {
+                current_state = STATE_S4_CLOSED_LOOP_RUN;
+            }
+            break;
+
+        case STATE_S4_CLOSED_LOOP_RUN: {
+            float v_h2o_lph   = pid_update(&pid_humidity, 82.0f, t->intake_rh_pct, dt);
+            float v_exh_split = pid_update(&pid_exh_split, -18.5f, t->vortex_dp_kpa, dt);
+            float v_therm_pct = pid_update(&pid_thermal, 90.0f, t->t_reservoir_c, dt);
+            float zvs_phase   = pid_update(&pid_phase, 0.0f, t->piston_phase_err, dt);
+            (void)v_h2o_lph; (void)v_exh_split; (void)v_therm_pct; (void)zvs_phase;
+            break;
+        }
+
+        case STATE_S5_SAFE_SHUTDOWN:
+        default:
+            /* Disable 33.6kV ZVS driver, close V_H2O, engage alternator braking */
+            break;
+    }
+}

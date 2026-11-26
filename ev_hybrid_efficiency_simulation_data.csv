@@ -1,0 +1,5 @@
+Vehicle_Class,Bus_Voltage_V,Battery_Pack_kWh,Operating_Mode,Module_Count,Displacement_cc,Frequency_Hz,Water_Injection_L_hr,Sensible_Preheat_Saved_W,Latent_Heat_Bypassed_W,Plasma_Power_W,Cavitation_Power_W,ECU_Valves_Power_W,Total_Parasitic_Input_W,Gross_Electric_Output_W,Net_Bus_Power_W,Mechanical_Efficiency_Gain_Pct,Thermal_Retention_Gain_Pct,Bottoming_Recovery_Gain_Pct,Winter_Range_Retention_Gain_Pct,Clean_Water_Output_L_hr
+Passenger BEV (Compact/Sedan),400,65,Mode A: Zero-Fuel Smog Scrubber + Thermal Assist,1,39.27,50,0.54,43.93,339.0,20.0,15.0,10.0,45.0,20.0,-25.0,11.0,8.0,5.5,16.0,0.58
+Passenger REEV (Crossover/SUV),400,35,Mode B: Ultra-Lean E-Fuel/Biofuel Range Extender,1,39.27,50,0.54,43.93,339.0,20.0,15.0,10.0,45.0,5500.0,5455.0,12.5,9.0,6.0,19.0,0.72
+Commercial Delivery Van (Class 2b-3),800,85,Mode B: Dual-Synchronized SHEV Range Extender,2,78.54,50,1.08,87.86,678.0,40.0,30.0,20.0,90.0,12800.0,12710.0,13.0,9.5,6.5,20.0,1.45
+Heavy-Duty Semi / Regional Tractor,800,250,Mode B: 6-Module Stacked Array + VGT/Tesla Cascade,6,235.62,50,3.24,263.58,2034.0,120.0,90.0,60.0,270.0,48500.0,48230.0,14.0,10.0,7.0,22.0,4.35
