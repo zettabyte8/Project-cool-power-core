@@ -1,0 +1,18 @@
+Subsystem,Component Name,Key Specifications,Qty,Critical Durability / Material Note
+Plasma Ignition,MnZn Ferrite U-Core Transformer,1000x step-up ratio; low core loss at 50-100 kHz ZVS,1,Epoxy-potted HV secondary to prevent corona tracking
+Plasma Ignition,8-Stage Cockcroft-Walton Multiplier,4.2V DC input -> 33.6 kV pulsed output; 20W avg; ns-rise diodes,1,High-alumina ceramic standoff mounts
+Plasma Ignition,Corona / O3 Arc Electrode Assembly,Tungsten-iridium tips; precision air gap for non-thermal radicals,2,Isolate from graphene surfaces to prevent O3 oxidation
+Free-Piston Core,Opposed Cylinder Liners,25 mm bore x 40 mm stroke; 30:1 CR; Yttria-Stabilized Zirconia (YSZ),2,Low thermal conductivity contains 3000C peak core heat
+Free-Piston Core,Precision Air-Bearing Piston Sleeves,5-micron radial clearance; porous graphite/ceramic air journals,2,Requires <0.1 um filtered dry air supply
+Linear Alternator,Radial-Magnetized N52H Translators,High-remanence NdFeB N52H grade; custom Halbach/radial array,2,Must stay <120C Curie limit via argon aerogel + cooling
+Linear Alternator,Litz-Wire Stator Coils & Split DC Bus,400V high-voltage output bus + 24V/4.2V step-down ECU rail,2,Active FPGA impedance matching for 50 Hz resonance
+Thermal Shielding,Argon Aerogel Insulation Blankets,Ultra-low thermal conductivity (<0.015 W/mK); 12 mm thickness,1,Isolates N52H magnets and 90C tank from 3000C combustion zone
+Fluidics & Cavitation,Graphene-Coated Vortex Fluidic Amplifier,No-moving-parts bistable/proportional exhaust & intake splitter,2,Use graphene only on <150C stages; SiC on hot exhaust splitter
+Fluidics & Cavitation,Ultrasonic / Hydrodynamic Cold-Steam Cavitator,15W-30W variable drive; atomizes 0.54 L/hr H2O without boiling,1,Injects into intake & HVAC condenser pre-cool header
+Exhaust Harvesting,Variable Geometry Turbocharger (VGT) Micro-Unit,High-temp Inconel turbine wheel; actuator-controlled vanes,1,Regulates backpressure and exhaust recirculation ratio
+Exhaust Harvesting,Bladeless Biomimetic Tesla Turbine,Multi-disk boundary-layer rotor coupled to micro-generator,1,Handles two-phase wet steam/gas without blade erosion
+Exhaust Harvesting,PZT Piezoelectric Pressure Harvesters,High-temperature lead zirconate titanate stacks tuned to 50 Hz,4,Captures acoustic/pressure pulsations in exhaust manifold
+Thermal & Ion Capture,TEG + Pyroelectric & Ion Grid Array,Bi2Te3/Skutterudite TEGs + electrostatic ion collector grid,1,Harvests 90C-to-ambient delta-T and charged plasma ions
+Emissions & HVAC,Vanadium/Titanium Dioxide SCR Catalyst Block,Honeycomb monolith; destroys NOx and residual O3 before HVAC duct,1,Mandatory for ASHRAE 62.1 indoor air safety (<0.01 ppm O3)
+Thermal Storage,Insulated 90C Water Reservoir & Heat Exchanger,2.5 L stainless/titanium tank + evaporator condensate feed pump,1,Stores exhaust waste heat for cavitation & desiccant wheel
+Control & Sensors,Dual-Core ARM Cortex-M7 + FPGA ECU Board,10 ns pulse timing; LVDT position; O3/PM2.5/RH/Curie temp sensors,1,Enforces hard shutdown on O3 >0.01 ppm or magnet >105C

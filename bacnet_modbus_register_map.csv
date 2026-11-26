@@ -1,0 +1,16 @@
+Register_Addr,BACnet_Object,Point_Name,Data_Type,Units,Access,Min_Val,Max_Val,Description
+40001,AV-1,SYS_OP_MODE_CMD,UINT16,Enum,R/W,0,4,"0=OFF, 1=IAQ_SCRUB, 2=ADIABATIC_COOL, 3=DESICCANT_REGEN, 4=FAULT_LOCKOUT"
+40002,AI-1,PISTON_FREQ_HZ,FLOAT32,Hz,R,0.0,60.0,Opposed free-piston oscillation frequency (Target: 50.00 Hz)
+40004,AI-2,ZVS_HV_OUTPUT_KV,FLOAT32,kV,R,0.0,36.0,8-stage Cockcroft-Walton secondary peak voltage (Nominal: 33.6 kV)
+40006,AI-3,NET_ELEC_POWER_W,FLOAT32,W,R,-50.0,100.0,Net electrical balance (Alternator+TEG+PZT minus ZVS+Cavitator+ECU)
+40008,AI-4,RESERVOIR_TEMP_C,FLOAT32,degC,R,5.0,105.0,Closed-loop thermal storage water temperature (Target: 90.0 degC)
+40010,AI-5,N52H_MAGNET_TEMP_C,FLOAT32,degC,R,10.0,120.0,Linear alternator translator magnet temp (Hard cutoff > 105.0 degC)
+40012,AI-6,AIR_BEARING_PRESS_KPA,FLOAT32,kPa,R,0.0,600.0,5-micron dry air bearing supply pressure (Minimum interlock: 350 kPa)
+40014,AI-7,DOWNSTREAM_O3_PPM,FLOAT32,ppm,R,0.000,0.500,Post-SCR supply duct ozone sensor (Hard trip > 0.010 ppm per UL 2998)
+40016,AI-8,SUPPLY_VOC_PPB,FLOAT32,ppb,R,0,5000,Post-reactor supply air TVOC concentration
+40018,AI-9,SUPPLY_PM25_UGM3,FLOAT32,ug/m3,R,0.0,500.0,Post-reactor supply air PM2.5 particulate concentration
+40020,AO-1,OA_DAMPER_MIN_PCT,FLOAT32,%,R,10.0,100.0,Commanded RTU Outside Air damper minimum position (ASHRAE 62.1 IAQP)
+40022,AO-2,CAVITATOR_DUTY_PCT,FLOAT32,%,R/W,0.0,100.0,Ultrasonic/vortex cavitator power modulation (15-30 W range)
+40024,BO-1,FLUIDIC_VLV_CONDENSER,BOOL,State,R/W,0,1,"0=Closed, 1=Route cold steam mist to RTU condenser pre-cooler"
+40025,BO-2,FLUIDIC_VLV_DESICCANT,BOOL,State,R/W,0,1,"0=Closed, 1=Route 90C thermal loop to desiccant regeneration wheel"
+40026,BI-1,HARD_SAFETY_TRIP,BOOL,Alarm,R,0,1,"1=Active safety shutdown (Magnet overtemp, O3 breach, or Air bearing loss)"
