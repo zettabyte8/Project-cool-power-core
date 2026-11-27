@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE claims SYSTEM "pct-claims-v19.dtd">
+<claims id="claims-cip12" lang="en" pct-rule="6.2(b)" docket="CPC-PAT-2026-012-CIP" pct-app="CPC-PCT-2026-001-WO">
+  <claim id="c0068" num="0068" type="independent">
+    <claim-text>A kinetic- and directed-energy-harvesting exoskeleton armor system <num>(2400)</num>, comprising:
+      <claim-text>(a) an outer strike face comprising a dielectric Bragg mirror <num>(2402)</num> disposed over Boron Carbide ceramic tiles <num>(2404)</num>;</claim-text>
+      <claim-text>(b) a thermal-to-electric conversion stratum <num>(2406)</num> comprising 4H-SiC thermophotovoltaic cells and Bi2Te3 thermoelectric generators thermally and optically coupled to an inner surface of the ceramic tiles <num>(2404)</num>;</claim-text>
+      <claim-text>(c) an open-cell viscoelastic memory-foam kinetic absorption layer <num>(2408)</num> having a restitution coefficient e &lt;= 0.035 and an embedded piezoelectric PVDF-TrFE lattice <num>(2410)</num> positioned behind the conversion stratum <num>(2406)</num>;</claim-text>
+      <claim-text>(d) a Ti-6Al-4V micro-channel cooling liner <num>(2412)</num> thermally coupled to a wearable closed-loop Cool Power Core <num>(2414)</num> operating a 90 deg C CVD-graphene cavitation chamber <num>(2416)</num> and a 33.6 kV ZVS plasma exciter <num>(2418)</num>; and</claim-text>
+      <claim-text>(e) a graphene-CNT supercapacitor bank <num>(2420)</num> storing electrical energy harvested from ballistic piezoelectric compression, viscoelastic dissipative heating, and directed-energy thermophotovoltaic conversion.</claim-text>
+    </claim-text>
+  </claim>
+  <claim id="c0069" num="0069" type="dependent" depends-on="0068">
+    <claim-text>The armor system <num>(2400)</num> of claim <claim-ref idref="c0068">68</claim-ref>, wherein the viscoelastic memory-foam layer <num>(2408)</num> attenuates hypervelocity ballistic impacts exceeding 180 g down to &lt;14.5 g at the cooling liner <num>(2412)</num> while recovering at least 96% of incident kinetic energy as combined piezoelectric pulses and harvestable thermal enthalpy.</claim-text>
+  </claim>
+  <claim id="c0070" num="0070" type="dependent" depends-on="0068">
+    <claim-text>The armor system <num>(2400)</num> of claim <claim-ref idref="c0068">68</claim-ref>, wherein the dielectric Bragg mirror <num>(2402)</num> reflects at least 92% of incident 1,064 nm laser radiation while the 4H-SiC thermophotovoltaic and Bi2Te3 stratum <num>(2406)</num> generates between +640 We and +1,850 We of surge electrical power during sustained directed-energy irradiation.</claim-text>
+  </claim>
+  <claim id="c0071" num="0071" type="independent">
+    <claim-text>An atmospheric-condensing tri-mode return-fire system <num>(2500)</num> powered by the supercapacitor bank <num>(2420)</num> and a -78 deg C cryogenic bus <num>(2422)</num> of the armor system <num>(2400)</num> of claim <claim-ref idref="c0068">68</claim-ref>, comprising:
+      <claim-text>(a) a centrifugal cyclone intake <num>(2504)</num> configured to draw ambient atmospheric gases and suspended particulates <num>(2506)</num> into a -78 deg C cryogenic condensation mold <num>(2508)</num>;</claim-text>
+      <claim-text>(b) a 33.6 kV ZVS plasma sintering electrode <num>(2510)</num> configured to fuse condensed atmospheric gases and particulates within the mold <num>(2508)</num> into a solid composite projectile <num>(2512)</num>; and</claim-text>
+      <claim-text>(c) a multi-stage linear induction coilgun barrel <num>(2516)</num> energized by the supercapacitor bank <num>(2420)</num> to accelerate the solid composite projectile <num>(2512)</num> to hypervelocity without chemical propellants.</claim-text>
+    </claim-text>
+  </claim>
+  <claim id="c0072" num="0072" type="dependent" depends-on="0071">
+    <claim-text>The return-fire system <num>(2500)</num> of claim <claim-ref idref="c0071">71</claim-ref>, further comprising a rotary breech selector <num>(2518)</num> that selectively diverts supercapacitor power and condensed atmospheric gas to a 0.55 T Sm2Co17 Halbach magnetic nozzle <num>(2520)</num> to launch 4,800 K toroidal plasma bolts at 1,850 m/s.</claim-text>
+  </claim>
+  <claim id="c0073" num="0073" type="dependent" depends-on="0071">
+    <claim-text>The return-fire system <num>(2500)</num> of claim <claim-ref idref="c0071">71</claim-ref>, wherein the rotary breech selector <num>(2518)</num> selectively energizes a cryogenically cooled 1,064 nm Yb:YAG laser resonator <num>(2522)</num> to emit 10 Hz pulsed directed-energy return fire through a sapphire aperture <num>(2524)</num>.</claim-text>
+  </claim>
+</claims>

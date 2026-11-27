@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='utf-8'?>
+<wo-patent-application lang="en" docket="CPC-PCT-2026-001-WO" st36-version="1.9" pct-rule="4,5,6.2(b),8,11" filing-date="2026-11-27" receiving-office="RO/US">
+  <bibliographic-data>
+    <invention-title lang="en">CLOSED-LOOP CAVITATION-PLASMA THERMOELECTRIC FLUID PURIFICATION CORE AND DISTRIBUTED INDUSTRIAL, CIVIC, TRANSIT, ROBOTIC, ARMOR, AND OFF-WORLD ARCHITECTURES</invention-title>
+    <applicant sequence="001" entity-status="MICRO-ENTITY-37CFR1.29">
+      <name>COLEMAN, Thomas Gabriel</name>
+      <residence>Corona, California, US</residence>
+      <nationality>US</nationality>
+    </applicant>
+    <priority-claims>
+      <priority-claim sequence="001" country="US">
+        <doc-number>CPC-PAT-2026-001</doc-number>
+        <date>2026-03-15</date>
+        <claims-supported>Claims 1–7 (3 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="002" country="US">
+        <doc-number>CPC-PAT-2026-002-CIP</doc-number>
+        <date>2026-04-12</date>
+        <claims-supported>Claims 8–13 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="003" country="US">
+        <doc-number>CPC-PAT-2026-003-CIP</doc-number>
+        <date>2026-05-08</date>
+        <claims-supported>Claims 14–19 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="004" country="US">
+        <doc-number>CPC-PAT-2026-004-CIP</doc-number>
+        <date>2026-06-02</date>
+        <claims-supported>Claims 20–25 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="005" country="US">
+        <doc-number>CPC-PAT-2026-005-CIP</doc-number>
+        <date>2026-06-28</date>
+        <claims-supported>Claims 26–31 (1 Ind, 5 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="006" country="US">
+        <doc-number>CPC-PAT-2026-006-CIP</doc-number>
+        <date>2026-08-14</date>
+        <claims-supported>Claims 32–37 (1 Ind, 5 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="007" country="US">
+        <doc-number>CPC-PAT-2026-007-CIP</doc-number>
+        <date>2026-09-19</date>
+        <claims-supported>Claims 38–43 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="008" country="US">
+        <doc-number>CPC-PAT-2026-008-CIP</doc-number>
+        <date>2026-10-11</date>
+        <claims-supported>Claims 44–49 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="009" country="US">
+        <doc-number>CPC-PAT-2026-009-CIP</doc-number>
+        <date>2026-10-29</date>
+        <claims-supported>Claims 50–55 (1 Ind, 5 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="010" country="US">
+        <doc-number>CPC-PAT-2026-010-CIP</doc-number>
+        <date>2026-11-09</date>
+        <claims-supported>Claims 56–61 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="011" country="US">
+        <doc-number>CPC-PAT-2026-011-CIP</doc-number>
+        <date>2026-11-18</date>
+        <claims-supported>Claims 62–67 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+      <priority-claim sequence="012" country="US">
+        <doc-number>CPC-PAT-2026-012-CIP</doc-number>
+        <date>2026-11-27</date>
+        <claims-supported>Claims 68–73 (2 Ind, 4 Dep)</claims-supported>
+      </priority-claim>
+    </priority-claims>
+  </bibliographic-data>
+  <description id="desc" lang="en" pct-rule="5">
+    <p id="p0001" num="0001">TECHNICAL FIELD: The present invention relates to closed-loop thermal-electric power generation, hydrodynamic cavitation, nanosecond pulsed plasma mineralization, zero-liquid-discharge (ZLD) water purification, and integrated architectures spanning industrial, municipal, subterranean civic, transoceanic transit, biomimetic robotics, kinetic/DEW-harvesting armor, atmospheric-condensing propulsion/weapons, and planetary/orbital systems.</p>
+    <p id="p0002" num="0002">SUMMARY OF CORE ARCHITECTURE (FIGS. 1–3): A modular Cool Power Core™ (100) preheats contaminated or ambient water to 90°C using recovered enthalpy (102), induces intense acoustic-hydrodynamic cavitation across CVD-graphene nozzles (104), mineralizes PFAS, pathogens, and toxic gases via 33.6 kV ZVS nanosecond plasma discharges (106), and harvests net 48 VDC surplus power (+335.6 We/core mean) via dual-stage thermoelectric/ORC converters (108) while condensing &gt;=98.5% pure distillate (112).</p>
+    <p id="p0003" num="0003">RADIOLYTIC, WEARABLE, ROBOTIC &amp; SWARM EXTENSIONS (FIGS. 4–11): Continuation embodiments incorporate 4H-SiC / HfO2-graphene betavoltaic and gamma-voltaic liners (402), 37°C human metabolic-heat exoskeleton life support (600), tri-necked continuum biomimetic robotic mounts (800), and hermaphroditic 48V / 90°C peer-to-peer swarm docking umbilicals (1004).</p>
+    <p id="p0004" num="0004">FRONTIER PLASMA TOOLS, TERRAFORMING &amp; SUB-GLACIAL ROVERS (FIGS. 12–17): Further embodiments provide a 0.65 T Halbach-Bitter magnetically confined handheld Martian plasma lance (1200) with &lt;1.2 ms GaN deadman quench (1304), a 6,000 m abyssal hydrothermal plasma torch (1400), a zero-recoil (&lt;0.15 N) asteroid volatile rock-splitter (1500), an atmospheric terraforming spire (1600), and a 10^8 Gy acoustic-cavitation ice-melt rover (1700).</p>
+    <p id="p0005" num="0005">TRANSOCEANIC TRANSIT, FLOATING/ORBITAL HUBS &amp; SUBTERRANEAN CITIES (FIGS. 18–23): Large-scale civic embodiments include submerged tension-leg transoceanic maglev tubes (1802) with &lt;= +0.08 K thermal impact, zero-brine oceanic mineral extraction hubs (2000), counter-rotating orbital colonies (2100), and radiation-shielded linear ridge-and-valley subterranean cities (2200) on degraded terrain.</p>
+    <p id="p0006" num="0006">KINETIC/DEW-HARVESTING ARMOR &amp; ATMOSPHERIC-CONDENSING TRI-MODE WEAPON (FIGS. 24–25): Wearable defense embodiments integrate a dielectric Bragg mirror + B4C shell (2404), 4H-SiC TPV-TEG converter (2406), and 18 mm NASA viscoelastic memory-foam + piezo-PVDF layer (2408) (e &lt;= 0.04) feeding a supercapacitor (2414) that drives an 18,000 RPM cyclone (2502), -78°C cryo-mold (2504), 33.6 kV plasma-sintering exciter (2506), and linear coilgun/plasma/laser tri-mode weapon (2500).</p>
+  </description>
+  <claims id="claims" lang="en" pct-rule="6.2(b)" total-claims="73">
+    <claim id="c0001" num="1" type="independent" priority-docket="CPC-PAT-2026-001" figure="FIG. 1">
+      <claim-text>1. A closed-loop thermal-electric and fluid-purification core (100), comprising: a preheated fluid reservoir (102) maintained at approximately 90°C by waste-heat recovery; a CVD-graphene acoustic-hydrodynamic cavitation chamber (104) coupled to said reservoir (102); a 33.6 kV zero-voltage-switching (ZVS) nanosecond pulsed plasma reactor (106) mineralizing contaminants into inert solids; a dual-stage thermoelectric and organic Rankine power module (108) bridging said 90°C reservoir (102) against a cold sink (110) to output 48 VDC net surplus power; and a condenser (112) recovering at least 98.5% pure distillate.</claim-text>
+    </claim>
+    <claim id="c0002" num="2" type="dependent" priority-docket="CPC-PAT-2026-001" figure="FIG. 1">
+      <claim-text>2. The core (100) of claim 1, wherein the cavitation chamber (104) comprises multi-layer chemical-vapor-deposited graphene nozzles generating localized micro-bubble collapse temperatures exceeding 4,500 K.</claim-text>
+    </claim>
+    <claim id="c0003" num="3" type="dependent" priority-docket="CPC-PAT-2026-001" figure="FIG. 2">
+      <claim-text>3. The core (100) of claim 1, wherein the ZVS pulsed plasma reactor (106) delivers 12 ns pulses at 33.6 kV peak potential to achieve &gt;6-Log destruction of per- and polyfluoroalkyl substances (PFAS) and pathogens.</claim-text>
+    </claim>
+    <claim id="c0004" num="4" type="dependent" priority-docket="CPC-PAT-2026-001" figure="FIG. 2">
+      <claim-text>4. The core (100) of claim 1, further comprising a solid-state graphene-CNT supercapacitor bank (114) regulating a 48 VDC bus.</claim-text>
+    </claim>
+    <claim id="c0005" num="5" type="independent" priority-docket="CPC-PAT-2026-001" figure="FIG. 3">
+      <claim-text>5. A method of simultaneous power generation and zero-liquid-discharge water purification, comprising: heating contaminated influent to 90°C using industrial or environmental enthalpy (102); inducing hydrodynamic cavitation across a CVD-graphene throat (104); subjecting vapor-liquid phases to 33.6 kV nanosecond plasma discharges (106); and extracting net electrical work across a thermal gradient (108) while condensing pure water (112).</claim-text>
+    </claim>
+    <claim id="c0006" num="6" type="dependent" priority-docket="CPC-PAT-2026-001" figure="FIG. 3">
+      <claim-text>6. The method of claim 5, wherein net continuous electrical export exceeds 320 We per 382.93 Wth of recovered thermal offset.</claim-text>
+    </claim>
+    <claim id="c0007" num="7" type="independent" priority-docket="CPC-PAT-2026-001" figure="FIG. 1">
+      <claim-text>7. A modular containerized tri-generation skid comprising an array of 100 to 1,000 cores (100) of claim 1 coupled in parallel to a common 48 VDC/480 VAC inverter manifold (116).</claim-text>
+    </claim>
+    <claim id="c0008" num="8" type="independent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 4">
+      <claim-text>8. A radiolytic-thermal energy harvesting core (400), comprising: the closed-loop core (100) of claim 1; a radiation-shielded pressure vessel lined with 4H-SiC and HfO2-graphene betavoltaic/gamma-voltaic conversion layers (402); and a radiolysis-assisted plasma chamber (404) utilizing ionizing flux from spent nuclear fuel, tritium, or cosmic radiation to reduce ZVS plasma excitation draw.</claim-text>
+    </claim>
+    <claim id="c0009" num="9" type="dependent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 4">
+      <claim-text>9. The core (400) of claim 8, wherein the betavoltaic/gamma-voltaic liners (402) contribute +16.5 to +21.5 We of continuous direct electrical conversion per core.</claim-text>
+    </claim>
+    <claim id="c0010" num="10" type="dependent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 5">
+      <claim-text>10. The core (400) of claim 8, further comprising a Pd-23%Ag permeation membrane (406) separating tritium and deuterium isotopes at &gt;99.99% purity.</claim-text>
+    </claim>
+    <claim id="c0011" num="11" type="dependent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 5">
+      <claim-text>11. The core (400) of claim 8, utilizing Sm2Co17 high-temperature magnets and silicon-on-insulator (SOI) electronics rated to &gt;10^8 Gy total ionizing dose.</claim-text>
+    </claim>
+    <claim id="c0012" num="12" type="independent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 4">
+      <claim-text>12. A nuclear reactor or spent-fuel dry-cask bottoming system comprising a plurality of cores (400) of claim 8 thermally coupled to secondary condenser loops without penetrating primary reactor containment.</claim-text>
+    </claim>
+    <claim id="c0013" num="13" type="dependent" priority-docket="CPC-PAT-2026-002-CIP" figure="FIG. 5">
+      <claim-text>13. The system of claim 12, wherein amidoxime-eluted seawater uranium yellowcake (U3O8) is concurrently precipitated and harvested.</claim-text>
+    </claim>
+    <claim id="c0014" num="14" type="independent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 6">
+      <claim-text>14. A wearable metabolic-heat life-support exoskeleton core (600), comprising: a micro-scale closed-loop core (100) having a mass under 3.5 kg; a conformal liquid-cooling undergarment (602) capturing 37°C human metabolic heat; a micro-plasma urine and sweat mineralizer (604) recovering 98.5% potable water and electrolytic O2; and a thermoelectric generator (606) bridging the 37°C/90°C loop against ambient air or space.</claim-text>
+    </claim>
+    <claim id="c0015" num="15" type="dependent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 6">
+      <claim-text>15. The exoskeleton core (600) of claim 14, generating +24.5 to +28.0 We of continuous autonomous power for joint actuators and environmental sensors.</claim-text>
+    </claim>
+    <claim id="c0016" num="16" type="dependent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 7">
+      <claim-text>16. The exoskeleton core (600) of claim 14, further comprising a solid-amine CO2 scrubber (608) regenerated at 90°C by the core reservoir.</claim-text>
+    </claim>
+    <claim id="c0017" num="17" type="dependent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 7">
+      <claim-text>17. The exoskeleton core (600) of claim 14, integrated into a sealed EVA spacesuit or hazardous-environment HazMat suit providing &gt;480 hours of closed-loop autonomy.</claim-text>
+    </claim>
+    <claim id="c0018" num="18" type="independent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 6">
+      <claim-text>18. A method of powering a wearable powered exoskeleton using wearer metabolic heat (602), comprising circulating a working fluid across the wearer's torso at 37°C, boosting enthalpy via actuator regenerative braking, and driving a micro-cavitation plasma life-support cycle (604).</claim-text>
+    </claim>
+    <claim id="c0019" num="19" type="dependent" priority-docket="CPC-PAT-2026-003-CIP" figure="FIG. 7">
+      <claim-text>19. The method of claim 18, wherein carbon dioxide is electrochemically reduced into solid carbon and breathable oxygen.</claim-text>
+    </claim>
+    <claim id="c0020" num="20" type="independent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 8">
+      <claim-text>20. An autonomous biomimetic robotic platform (800), comprising: an articulated quadruped or humanoid chassis (802) driven by quasi-direct-drive (QDD) brushless actuators; an onboard thermal-electric core (804) harvesting QDD stator and regenerative braking heat into a 90°C loop; and an atmospheric or ambient-water intake (806) replenishing closed-loop working fluid via 33.6 kV plasma purification.</claim-text>
+    </claim>
+    <claim id="c0021" num="21" type="dependent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 8">
+      <claim-text>21. The robotic platform (800) of claim 20, comprising three telescoping omni-flexible continuum necks (808) terminating in convertible sensor-manipulator hands.</claim-text>
+    </claim>
+    <claim id="c0022" num="22" type="dependent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 9">
+      <claim-text>22. The robotic platform (800) of claim 20, further comprising a 38.5°C heated tandem saddle (810) supporting two human riders and cargo.</claim-text>
+    </claim>
+    <claim id="c0023" num="23" type="dependent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 9">
+      <claim-text>23. The robotic platform (800) of claim 20, incorporating deployable NIJ-IV ballistic shield wings (812) and an 8-DOF prehensile tail manipulator (814).</claim-text>
+    </claim>
+    <claim id="c0024" num="24" type="independent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 8">
+      <claim-text>24. A wildfire-fighting or hazardous-rescue autonomous quadruped (800) of claim 20 utilizing ambient fire-front thermal gradients (&gt;200°C) to boost continuous electrical generation above 650 We.</claim-text>
+    </claim>
+    <claim id="c0025" num="25" type="dependent" priority-docket="CPC-PAT-2026-004-CIP" figure="FIG. 9">
+      <claim-text>25. The quadruped of claim 24, projecting a high-velocity water-mist and plasma-radical fire-suppression plume from its continuum nozzles (808).</claim-text>
+    </claim>
+    <claim id="c0026" num="26" type="independent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 10">
+      <claim-text>26. A peer-to-peer autonomous swarm energy and fluid sharing network (1000), comprising: a plurality of mobile robotic units (1002), each housing an onboard core (100); and hermaphroditic magnetic-latching coaxial umbilicals (1004) transferring both 48 VDC electrical power and 90°C pressurized thermal water between units.</claim-text>
+    </claim>
+    <claim id="c0027" num="27" type="dependent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 10">
+      <claim-text>27. The network (1000) of claim 26, wherein a stationary anchor unit harvests high-ΔT environmental heat and distributes 90°C working fluid to mobile scout units.</claim-text>
+    </claim>
+    <claim id="c0028" num="28" type="dependent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 11">
+      <claim-text>28. The network (1000) of claim 26, further comprising a ballistic phalanx formation controller (1006) interlocking deployable shield wings across adjacent units.</claim-text>
+    </claim>
+    <claim id="c0029" num="29" type="dependent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 11">
+      <claim-text>29. The network (1000) of claim 26, wherein coaxial couplings (1004) purge and sterilize fluid interfaces with 33.6 kV plasma prior to decoupling.</claim-text>
+    </claim>
+    <claim id="c0030" num="30" type="dependent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 10">
+      <claim-text>30. The network (1000) of claim 26, supporting transmedium underwater-to-air autonomous drones docking at sea-surface buoys.</claim-text>
+    </claim>
+    <claim id="c0031" num="31" type="dependent" priority-docket="CPC-PAT-2026-005-CIP" figure="FIG. 11">
+      <claim-text>31. The network (1000) of claim 26, operating over decentralized mesh optical/RF telemetry without central cloud infrastructure.</claim-text>
+    </claim>
+    <claim id="c0032" num="32" type="independent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 12">
+      <claim-text>32. A handheld magnetically confined planetary plasma lance (1200), comprising: a hilt housing a micro-core (1202) with a 180 mL water/ice cartridge (1204), 90°C CVD-graphene cavitator (1206), and 33.6 kV ZVS plasma exciter (1208); a hybrid 0.42 T Sm2Co17 Halbach array (1210) and +0.23 T CuCrZr Bitter coil (1212) forming a 0.65 T throat and 0.67 T distal magnetic mirror pinch confining a 0.92 m, 4,200 K plasma blade (1214); and external cryo-fins (1216) bridging against -60°C Martian atmosphere to regenerate +142.0 We.</claim-text>
+    </claim>
+    <claim id="c0033" num="33" type="dependent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 12">
+      <claim-text>33. The handheld plasma lance (1200) of claim 32, further comprising a coaxial vacuum aspiration shroud (1218) recovering &gt;98% of ionized working vapor for closed-loop recycling.</claim-text>
+    </claim>
+    <claim id="c0034" num="34" type="dependent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 13">
+      <claim-text>34. The handheld plasma lance (1200) of claim 32, comprising a capacitive EVA-glove deadman sensor (1302) triggering solid-state GaN quench switches (1304) to collapse the magnetic bottle in &lt;1.2 ms upon grip release.</claim-text>
+    </claim>
+    <claim id="c0035" num="35" type="dependent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 12">
+      <claim-text>35. The handheld plasma lance (1200) of claim 32, wherein plasma beta is maintained at β ≤ 0.18 in a 610 Pa CO2 atmosphere.</claim-text>
+    </claim>
+    <claim id="c0036" num="36" type="dependent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 13">
+      <claim-text>36. The handheld plasma lance (1200) of claim 32, powered by a 140 Wh graphene-CNT supercapacitor (1306) delivering 3.5 kW peak cutting pulses.</claim-text>
+    </claim>
+    <claim id="c0037" num="37" type="dependent" priority-docket="CPC-PAT-2026-006-CIP" figure="FIG. 12">
+      <claim-text>37. The handheld plasma lance (1200) of claim 32, selectively switchable between permafrost core boring, Ti-6Al-4V welding, and basalt rock cutting modes.</claim-text>
+    </claim>
+    <claim id="c0038" num="38" type="independent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 14">
+      <claim-text>38. A deep-sea hydrothermal plasma torch (1400) rated to 6,000 m depth (60.8 MPa), comprising: a titanium-niobium pressure hull housing a closed-loop core (1402); an arc-shroud heat recuperator (1404) feeding a 90°C cavitation-plasma generator; a 0.75 T magnetic nozzle emitting a 4.2 kW, 6,800 K hydro-sheathed plasma jet (1406); and hull-conformal thermoelectric exchangers (1408) bridging against 2.0°C abyssal seawater to regenerate +196.4 We.</claim-text>
+    </claim>
+    <claim id="c0039" num="39" type="dependent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 14">
+      <claim-text>39. The deep-sea plasma torch (1400) of claim 38, operating without umbilical surface power cables for subsea salvage and polymetallic sulfide nodule cutting.</claim-text>
+    </claim>
+    <claim id="c0040" num="40" type="dependent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 14">
+      <claim-text>40. The deep-sea plasma torch (1400) of claim 38, wherein an annular high-velocity steam-gas sheath isolates the 6,800 K plasma core from hydrostatic quenching.</claim-text>
+    </claim>
+    <claim id="c0041" num="41" type="independent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 15">
+      <claim-text>41. A zero-recoil asteroid microgravity plasma rock-splitter (1500), comprising: a 3.2 kW, 5,400 K magnetically pinched plasma needle (1502) flash-vaporizing bound phyllosilicate water inside asteroid regolith to induce 45–90 MPa internal spallation with &lt;0.15 N axial recoil; a coaxial volatile capture hood (1504) aspirating released H2O, CO2, and metal carbonyl vapors into a 90°C closed-loop core (1506); and a 120 K shaded radiator (1508) generating +184.0 We.</claim-text>
+    </claim>
+    <claim id="c0042" num="42" type="dependent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 15">
+      <claim-text>42. The rock-splitter (1500) of claim 41, achieving &gt;100% net fluid replenishment from mined hydrated asteroid minerals.</claim-text>
+    </claim>
+    <claim id="c0043" num="43" type="dependent" priority-docket="CPC-PAT-2026-007-CIP" figure="FIG. 15">
+      <claim-text>43. The rock-splitter (1500) of claim 41, separating nickel and iron carbonyls (Ni(CO)4, Fe(CO)5) for zero-gravity additive manufacturing.</claim-text>
+    </claim>
+    <claim id="c0044" num="44" type="independent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 16">
+      <claim-text>44. A closed-loop atmospheric terraforming and climate-restoration spire (1600), comprising: an array of 1,000 cores (1602) integrated within a vertical intake pylon; a 33.6 kV ZVS plasma-catalytic reactor (1604) splitting atmospheric CO2 and regolith perchlorates into breathable O2, solid carbon/CNT feedstock, and ammonium nitrate fertilizer; and a ground-coupled geothermal or cryogenic radiator sink (1606) exporting &gt;329 kWe continuous net power.</claim-text>
+    </claim>
+    <claim id="c0045" num="45" type="dependent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 16">
+      <claim-text>45. The spire (1600) of claim 44, configured for Martian 610 Pa / -60°C surface operation to produce &gt;1,027 kg/day O2 and &gt;386 kg/day solid carbon nanotubes.</claim-text>
+    </claim>
+    <claim id="c0046" num="46" type="dependent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 16">
+      <claim-text>46. The spire (1600) of claim 44, configured for Earth climate restoration to mineralize &gt;6,450 kg/day CO2 and distill &gt;12,960 L/day pure water.</claim-text>
+    </claim>
+    <claim id="c0047" num="47" type="independent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 17">
+      <claim-text>47. A sub-glacial cryo-volcanic melt and abyssal rover (1700), comprising: a 10^8 Gy radiation-hardened hull (1702) housing four cores (1704) with 4H-SiC betavoltaic liners; a forward 33.6 kV plasma acoustic-cavitation ice-fracturing nosecone (1706) boring through &gt;15 km of 95 K cryogenic ice; and articulating seafloor tracks (1708) harvesting 140°C hydrothermal vent plumes against 2°C abyssal ocean water.</claim-text>
+    </claim>
+    <claim id="c0048" num="48" type="dependent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 17">
+      <claim-text>48. The rover (1700) of claim 47, generating +1,488 We during ice descent and +1,424 We during &gt;10-year autonomous seafloor exploration.</claim-text>
+    </claim>
+    <claim id="c0049" num="49" type="dependent" priority-docket="CPC-PAT-2026-008-CIP" figure="FIG. 17">
+      <claim-text>49. The rover (1700) of claim 47, utilizing acoustic-cavitation shockwaves to fracture cryogenic ice ahead of thermal melt contact.</claim-text>
+    </claim>
+    <claim id="c0050" num="50" type="independent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 18">
+      <claim-text>50. A closed-loop thermal-harvesting evacuated maglev transit system (1800), comprising: a low-pressure guideway tube (1802); vacuum roughing-pump stations thermally coupled to arrays of cores (1804) bridging 95°C pump compression and linear-stator heat against subsurface geothermal piles or deep-ocean water (1806); and passenger pods carrying onboard micro-cores (1808) providing zero-discharge cabin air and water recycling.</claim-text>
+    </claim>
+    <claim id="c0051" num="51" type="dependent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 18">
+      <claim-text>51. The transit system (1800) of claim 50, wherein the guideway tube (1802) is a positively buoyant submerged transoceanic conduit suspended 150 to 300 m below sea level via tension-leg tethers (1810) spaced at 250 m intervals.</claim-text>
+    </claim>
+    <claim id="c0052" num="52" type="dependent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 18">
+      <claim-text>52. The transit system (1800) of claim 51, limiting benthic seafloor contact to &lt;0.012 km2 per 1,000 km and thermal plume rise to &lt;= +0.08 K at 1.0 m.</claim-text>
+    </claim>
+    <claim id="c0053" num="53" type="dependent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 19">
+      <claim-text>53. The transit system (1800) of claim 51, incorporating 6-DOF seismic gimbals (1902) surviving Mw 9.2 fault displacements up to 6.5 m.</claim-text>
+    </claim>
+    <claim id="c0054" num="54" type="dependent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 19">
+      <claim-text>54. The transit system (1800) of claim 50, wherein subsea methane-seep plasma mineralizers (1904) oxidize continental-shelf CH4 plumes.</claim-text>
+    </claim>
+    <claim id="c0055" num="55" type="dependent" priority-docket="CPC-PAT-2026-009-CIP" figure="FIG. 19">
+      <claim-text>55. The transit system (1800) of claim 50, offsetting &gt;82% of steady-state tube vacuum maintenance power while exporting surplus grid electricity.</claim-text>
+    </claim>
+    <claim id="c0056" num="56" type="independent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 20">
+      <claim-text>56. A floating oceanic sanctuary and zero-brine marine mineral hub (2000), comprising: semi-submersible spar pontoons (2002) supporting a Category-5 rated climate-controlled ETFE geodesic canopy (2004); an array of &gt;10,000 cores (2006) bridging process heat against 2°C–4°C abyssal seawater; and a zero-liquid-discharge crystallizer (2008) extracting pure water, battery-grade Li2CO3, Mg(OH)2, and amidoxime U3O8 with zero hypersaline brine outfall.</claim-text>
+    </claim>
+    <claim id="c0057" num="57" type="dependent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 20">
+      <claim-text>57. The oceanic hub (2000) of claim 56, integrated above a -200 m submerged transoceanic maglev transfer terminal (2010).</claim-text>
+    </claim>
+    <claim id="c0058" num="58" type="dependent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 20">
+      <claim-text>58. The oceanic hub (2000) of claim 56, skimming and plasma-mineralizing floating ocean microplastics into pure water and inert carbon.</claim-text>
+    </claim>
+    <claim id="c0059" num="59" type="independent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 21">
+      <claim-text>59. An orbital artificial-gravity colony and cislunar mass-driver hub (2100), comprising: two counter-rotating torus rings (2102) generating 1.00 g around a non-rotating central electromagnetic mass-driver dock (2104); a 2.4 m water-wall radiation shield (2106); and 25,000 cores (2108) bridging solar-foundry and cosmic-ray radiolytic heat against an 85 K shaded deep-space radiator (2110).</claim-text>
+    </claim>
+    <claim id="c0060" num="60" type="dependent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 21">
+      <claim-text>60. The orbital colony (2100) of claim 59, recovering 99.85% of water and synthesizing &gt;1,685 kg/day of structural carbon nanotubes from closed-loop CO2.</claim-text>
+    </claim>
+    <claim id="c0061" num="61" type="dependent" priority-docket="CPC-PAT-2026-010-CIP" figure="FIG. 21">
+      <claim-text>61. The orbital colony (2100) of claim 59, harvesting mass-driver linear-motor braking enthalpy during cislunar cargo capture.</claim-text>
+    </claim>
+    <claim id="c0062" num="62" type="independent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 22">
+      <claim-text>62. A radiation-shielded linear ridge-and-valley subterranean megastructure (2200) sited on degraded terrain, comprising: an elongated aerodynamic hill shell (2202) having 22°–26° exterior slopes covered by a 2.2 m to 4.0 m living soil and vegetation radiation mantle (2204) attenuating &gt;96% of cosmic/solar radiation; an open V-shaped central canyon with staggered sunlit residential garden terraces (2206); a multi-level subterranean commerce and autonomous logistics spine (2208); and a distributed array of closed-loop thermal-electric cores (2210).</claim-text>
+    </claim>
+    <claim id="c0063" num="63" type="dependent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 22">
+      <claim-text>63. The megastructure (2200) of claim 62, wherein wind-saddle passes (2212) sculpted across the ridge crest channel natural weather patterns and passive valley ventilation.</claim-text>
+    </claim>
+    <claim id="c0064" num="64" type="dependent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 22">
+      <claim-text>64. The megastructure (2200) of claim 62, sited on open-pit mine scars and utilizing 33.6 kV plasma reactors to remediate Acid Mine Drainage into pure water and inert vitrified slag.</claim-text>
+    </claim>
+    <claim id="c0065" num="65" type="independent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 23">
+      <claim-text>65. A method of constructing a high-density self-sufficient metropolis without displacing arable land, comprising: excavating a subterranean commerce canyon (2208) within degraded desert, strip-mine, or permafrost terrain; erecting stepped sunlit residential terraces (2206); blanketing exterior flanks with &gt;2.2 m of living soil (2204); and operating distributed cores (2210) to achieve &gt;85% food, &gt;92% material, and &gt;100% power/water self-sufficiency.</claim-text>
+    </claim>
+    <claim id="c0066" num="66" type="dependent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 23">
+      <claim-text>66. The method of claim 65, incorporating an automated underground shuttle spine (2302) delivering goods directly into residential pantries within 12 minutes.</claim-text>
+    </claim>
+    <claim id="c0067" num="67" type="dependent" priority-docket="CPC-PAT-2026-011-CIP" figure="FIG. 23">
+      <claim-text>67. The method of claim 65, deployed within a subterranean Martian lava tube beneath &gt;50 m of basalt overburden (2304) using heliostat solar mirrors.</claim-text>
+    </claim>
+    <claim id="c0068" num="68" type="independent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 24">
+      <claim-text>68. A kinetic and directed-energy-weapon (DEW) harvesting exoskeleton armor system (2400), comprising: a multi-layer modular armor plate (2402) having an outer dielectric Bragg mirror and boron carbide (B4C) shell (2404) reflecting &gt;92% of laser energy; a 4H-SiC thermophotovoltaic (TPV) and Bi2Te3 thermoelectric layer (2406) converting absorbed thermal flux into electrical pulses; an 18 mm open-cell viscoelastic memory-foam and piezo-PVDF kinetic layer (2408) exhibiting a coefficient of restitution e &lt;= 0.04 and converting &gt;96% of ballistic impact energy into electricity and heat; and a 37°C micro-channel cooling liner (2410) coupled to a dorsal closed-loop core (2412).</claim-text>
+    </claim>
+    <claim id="c0069" num="69" type="dependent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 24">
+      <claim-text>69. The armor system (2400) of claim 68, attenuating &gt;180 g ballistic shock down to &lt;14.5 g while harvesting &gt;1,180 J per rifle impact and +640 to +1,850 We during DEW exposure into a graphene-CNT supercapacitor (2414).</claim-text>
+    </claim>
+    <claim id="c0070" num="70" type="dependent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 24">
+      <claim-text>70. The armor system (2400) of claim 68, utilizing tool-free quick-disconnect latches (2416) for interchangeable field replacement of armor modules.</claim-text>
+    </claim>
+    <claim id="c0071" num="71" type="independent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 25">
+      <claim-text>71. An atmospheric-condensing tri-mode return-fire weapon (2500) powered by the supercapacitor (2414) of claim 69, comprising: an 18,000 RPM cyclonic intake (2502) aspirating ambient atmospheric gases and airborne particulates; a -78°C cryogenic condensation mold (2504) coupled to the cold side of a closed-loop core; a 33.6 kV ZVS plasma-sintering exciter (2506) solidifying condensed gases and particulates into a dense solid projectile; and a multi-stage linear induction coilgun barrel (2508) accelerating said projectile to &gt;1,400 m/s.</claim-text>
+    </claim>
+    <claim id="c0072" num="72" type="dependent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 25">
+      <claim-text>72. The weapon (2500) of claim 71, selectively switchable between solid atmospheric-condensed slugs (2510), 4,800 K magnetically pinched plasma bolts (2512), and 1,064 nm pulsed Yb:YAG laser bursts (2514).</claim-text>
+    </claim>
+    <claim id="c0073" num="73" type="dependent" priority-docket="CPC-PAT-2026-012-CIP" figure="FIG. 25">
+      <claim-text>73. The weapon (2500) of claim 71, operating on Earth, Mars (CO2/regolith dust), or Titan (CH4/tholin aerosol) without external metallic ammunition magazines.</claim-text>
+    </claim>
+  </claims>
+  <abstract id="abst" lang="en" pct-rule="8" figure="FIG. 1">
+    <p>A closed-loop thermal-electric and fluid-purification system (100) preheats influent water to 90°C using recovered waste or environmental enthalpy (102), induces hydrodynamic cavitation across CVD-graphene nozzles (104), and applies 33.6 kV zero-voltage-switching nanosecond pulsed plasma (106) to achieve &gt;6-Log mineralization of PFAS, pathogens, and toxic gases into inert solids while condensing &gt;=98.5% pure distillate (112). Dual-stage thermoelectric and Rankine converters (108) bridge the 90°C loop against cold sinks (110) to generate continuous 48 VDC net electrical power (+335.6 We/core mean). Integrated embodiments span radiolytic harvesting (400), wearable metabolic exoskeletons (600), tri-necked robotic mounts (800), swarm docking (1000), planetary plasma lances (1200) and rock-splitters (1500), terraforming spires (1600), sub-glacial rovers (1700), submerged transoceanic maglev tubes (1800), floating/orbital hubs (2000, 2100), radiation-shielded linear subterranean cities (2200), kinetic/DEW-harvesting viscoelastic-TPV armor (2400), and atmospheric-condensing tri-mode coilgun/plasma/laser weapons (2500).</p>
+  </abstract>
+</wo-patent-application>
