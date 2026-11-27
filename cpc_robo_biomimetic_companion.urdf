@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!-- =========================================================================
+  COOL POWER CORE (uCPC-ROBO) MULTI-MORPHOLOGY BIOMIMETIC ROBOT URDF
+  Morphologies: Quadruped Hound / Agile Feline / Winged Biomimetic Dragon
+  Inventor: Thomas Gabriel Coleman | Docket Reference: CPC-PAT-2026-004-CIP
+  Mass Budget: 38.4 kg (Quadruped) / 42.8 kg (Dragon Winged Variant)
+========================================================================== -->
+<robot name="cpc_robo_biomimetic_companion">
+
+  <!-- Materials -->
+  <material name="carbon_peek"><color rgba="0.15 0.17 0.20 1.0"/></material>
+  <material name="titanium_ti6al4v"><color rgba="0.55 0.58 0.62 1.0"/></material>
+  <material name="boron_carbide_armor"><color rgba="0.10 0.22 0.35 1.0"/></material>
+  <material name="graphene_wing"><color rgba="0.08 0.35 0.45 0.85"/></material>
+
+  <!-- Base Torso Chassis (Houses 2.45 kg uCPC-ROBO Power Core & 90C Reservoir) -->
+  <link name="base_torso">
+    <inertial>
+      <origin xyz="0.0 0.0 0.05" rpy="0 0 0"/>
+      <mass value="16.20"/>
+      <inertia ixx="0.42" ixy="0.0" ixz="0.0" iyy="1.15" iyz="0.0" izz="1.28"/>
+    </inertial>
+    <visual>
+      <geometry><box size="0.78 0.28 0.22"/></geometry>
+      <material name="carbon_peek"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.78 0.28 0.22"/></geometry>
+    </collision>
+  </link>
+
+  <!-- Multi-Spectral Sensor Head (3-DOF Neck: Pan, Pitch, Roll) -->
+  <link name="sensor_head">
+    <inertial>
+      <origin xyz="0.08 0.0 0.04" rpy="0 0 0"/>
+      <mass value="2.15"/>
+      <inertia ixx="0.015" ixy="0.0" ixz="0.0" iyy="0.022" iyz="0.0" izz="0.020"/>
+    </inertial>
+    <visual>
+      <geometry><box size="0.22 0.16 0.14"/></geometry>
+      <material name="titanium_ti6al4v"/>
+    </visual>
+  </link>
+
+  <joint name="neck_yaw_joint" type="revolute">
+    <parent link="base_torso"/>
+    <child link="sensor_head"/>
+    <origin xyz="0.41 0.0 0.11" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.356" upper="2.356" effort="24.0" velocity="8.5"/>
+    <dynamics damping="0.35" friction="0.05"/>
+  </joint>
+
+  <!-- Deployable NIJ Level IV Ballistic Shootout Cover Wings (Left & Right) -->
+  <link name="ballistic_shield_left">
+    <inertial>
+      <origin xyz="0.0 0.18 0.0" rpy="0 0 0"/>
+      <mass value="3.80"/>
+      <inertia ixx="0.18" ixy="0.0" ixz="0.0" iyy="0.24" iyz="0.0" izz="0.08"/>
+    </inertial>
+    <visual>
+      <geometry><box size="0.68 0.42 0.018"/></geometry>
+      <material name="boron_carbide_armor"/>
+    </visual>
+  </link>
+
+  <joint name="shield_deploy_left" type="revolute">
+    <parent link="base_torso"/>
+    <child link="ballistic_shield_left"/>
+    <origin xyz="0.0 0.14 0.11" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="0.0" upper="1.483" effort="110.0" velocity="6.2"/>
+  </joint>
+
+  <link name="ballistic_shield_right">
+    <inertial>
+      <origin xyz="0.0 -0.18 0.0" rpy="0 0 0"/>
+      <mass value="3.80"/>
+      <inertia ixx="0.18" ixy="0.0" ixz="0.0" iyy="0.24" iyz="0.0" izz="0.08"/>
+    </inertial>
+    <visual>
+      <geometry><box size="0.68 0.42 0.018"/></geometry>
+      <material name="boron_carbide_armor"/>
+    </visual>
+  </link>
+
+  <joint name="shield_deploy_right" type="revolute">
+    <parent link="base_torso"/>
+    <child link="ballistic_shield_right"/>
+    <origin xyz="0.0 -0.14 0.11" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.483" upper="0.0" effort="110.0" velocity="6.2"/>
+  </joint>
+
+  <!-- Dragon Morphology Flapping / Gliding Aero-Membrane Wing Module (Optional Attach) -->
+  <link name="dragon_wing_left">
+    <inertial>
+      <origin xyz="0.0 0.55 0.02" rpy="0 0 0"/>
+      <mass value="2.20"/>
+      <inertia ixx="0.45" ixy="0.0" ixz="0.0" iyy="0.12" iyz="0.0" izz="0.52"/>
+    </inertial>
+    <visual>
+      <geometry><box size="0.45 1.15 0.012"/></geometry>
+      <material name="graphene_wing"/>
+    </visual>
+  </link>
+
+  <joint name="dragon_wing_flap_left" type="revolute">
+    <parent link="base_torso"/>
+    <child link="dragon_wing_left"/>
+    <origin xyz="0.12 0.15 0.12" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.65" upper="1.15" effort="95.0" velocity="9.0"/>
+  </joint>
+
+  <!-- Quadruped Leg Macro Template: Front-Left (FL) Representative 3-DOF QDD Chain -->
+  <link name="fl_hip_link">
+    <inertial><mass value="1.10"/><inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/></inertial>
+  </link>
+  <joint name="fl_abduction_joint" type="revolute">
+    <parent link="base_torso"/><child link="fl_hip_link"/>
+    <origin xyz="0.31 0.14 -0.06" rpy="0 0 0"/><axis xyz="1 0 0"/>
+    <limit lower="-0.785" upper="0.785" effort="85.0" velocity="14.0"/>
+  </joint>
+
+  <link name="fl_thigh_link">
+    <inertial><mass value="1.45"/><inertia ixx="0.018" ixy="0" ixz="0" iyy="0.018" iyz="0" izz="0.004"/></inertial>
+    <visual><geometry><cylinder length="0.32" radius="0.036"/></geometry><material name="titanium_ti6al4v"/></visual>
+  </link>
+  <joint name="fl_hip_pitch_joint" type="revolute">
+    <parent link="fl_hip_link"/><child link="fl_thigh_link"/>
+    <origin xyz="0.0 0.06 0.0" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-2.10" upper="2.10" effort="115.0" velocity="16.5"/>
+  </joint>
+
+  <link name="fl_shank_link">
+    <inertial><mass value="0.85"/><inertia ixx="0.014" ixy="0" ixz="0" iyy="0.014" iyz="0" izz="0.002"/></inertial>
+    <visual><geometry><cylinder length="0.33" radius="0.026"/></geometry><material name="carbon_peek"/></visual>
+  </link>
+  <joint name="fl_knee_pitch_joint" type="revolute">
+    <parent link="fl_thigh_link"/><child link="fl_shank_link"/>
+    <origin xyz="0.0 0.0 -0.32" rpy="0 0 0"/><axis xyz="0 1 0"/>
+    <limit lower="-2.65" upper="-0.15" effort="125.0" velocity="18.0"/>
+  </joint>
+
+  <!-- Active Articulated Counter-Balance & Terraforming Tool Tail (2-DOF) -->
+  <link name="articulated_tail">
+    <inertial><mass value="1.35"/><inertia ixx="0.04" ixy="0" ixz="0" iyy="0.04" iyz="0" izz="0.003"/></inertial>
+    <visual><geometry><cylinder length="0.62" radius="0.022"/></geometry><material name="titanium_ti6al4v"/></visual>
+  </link>
+  <joint name="tail_pitch_joint" type="revolute">
+    <parent link="base_torso"/><child link="articulated_tail"/>
+    <origin xyz="-0.40 0.0 0.04" rpy="0 0.35 0"/><axis xyz="0 1 0"/>
+    <limit lower="-1.20" upper="1.40" effort="48.0" velocity="12.0"/>
+  </joint>
+
+</robot>

@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="cpc_robo_multi_frontier_theater">
+    <physics name="1ms" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- Default Martian Surface Gravity (3.721 m/s^2); toggle to -9.80665 for Earth Shootout/Recon -->
+    <gravity>0 0 -3.721</gravity>
+    <atmosphere type="adiabatic">
+      <temperature>213.15</temperature>
+      <pressure>610.0</pressure>
+    </atmosphere>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 25 0 0 0</pose>
+      <diffuse>0.95 0.88 0.78 1</diffuse>
+      <specular>0.3 0.3 0.3 1</specular>
+      <direction>-0.4 0.3 -0.85</direction>
+    </light>
+
+    <!-- Ground Terrain -->
+    <model name="frontier_terrain">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_col">
+          <geometry><plane><normal>0 0 1</normal><size>500 500</size></plane></geometry>
+          <surface><friction><ode><mu>0.85</mu><mu2>0.85</mu2></ode></friction></surface>
+        </collision>
+        <visual name="ground_vis">
+          <geometry><plane><normal>0 0 1</normal><size>500 500</size></plane></geometry>
+          <material><ambient>0.55 0.27 0.16 1</ambient><diffuse>0.65 0.32 0.18 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Zone A: Tactical Urban Shootout & Acoustic Sniper Emitter -->
+    <model name="zone_a_tactical_barricade">
+      <static>true</static>
+      <pose>12.0 -6.0 0.75 0 0 0.35</pose>
+      <link name="barricade_link">
+        <collision name="col"><geometry><box><size>4.0 0.45 1.5</size></box></geometry></collision>
+        <visual name="vis">
+          <geometry><box><size>4.0 0.45 1.5</size></box></geometry>
+          <material><ambient>0.35 0.37 0.40 1</ambient><diffuse>0.45 0.47 0.50 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Zone B: Martian Terraforming Regolith Seeding Plot (25m x 25m) -->
+    <model name="zone_b_terraforming_plot">
+      <static>true</static>
+      <pose>18.0 14.0 0.02 0 0 0</pose>
+      <link name="plot_link">
+        <visual name="plot_vis">
+          <geometry><box><size>25.0 25.0 0.04</size></box></geometry>
+          <material><ambient>0.32 0.22 0.14 1</ambient><diffuse>0.42 0.28 0.18 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Zone C: Subsurface Regolith Ice Core Beacon -->
+    <model name="zone_c_subsurface_ice_deposit">
+      <static>true</static>
+      <pose>-15.0 10.0 0.4 0 0 0</pose>
+      <link name="ice_marker">
+        <visual name="vis">
+          <geometry><cylinder><radius>1.2</radius><length>0.8</length></cylinder></geometry>
+          <material><ambient>0.2 0.65 0.85 1</ambient><diffuse>0.25 0.75 0.95 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>
