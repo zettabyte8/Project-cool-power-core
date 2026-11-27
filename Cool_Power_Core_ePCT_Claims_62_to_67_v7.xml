@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epct-claim-append docket="CPC-PCT-2026-001-WO" cip-reference="CPC-PAT-2026-011-CIP" inventor="Thomas Gabriel Coleman" rule="PCT Rule 6.2(b)">
+  <claims id="claims-cip11" lang="en" start-num="62" end-num="67">
+    <claim num="62" type="independent">
+      <claim-text>A self-contained linear ridge-and-valley megastructure constructed on degraded or marginal terrain (2200), comprising:
+        (a) an aerodynamic ridge shell having exterior slopes covered by a living soil and vegetation radiation-shielding mantle (2202) at least 2.2 meters thick attenuating cosmic and solar radiation by at least 96%;
+        (b) an open interior valley flanked by staggered sunlit residential terraces (2204) descending to a central valley park (2206);
+        (c) a multi-level subterranean commerce and vertical-farming canyon (2208, 2210) disposed beneath said central valley park (2206) and housing an evacuated maglev transit and freight conduit (2214); and
+        (d) a distributed array of Cool Power Core thermo-cavitation plasma modules (2212, 2302) thermally coupled between waste heat from said subterranean canyon (2208, 2210) and deep cold-sink heat exchangers (2216, 2304) to mineralize site wastewater into less than 1 ppm TDS distilled water (2306) while exporting net continuous electrical power (2308).</claim-text>
+    </claim>
+    <claim num="63" type="dependent" parent="62">
+      <claim-text>The megastructure of Claim 62, wherein said degraded terrain (2200) comprises an abandoned open-pit mine or tailings basin, and said thermo-cavitation plasma modules (2302) mineralize Acid Mine Drainage (AMD) and per- and polyfluoroalkyl substances (PFAS) into inert vitrified slag (2306) with zero liquid outfall.</claim-text>
+    </claim>
+    <claim num="64" type="dependent" parent="62">
+      <claim-text>The megastructure of Claim 62, wherein said degraded terrain (2200) comprises a coastal alkali sabkha or salt flat, and said cold-sink heat exchangers (2304) couple to deep ocean seawater to co-produce battery-grade lithium carbonate (Li2CO3) and magnesium hydroxide (Mg(OH)2) (2306) without hypersaline brine discharge.</claim-text>
+    </claim>
+    <claim num="65" type="dependent" parent="62">
+      <claim-text>The megastructure of Claim 62, wherein said subterranean freight conduit (2214) connects to automated vertical shuttle shafts (2310) configured to deliver temperature-controlled food and commerce goods from said vertical farms (2210) directly into individual residential pantries along said staggered terraces (2204) within 15 minutes.</claim-text>
+    </claim>
+    <claim num="66" type="independent">
+      <claim-text>A method of rehabilitating ecologically degraded or non-arable land (2200) into a net-positive human settlement, comprising:
+        (a) erecting a linear ridge-and-valley earth-sheltered superstructure over said degraded terrain (2200) with a living soil mantle (2202) exceeding 450 g/cm2 areal density;
+        (b) routing contaminated site leachate, saline brine, and domestic blackwater (2300) through a 90 C graphene-vortex cavitator and 33.6 kV nanosecond pulsed plasma reactor (2302);
+        (c) bridging process heat against sub-surface cold-sink piles (2216, 2304) to generate continuous electrical power (2308) exceeding total settlement demand; and
+        (d) circulating recovered less than 1 ppm TDS distillate (2306) and conditioned 21.5 C air through subterranean vertical farms (2210) and sunlit terraced residences (2204).</claim-text>
+    </claim>
+    <claim num="67" type="dependent" parent="66">
+      <claim-text>The method of Claim 66, wherein said degraded terrain (2200) comprises sub-zero permafrost barrens supported on thermal-break foundation piers (2216) that prevent permafrost thaw while harvesting ambient -35 C cold-sink thermal differentials and oxidizing thermokarst methane plumes.</claim-text>
+    </claim>
+  </claims>
+</epct-claim-append>

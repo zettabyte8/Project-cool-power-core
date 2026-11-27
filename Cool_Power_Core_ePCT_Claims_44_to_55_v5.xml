@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epct-claims-amendment docket="CPC-PCT-2026-001-WO" version="5.0" inventor="Thomas Gabriel Coleman" date="2026-11-26">
+  <summary total-claims="55" independent-claims="16" dependent-claims="39" total-figures="19" total-sheets="14"/>
+  <claims-block range="44-55" pct-rule="6.2(b)">
+    <claim id="claim-0044" num="44" type="independent" priority="CPC-PAT-2026-008-CIP">
+      <claim-text>A closed-loop atmospheric terraforming spire (1600) comprising: an intake blower (1602) ingesting ambient planetary atmosphere; a plurality of Cool Power Core modules (1604) each including a 90°C CVD-graphene hydrodynamic vortex cavitator (104), a 33.6 kV zero-voltage-switching nanosecond pulsed plasma stage (106), and an 8YSZ oxygen-ion membrane (108); a thermal radiator fin array (1606) coupled to a cryogenic planetary ambient cold sink; and a solid-carbon and nitrate synthesis reactor (1608) converting dissociated carbon dioxide and nitrogen into structural carbon allotropes, breathable oxygen, and fixed agricultural fertilizer.</claim-text>
+    </claim>
+    <claim id="claim-0045" num="45" type="dependent" parent="44">
+      <claim-text>The closed-loop atmospheric terraforming spire (1600) of claim 44, wherein the planetary atmosphere comprises Martian carbon dioxide at 500 to 800 Pa and -60°C, and wherein the spire exports at least 340 kWe per 1,000 cores while producing solid graphitic carbon and ammonium nitrate.</claim-text>
+    </claim>
+    <claim id="claim-0046" num="46" type="dependent" parent="44">
+      <claim-text>The closed-loop atmospheric terraforming spire (1600) of claim 44, further comprising a regolith perchlorate wash loop (1610) decomposing ClO4- ions in the 33.6 kV nanosecond plasma stage (106) into benign chloride salts and gaseous oxygen.</claim-text>
+    </claim>
+    <claim id="claim-0047" num="47" type="independent" priority="CPC-PAT-2026-008-CIP">
+      <claim-text>A sub-glacial cryo-volcanic melt and abyssal exploration rover (1700) comprising: a radiation-hardened chassis (1702) rated to 10^8 Gy; a plurality of Cool Power Core units (1704) incorporating 4H-SiC betavoltaic liners (402); an acoustic-cavitation plasma ice-fracturing nosecone (1706) driven by a 33.6 kV pulsed exciter (106); and a closed-loop heat-pipe condenser (1708) rejecting heat to surrounding cryogenic ice or abyssal ocean water to generate continuous propulsion and sensor power.</claim-text>
+    </claim>
+    <claim id="claim-0048" num="48" type="dependent" parent="47">
+      <claim-text>The sub-glacial cryo-volcanic melt and abyssal exploration rover (1700) of claim 47, wherein the acoustic-cavitation plasma nosecone (1706) induces micro-spallation in 95 K cryogenic ice to reduce thermal melt enthalpy requirements by at least 35 percent.</claim-text>
+    </claim>
+    <claim id="claim-0049" num="49" type="dependent" parent="47">
+      <claim-text>The sub-glacial cryo-volcanic melt and abyssal exploration rover (1700) of claim 47, further comprising a seafloor hydrothermal plume intake (1710) harvesting 140°C vent fluid against 2°C abyssal seawater across thermoelectric arrays (112) to sustain multi-year autonomous seafloor operation.</claim-text>
+    </claim>
+    <claim id="claim-0050" num="50" type="independent" priority="CPC-PAT-2026-009-CIP">
+      <claim-text>An intercity evacuated pneumatic-maglev transit system (1800) comprising: a low-pressure guideway tube (1802); a vacuum roughing-pump station (1804) maintaining sub-atmospheric tube pressure; a Cool Power Core thermal-harvesting array (1806) thermally coupled to heat exchangers on the vacuum roughing-pump station (1804) and linear-motor stators (1808) as a 90°C to 95°C hot-side input; and a sub-surface geothermal or marine cold-sink loop (1810) coupled to thermoelectric generators (112) to export net continuous electricity to the guideway.</claim-text>
+    </claim>
+    <claim id="claim-0051" num="51" type="dependent" parent="50">
+      <claim-text>The intercity evacuated pneumatic-maglev transit system (1800) of claim 50, further comprising a high-speed rail dynamic-braking resistor heat exchanger (1812) transferring regenerative braking thermal pulses into a 90°C thermal buffer tank (102).</claim-text>
+    </claim>
+    <claim id="claim-0052" num="52" type="dependent" parent="50">
+      <claim-text>The intercity evacuated pneumatic-maglev transit system (1800) of claim 50, wherein each passenger transit pod (1814) incorporates an onboard closed-loop life-support core (1816) recycling cabin condensate, carbon dioxide, and lavatory wastewater via 90°C graphene cavitation and 33.6 kV plasma without external sewage discharge.</claim-text>
+    </claim>
+    <claim id="claim-0053" num="53" type="independent" priority="CPC-PAT-2026-009-CIP">
+      <claim-text>A submerged transoceanic maglev conduit (1900) comprising: a positively buoyant double-walled composite pressure hull (1902) suspended 150 to 300 meters below sea level; tension-leg seafloor tethers (1904) anchored by suction caissons (1906) with 6-DOF seismic gimbals (1908); and a distributed Cool Power Core array (1910) bridging internal vacuum-pump and eddy-current heat against 2°C ambient seawater while limiting external thermal plume elevation to less than 0.1 K at 1.0 meter radial distance.</claim-text>
+    </claim>
+    <claim id="claim-0054" num="54" type="dependent" parent="53">
+      <claim-text>The submerged transoceanic maglev conduit (1900) of claim 53, further comprising a continental-shelf methane-seep capture hood (1912) routing natural seafloor methane bubbles into the 33.6 kV plasma stage (106) for conversion into solid carbon and hydrogen.</claim-text>
+    </claim>
+    <claim id="claim-0055" num="55" type="dependent" parent="53">
+      <claim-text>The submerged transoceanic maglev conduit (1900) of claim 53, wherein the conduit terminates at a semi-submersible floating ocean sanctuary hub (1914) integrating zero-brine seawater desalination, mineral extraction, and a climate-controlled geodesic habitat.</claim-text>
+    </claim>
+  </claims-block>
+</epct-claims-amendment>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<claims id="claims-cip10" lang="en" pct-rule="6.2(b)" docket="CPC-PCT-2026-001-WO">
+  <claim id="c0056" num="56">
+    <claim-text>A semi-submersible ocean habitat and submerged maglev transfer station (2000) comprising:
+      <claim-text>(a) a plurality of tension-leg spar pontoons supporting an enclosed climate-controlled deck (2002) and a submerged evacuated maglev terminal (2004);</claim-text>
+      <claim-text>(b) a plurality of closed-loop thermo-cavitation-plasma cores thermally coupled between an 85°C to 140°C station process reservoir (2006) and a 2.0°C to 4.0°C abyssal seawater condenser (2008); and</claim-text>
+      <claim-text>(c) a zero-liquid-discharge mineral crystallizer (2012) powered by said cores that distills seawater into &lt;1 ppm TDS freshwater (2014) while precipitating solid lithium carbonate, magnesium hydroxide, and uranium oxide without hypersaline brine discharge.</claim-text>
+    </claim-text>
+  </claim>
+  <claim id="c0057" num="57">
+    <claim-text>The semi-submersible ocean habitat of claim 56, wherein 33.6 kV nanosecond pulsed plasma stages (2010) mineralize microplastics and dissolved methane plumes drawn from ocean intake manifolds into inert carbonate precipitates and potable condensate.</claim-text>
+  </claim>
+  <claim id="c0058" num="58">
+    <claim-text>The semi-submersible ocean habitat of claim 56, wherein the submerged maglev terminal (2004) connects via positively buoyant tension-leg vacuum conduits suspended 150 m to 300 m below sea level to limit seafloor benthic contact to &lt;0.015 km² per 1,000 km.</claim-text>
+  </claim>
+  <claim id="c0059" num="59">
+    <claim-text>An orbital space habitat and electromagnetic launch station (2100) comprising:
+      <claim-text>(a) counter-rotating torus habitats generating artificial gravity around a non-rotating central maglev mass-driver dock (2102);</claim-text>
+      <claim-text>(b) a 2.4 m water-filled radiation shield hull (2104) surrounding said habitats; and</claim-text>
+      <claim-text>(c) a plurality of closed-loop thermo-cavitation-plasma cores coupling solar-concentrator and foundry heat plus secondary cosmic-ray radiolytic flux (2106) inside said water hull against an 85 K deep-space shaded radiator (2108) to achieve at least 99.8% water recovery and net continuous electrical export (2112).</claim-text>
+    </claim-text>
+  </claim>
+  <claim id="c0060" num="60">
+    <claim-text>The orbital space habitat of claim 59, wherein exhaled carbon dioxide and organic wastes are processed through an 8YSZ oxygen-ion separator and CVD graphene pyrolysis chamber (2110) to co-produce breathable oxygen exceeding 125% of metabolic demand and structural carbon-nanotube feedstock.</claim-text>
+  </claim>
+  <claim id="c0061" num="61">
+    <claim-text>The orbital space habitat of claim 59, wherein regenerative braking energy from incoming cislunar maglev capsules is captured as 90°C thermal enthalpy in the water-shield hull (2104) to drive additional closed-loop power generation.</claim-text>
+  </claim>
+</claims>
