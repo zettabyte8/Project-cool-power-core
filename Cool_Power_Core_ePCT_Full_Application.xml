@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE patent-application SYSTEM "wo-patent-application-v1-9.dtd">
+<patent-application lang="en" dtd-version="1.9" file="CPC-PCT-2026-001-WO" status="READY-FOR-EPCT-UPLOAD">
+  <bibliographic-data>
+    <application-reference appl-type="pct">
+      <document-id>
+        <country>WO</country>
+        <doc-number>CPC-PCT-2026-001-WO</doc-number>
+        <kind>00</kind>
+        <date>20261126</date>
+      </document-id>
+    </application-reference>
+    <invention-title lang="en">CLOSED-LOOP THERMODYNAMIC, CAVITATION, AND PULSED-PLASMA ENERGY AND FLUID REGENERATION SYSTEM AND MULTI-DOMAIN APPARATUS THEREOF</invention-title>
+    <parties>
+      <applicants>
+        <applicant sequence="001" app-type="applicant-inventor" designation="all">
+          <addressbook>
+            <last-name>Coleman</last-name>
+            <first-name>Thomas Gabriel</first-name>
+            <address>
+              <city>Corona</city>
+              <state>CA</state>
+              <country>US</country>
+            </address>
+          </addressbook>
+          <nationality><country>US</country></nationality>
+          <residence><country>US</country></residence>
+        </applicant>
+      </applicants>
+    </parties>
+    <priority-claims>
+      <priority-claim sequence="01" kind="national"><country>US</country><doc-number>CPC-PAT-2026-001</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="02" kind="national"><country>US</country><doc-number>CPC-PAT-2026-002-CIP</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="03" kind="national"><country>US</country><doc-number>CPC-PAT-2026-003-CIP</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="04" kind="national"><country>US</country><doc-number>CPC-PAT-2026-004-CIP</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="05" kind="national"><country>US</country><doc-number>CPC-PAT-2026-005-CIP</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="06" kind="national"><country>US</country><doc-number>CPC-PAT-2026-006-CIP</doc-number><date>20261126</date></priority-claim>
+      <priority-claim sequence="07" kind="national"><country>US</country><doc-number>CPC-PAT-2026-007-CIP</doc-number><date>20261126</date></priority-claim>
+    </priority-claims>
+  </bibliographic-data>
+  <description id="description" lang="en">
+    <heading id="h-0001" level="1">TECHNICAL FIELD</heading>
+    <p id="p-0001" num="0001">The present invention relates generally to closed-loop thermodynamic power generation, hydrodynamic cavitation, non-thermal nanosecond pulsed-plasma fluid remediation, and multi-domain apparatus integrating said core across industrial, nuclear, wearable life-support, autonomous robotic, and planetary exploration systems.</p>
+    <heading id="h-0002" level="1">BACKGROUND ART</heading>
+    <p id="p-0002" num="0002">Conventional thermal power cycles, industrial wastewater treatment facilities, and closed-loop environmental control and life-support systems (ECLSS) operate as decoupled energy sinks. Industrial exhaust scrubbers, reverse-osmosis desalination plants, and incineration units consume substantial external grid electricity while rejecting low-grade sensible and latent heat (350 Wth to 600 Wth per unit equivalent) to the environment. Furthermore, persistent organic pollutants such as per- and polyfluoroalkyl substances (PFAS), volatile organic compounds (VOCs), and radioactive leachates resist conventional filtration, while extreme-environment suits, autonomous robots, and planetary surface tools suffer from severe battery mass penalties and open-loop consumable losses.</p>
+    <heading id="h-0003" level="1">SUMMARY OF INVENTION</heading>
+    <p id="p-0003" num="0003">The Cool Power Core (CPC) system (100) overcomes these limitations by uniting recovered waste-enthalpy preheating at approximately 90 degrees Celsius, chemical-vapor-deposition (CVD) graphene-lined hydrodynamic cavitation (104, 106), zero-voltage-switching (ZVS) 33.6-kilovolt nanosecond pulsed-plasma dissociation (108, 110), oil-free aerostatic gas-bearing opposed-piston linear electrical generation (112, 114, 116), and cold-sink condensation (118) into a compact, scalable module weighing approximately 2.55 kilograms.</p>
+    <p id="p-0004" num="0004">Across industrial and marine configurations, sensible and latent enthalpy recovery offsets approximately 382.93 watts thermal per core, enabling net continuous electrical export of +286 to +365 watts electric per core alongside 12.96 liters per day of sterile distilled water (<0.1 ppm TDS) and >99.9999% (6-Log) pollutant mineralization.</p>
+    <heading id="h-0005" level="1">BRIEF DESCRIPTION OF DRAWINGS</heading>
+    <p id="p-0005" num="0005">FIG. 1 illustrates a closed-loop process schematic of the baseline Cool Power Core system (100).</p>
+    <p id="p-0006" num="0006">FIG. 2 illustrates a cross-sectional mechanical view of the opposed-piston free-piston linear alternator (112) with 5-micrometer aerostatic gas bearings (114).</p>
+    <p id="p-0007" num="0007">FIG. 3 illustrates a block diagram of the sub-15-watt digital electronic control unit (ECU) (124) and 33.6-kilovolt ZVS pulsed-plasma driver (110).</p>
+    <p id="p-0008" num="0008">FIG. 4 illustrates a cross-sectional elevation view of the radiation-harvesting radionuclide concentration sump (400) incorporating 4H-SiC betavoltaic tiles (408), HfO2/Ta2O5-graphene gamma-voltaic liners (410), and W-B4C shielding (412).</p>
+    <p id="p-0009" num="0009">FIG. 5 illustrates a dual-bus SOI maximum-power-point-tracking (MPPT) electrical combiner (502) for multi-modal radiation harvesting.</p>
+    <p id="p-0010" num="0010">FIG. 6 illustrates a wearable liquid cooling garment (LCG) (602) and metabolic waste-heat closed-loop life-support architecture (600).</p>
+    <p id="p-0011" num="0011">FIG. 7 illustrates a 48-volt bidirectional traction and regenerative braking electrical bus for a 10-axis quasi-direct-drive (QDD) exoskeleton (704).</p>
+    <p id="p-0012" num="0012">FIG. 8 illustrates an autonomous multi-morphology robotic companion (800) harvesting QDD actuator waste heat into a 90-degree-Celsius cavitation loop (808, 810).</p>
+    <p id="p-0013" num="0013">FIG. 9 illustrates deployable B4C/UHMWPE ballistic shield wings (902) and soaring wing assemblies on the robotic companion (800).</p>
+    <p id="p-0014" num="0014">FIG. 10 illustrates a magnetic dry-break umbilical docking coupler (1002) transferring 48-volt DC power (1004) and 90-degree-Celsius water (1006) between swarm units.</p>
+    <p id="p-0015" num="0015">FIG. 11 illustrates a UWB-synchronized interlocking ballistic phalanx formation (1104).</p>
+    <p id="p-0016" num="0016">FIG. 12 illustrates a longitudinal cross-section of a handheld magnetically confined Martian plasma lance (1200).</p>
+    <p id="p-0017" num="0017">FIG. 13 illustrates a dual-bus supercapacitor (1302) and <1.2 ms capacitive EVA-glove deadman GaN quench circuit (1304, 1306).</p>
+    <p id="p-0018" num="0018">FIG. 14 illustrates a pressure-compensated 6,000-meter abyssal hydrothermal plasma torch (1400) with conformal keel cooling (1408).</p>
+    <p id="p-0019" num="0019">FIG. 15 illustrates a zero-recoil microgravity asteroid plasma rock-splitting and volatile-harvesting lance (1500).</p>
+    <heading id="h-0006" level="1">DETAILED DESCRIPTION OF EMBODIMENTS</heading>
+    <p id="p-0020" num="0020">Referring to FIGS. 1-3, the baseline system (100) circulates working fluid from a thermal reservoir (102) maintained at approximately 90 degrees Celsius through a CVD-graphene-lined hydrodynamic cavitation chamber (104, 106). Collapse of cavitation micro-bubbles generates localized extreme pressures and temperatures while lowering continuous pumping power. Downstream, a pulsed-plasma reaction chamber (108) driven by a 33.6-kilovolt ZVS nanosecond power supply (110) generates non-thermal hydrated electrons and hydroxyl radicals that cleave recalcitrant C-F, C-Cl, and N-H chemical bonds. Expansion work drives an opposed-piston linear alternator (112) supported on 5-micrometer oil-free aerostatic gas bearings (114), while a cold-sink condenser (118) recovers latent enthalpy and outputs sterile distillate (120).</p>
+    <p id="p-0021" num="0021">Referring to FIGS. 4-5, in nuclear remediation embodiment (400), samarium-cobalt magnets (402) and SOI electronics (404) withstand absorbed doses exceeding 10^8 Gray. Concentrated radionuclides (416) in sump (406) irradiate CVD-diamond-passivated 4H-SiC betavoltaic tiles (408) and an HfO2/Ta2O5-graphene gamma-voltaic liner (410), while attenuated gamma energy heats a thermoelectric collar (414) inside a W-B4C shield (412), boosting net output to +364.5 We per core.</p>
+    <p id="p-0022" num="0022">Referring to FIGS. 6-7, in wearable exoskeleton embodiment (600), a liquid cooling garment (602) transfers +165 to +285 Wth of operator metabolic heat into reservoir (604). A miniaturized core (606) processes sweat, urine, and exhaled CO2 via oxygen-ion separation (612) and Sabatier/pyrolysis carbon trapping (614) to provide >120% metabolic oxygen margin, >99% water recovery, and continuous electrical power buffered by a graphene supercapacitor (702) driving 10-axis QDD actuators (704, 706) and auxiliary PTO ports (710).</p>
+    <p id="p-0023" num="0023">Referring to FIGS. 8-11, in autonomous robotic embodiment (800) and swarm system (1000), QDD actuator waste heat (+185 to +310 Wth) preheats reservoir (808) across reconfigurable hound, feline, or winged dragon chassis (802). Deployable B4C/UHMWPE ballistic shield wings (902) deploy within 0.30 seconds, while magnetic dry-break couplers (1002) transfer 48-volt DC power (1004) and 90-degree-Celsius preheated water (1006) between swarm members synchronized via UWB transceivers (1102).</p>
+    <p id="p-0024" num="0024">Referring to FIGS. 12-15, in extreme-environment handheld tool embodiments, Martian plasma lance (1200) confines a 0.92-meter, 4,200-Kelvin plasma blade (1220) within a 0.65-Tesla Halbach-Bitter magnetic mirror bottle (1216, 1218) while regenerating +142.0 We via -60-degree-Celsius cryo-radiator fins (1222) and featuring a <1.2 ms capacitive deadman GaN quench (1304, 1306). Abyssal torch (1400) operates at 60.8 MPa using conformal seawater cooling (1408) for +196.4 We regeneration, and asteroid rock-splitter (1500) induces volatile spallation with <0.15 N recoil while capturing >100% replenishment water and carbonyl vapors (1508, 1512).</p>
+  </description>
+  <claims id="claims" lang="en" pct-rule="6.2(b)">
+    <claim id="c-0001" num="1" claim-type="independent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>1. A closed-loop thermodynamic power and fluid regeneration system (100), comprising: a thermal reservoir (102) configured to receive heated fluid at approximately 90 degrees Celsius preheated via recovered waste enthalpy; a hydrodynamic cavitation chamber (104) downstream of the thermal reservoir (102) lined with a chemical-vapor-deposition (CVD) graphene surface (106); a pulsed-plasma reaction chamber (108) downstream of the cavitation chamber (104) coupled to a zero-voltage-switching (ZVS) nanosecond high-voltage power supply (110) operating at approximately 33.6 kilovolts; an opposed-piston free-piston linear alternator assembly (112) having oil-free aerostatic gas bearings (114) and permanent magnet movers (116) driven by thermal-plasma expansion; and a cold-sink condenser (118) configured to condense vapor into sterile distillate (120) while returning condensate to the thermal reservoir (102).</claim-text>
+    </claim>
+    <claim id="c-0002" num="2" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>2. The system (100) of claim 1, wherein the CVD graphene surface (106) reduces cavitation inception pressure threshold and lowers continuous pump power consumption while inducing localized radical generation.</claim-text>
+    </claim>
+    <claim id="c-0003" num="3" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>3. The system (100) of claim 1, wherein the ZVS nanosecond high-voltage power supply (110) delivers sub-100-nanosecond pulses at 33.6 kilovolts to dissociate volatile organic compounds, pathogens, and per- and polyfluoroalkyl substances (PFAS) without thermal equilibrium arc erosion.</claim-text>
+    </claim>
+    <claim id="c-0004" num="4" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>4. The system (100) of claim 1, wherein the oil-free aerostatic gas bearings (114) maintain a radial clearance of approximately 5 micrometers using self-pressurized working vapor, eliminating hydrocarbon lubricants and enabling over 25,000 hours of continuous operation.</claim-text>
+    </claim>
+    <claim id="c-0005" num="5" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>5. The system (100) of claim 1, further comprising a solid-oxide or thermoelectric cogeneration stage (122) thermally coupled between the pulsed-plasma reaction chamber (108) and the cold-sink condenser (118) to export net continuous direct-current electrical power.</claim-text>
+    </claim>
+    <claim id="c-0006" num="6" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>6. The system (100) of claim 1, further comprising a digital electronic control unit (ECU) (124) consuming less than 15 watts and executing closed-loop phase-locked control over the opposed-piston linear alternator assembly (112) and ZVS power supply (110).</claim-text>
+    </claim>
+    <claim id="c-0007" num="7" claim-type="dependent" priority-docket="Parent Utility" figures="FIG. 1-3">
+      <claim-text>7. The system (100) of claim 1, configured as a modular core weighing less than 3.0 kilograms and scalable into multi-core containerized arrays for marine, industrial, municipal, or aerospace deployment.</claim-text>
+    </claim>
+    <claim id="c-0008" num="8" claim-type="independent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>8. A radiation-harvesting closed-loop radionuclide remediation system (400), comprising: the closed-loop system (100) of claim 1 modified with radiation-tolerant samarium-cobalt (Sm2Co17) magnets (402) and silicon-on-insulator (SOI) control electronics (404); a radionuclide concentration sump (406) lined with CVD-diamond-passivated 4H-silicon-carbide (4H-SiC) betavoltaic tiles (408); a hafnium-dioxide/tantalum-pentoxide (HfO2/Ta2O5) and CVD-graphene Schottky gamma-voltaic liner (410); and a graded tungsten-boron-carbide (W-B4C) gamma-attenuating shield (412) coupled to a thermoelectric generator collar (414).</claim-text>
+    </claim>
+    <claim id="c-0009" num="9" claim-type="dependent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>9. The system (400) of claim 8, wherein ionizing beta and gamma flux from concentrated radionuclides (416) induces radiolytic hydroxyl and hydrogen radicals in the working fluid, reducing ZVS plasma excitation power demand.</claim-text>
+    </claim>
+    <claim id="c-0010" num="10" claim-type="dependent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>10. The system (400) of claim 8, wherein the CVD-diamond passivation layer protects the 4H-SiC betavoltaic tiles (408) against lattice displacement damage up to an absorbed dose of at least 10^8 Gray.</claim-text>
+    </claim>
+    <claim id="c-0011" num="11" claim-type="dependent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>11. The system (400) of claim 8, further comprising a counter-current vapor fractionation stage (418) configured to enrich tritiated water (HTO) while discharging detritiated sterile distillate.</claim-text>
+    </claim>
+    <claim id="c-0012" num="12" claim-type="dependent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>12. The system (400) of claim 8, further comprising a pneumatic discharge slide gate (420) at the base of the radionuclide concentration sump (406) for ejecting vitrified solid radioactive concentrate cakes.</claim-text>
+    </claim>
+    <claim id="c-0013" num="13" claim-type="dependent" priority-docket="CIP-2 Nuclear" figures="FIG. 4-5">
+      <claim-text>13. The system (400) of claim 8, further comprising a dual-bus SOI maximum-power-point-tracking (MPPT) combiner (502) summing electrical outputs from the betavoltaic tiles (408), gamma-voltaic liner (410), thermoelectric collar (414), and linear alternator (112).</claim-text>
+    </claim>
+    <claim id="c-0014" num="14" claim-type="independent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>14. A wearable metabolic-heat-assisted closed-loop life-support and powered exoskeleton system (600), comprising: a liquid cooling garment (LCG) (602) capturing metabolic body heat from a human operator to preheat a wastewater reservoir (604) to approximately 90 degrees Celsius; a miniaturized closed-loop core (606) comprising a CVD-graphene cavitator (608), a 33.6 kilovolt ZVS plasma reactor (610), an oxygen-ion separation membrane (612), and a Sabatier/pyrolysis carbon trap (614) regenerating breathable oxygen and potable water; a graphene supercapacitor energy buffer (702); and a multi-axis quasi-direct-drive (QDD) actuated exoskeleton frame (704) powered by the miniaturized core (606).</claim-text>
+    </claim>
+    <claim id="c-0015" num="15" claim-type="dependent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>15. The system (600) of claim 14, wherein the wastewater reservoir (604) receives perspiration, breath condensate, urine, and greywater, achieving greater than 99 percent closed-loop potable water recovery.</claim-text>
+    </claim>
+    <claim id="c-0016" num="16" claim-type="dependent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>16. The system (600) of claim 14, wherein the QDD actuators (706) execute four-quadrant regenerative braking during eccentric limb motion to recharge the graphene supercapacitor energy buffer (702).</claim-text>
+    </claim>
+    <claim id="c-0017" num="17" claim-type="dependent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>17. The system (600) of claim 14, further comprising a lockstep dual-core microcontroller (708) executing 1-kilohertz human-intent admittance control and phase-shorting fail-safe damping.</claim-text>
+    </claim>
+    <claim id="c-0018" num="18" claim-type="dependent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>18. The system (600) of claim 14, further comprising dual auxiliary power take-off (PTO) ports (710) supplying 48-volt direct-current electrical power and pressurized sterile air or ozonated water.</claim-text>
+    </claim>
+    <claim id="c-0019" num="19" claim-type="dependent" priority-docket="CIP-3 Exoskeleton" figures="FIG. 6-7">
+      <claim-text>19. The system (600) of claim 14, further comprising a 33.6-kilovolt electrodynamic dust shield (EDS) (712) integrated across rotary joint seals for lunar or Martian extravehicular activity (EVA).</claim-text>
+    </claim>
+    <claim id="c-0020" num="20" claim-type="independent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>20. An autonomous multi-morphology robotic companion and planetary workhorse (800), comprising: an articulated chassis (802) driven by QDD brushless actuators (804); a closed-loop thermodynamic core (806) thermally coupled to the QDD actuators (804) to harvest actuator waste heat into a 90-degree-Celsius fluid reservoir (808) driving CVD-graphene cavitation (810) and 33.6-kilovolt pulsed plasma (812); a deployable ballistic shield wing assembly (902); and an environmental life-support and regolith-processing manifold (814).</claim-text>
+    </claim>
+    <claim id="c-0021" num="21" claim-type="dependent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>21. The robotic companion (800) of claim 20, wherein the articulated chassis (802) is reconfigurable between quadruped hound, feline scout, and winged soaring biomimetic morphologies.</claim-text>
+    </claim>
+    <claim id="c-0022" num="22" claim-type="dependent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>22. The robotic companion (800) of claim 20, wherein the deployable ballistic shield wing assembly (902) comprises boron-carbide and ultra-high-molecular-weight polyethylene (B4C/UHMWPE) panels (904) actuating into a protective cover within 0.30 seconds upon acoustic gunshot detection.</claim-text>
+    </claim>
+    <claim id="c-0023" num="23" claim-type="dependent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>23. The robotic companion (800) of claim 20, further comprising a closed-loop warm fluid skin circulation layer (816) maintained at approximately 38.5 degrees Celsius for physiological stress reduction and hypothermia prevention.</claim-text>
+    </claim>
+    <claim id="c-0024" num="24" claim-type="dependent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>24. The robotic companion (800) of claim 20, wherein the manifold (814) supplies regenerated breathable oxygen and sterile drinking water to accompanied personnel.</claim-text>
+    </claim>
+    <claim id="c-0025" num="25" claim-type="dependent" priority-docket="CIP-4 Robo Companion" figures="FIG. 8-9">
+      <claim-text>25. The robotic companion (800) of claim 20, further comprising an articulated tail auger (818) injecting plasma-fixed nitrogen species into planetary regolith for in-situ terraforming.</claim-text>
+    </claim>
+    <claim id="c-0026" num="26" claim-type="independent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>26. An autonomous multi-robot swarm energy-sharing and protective formation system (1000), comprising: a plurality of autonomous robotic units (800A, 800B) each equipped with a closed-loop thermodynamic core (806); a self-aligning magnetic dry-break umbilical docking coupler (1002) establishing simultaneous 48-volt direct-current power transfer (1004) and 90-degree-Celsius preheated water exchange (1006) between units; and an ultra-wideband (UWB) mesh transceiver (1102) coordinating synchronized multi-unit spatial formations.</claim-text>
+    </claim>
+    <claim id="c-0027" num="27" claim-type="dependent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>27. The swarm system (1000) of claim 26, wherein a donor unit transfers 90-degree-Celsius preheated thermal fluid directly into the cavitation reservoir of a depleted recipient unit to accelerate cold-start electrical generation.</claim-text>
+    </claim>
+    <claim id="c-0028" num="28" claim-type="dependent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>28. The swarm system (1000) of claim 26, wherein the units execute a decentralized market-based auction protocol allocating electrical watt-hours and distilled water reserves based on mission priority.</claim-text>
+    </claim>
+    <claim id="c-0029" num="29" claim-type="dependent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>29. The swarm system (1000) of claim 26, wherein the UWB mesh transceiver (1102) synchronizes adjacent units within 0.35 seconds to deploy overlapping NIJ Level IV ballistic shield wings (902) forming a continuous interlocking phalanx wall (1104).</claim-text>
+    </claim>
+    <claim id="c-0030" num="30" claim-type="dependent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>30. The swarm system (1000) of claim 26, wherein the docking coupler (1002) includes Hall-effect magnetic latch verification and zero-drip poppet valves rated for lunar and Martian dust environments.</claim-text>
+    </claim>
+    <claim id="c-0031" num="31" claim-type="dependent" priority-docket="CIP-5 Swarm Docking" figures="FIG. 10-11">
+      <claim-text>31. The swarm system (1000) of claim 26, wherein an airborne winged relay unit maintains line-of-sight LoRa/UWB mesh telemetry across subterranean or canyon terrain.</claim-text>
+    </claim>
+    <claim id="c-0032" num="32" claim-type="independent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>32. A handheld magnetically confined planetary plasma lance (1200), comprising: a hilt housing (1202) containing a closed-loop thermodynamic core (1204) fed by a replaceable ice or water cartridge (1206), a 90-degree-Celsius thermal reservoir (1208), a CVD-graphene vortex cavitator (1210), and a 33.6-kilovolt ZVS plasma exciter (1212); an emitter nozzle (1214) having a samarium-cobalt Halbach permanent-magnet array (1216) and a water-cooled Bitter electromagnet coil (1218) generating an axisymmetric magnetic mirror bottle confining a high-temperature plasma blade (1220); and external cryo-radiator fins (1222) rejecting heat to a sub-zero planetary atmosphere to drive thermoelectric power regeneration.</claim-text>
+    </claim>
+    <claim id="c-0033" num="33" claim-type="dependent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>33. The plasma lance (1200) of claim 32, wherein the magnetic mirror bottle generates a throat magnetic flux density of approximately 0.65 Tesla and a distal mirror pinch of approximately 0.67 Tesla at a blade length of approximately 0.92 meters.</claim-text>
+    </claim>
+    <claim id="c-0034" num="34" claim-type="dependent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>34. The plasma lance (1200) of claim 32, further comprising a coaxial vapor aspiration shroud (1224) surrounding the emitter nozzle (1214) to recapture ionized working vapor and condensed water back into the thermal reservoir (1208).</claim-text>
+    </claim>
+    <claim id="c-0035" num="35" claim-type="dependent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>35. The plasma lance (1200) of claim 32, wherein the cryo-radiator fins (1222) couple to a Martian atmosphere at approximately -60 degrees Celsius and 610 Pascals to generate over 140 watts of continuous electrical recharge power.</claim-text>
+    </claim>
+    <claim id="c-0036" num="36" claim-type="dependent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>36. The plasma lance (1200) of claim 32, further comprising a high-discharge graphene-carbon-nanotube supercapacitor bank (1302) delivering at least 3.5 kilowatts peak pulse power to the Bitter coil (1218) and plasma arc.</claim-text>
+    </claim>
+    <claim id="c-0037" num="37" claim-type="dependent" priority-docket="CIP-6 Mars Saber" figures="FIG. 12-13">
+      <claim-text>37. The plasma lance (1200) of claim 32, further comprising a dual-channel capacitive EVA-glove deadman sensor (1304) coupled to a solid-state gallium-nitride (GaN) crowbar quench circuit (1306) extinguishing the plasma blade (1220) in less than 1.2 milliseconds upon grip release.</claim-text>
+    </claim>
+    <claim id="c-0038" num="38" claim-type="independent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>38. A closed-loop abyssal hydrothermal plasma cutting and salvage torch (1400) rated for ambient hydrostatic pressures up to 60.8 megapascals, comprising: a pressure-compensated titanium housing (1402); an internal closed-loop thermodynamic core (1404) recovering arc-shroud waste heat into a 90-degree-Celsius cavitation reservoir (1406) while rejecting condenser heat to 2-degree-Celsius ambient seawater via a conformal keel heat exchanger (1408); and a magnetic-nozzle plasma emitter (1410) generating a hydro-sheathed 6,800-Kelvin plasma jet (1412) without overboard gas compression.</claim-text>
+    </claim>
+    <claim id="c-0039" num="39" claim-type="dependent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>39. The abyssal plasma torch (1400) of claim 38, wherein the conformal keel heat exchanger (1408) enables continuous electrical regeneration exceeding 190 watts at a depth of 6,000 meters.</claim-text>
+    </claim>
+    <claim id="c-0040" num="40" claim-type="dependent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>40. The abyssal plasma torch (1400) of claim 38, further comprising a hydro-cyclone mineral separator (1414) capturing polymetallic sulfide particulates entrained in the recirculating shroud fluid.</claim-text>
+    </claim>
+    <claim id="c-0041" num="41" claim-type="independent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>41. A zero-recoil microgravity asteroid plasma rock-splitting and volatile-harvesting lance (1500), comprising: a closed-loop thermodynamic core (1502) rejecting condenser heat to a 120-Kelvin deep-space shaded radiator (1504); a magnetically focused plasma needle emitter (1506) delivering localized thermal shock to phyllosilicate asteroid rock to induce internal volatile spallation with less than 0.15 Newtons of axial recoil; and a vacuum-sealed bell-mouth aspiration hood (1508) capturing liberated water, carbon dioxide, and metal carbonyl vapors into the closed-loop reservoir (1510).</claim-text>
+    </claim>
+    <claim id="c-0042" num="42" claim-type="dependent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>42. The asteroid plasma rock-splitting lance (1500) of claim 41, wherein captured phyllosilicate water vapor yields greater than 100 percent closed-loop propellant and working-fluid replenishment.</claim-text>
+    </claim>
+    <claim id="c-0043" num="43" claim-type="dependent" priority-docket="CIP-7 Frontier Tools" figures="FIG. 14-15">
+      <claim-text>43. The asteroid plasma rock-splitting lance (1500) of claim 41, further comprising a carbonyl thermal decomposition trap (1512) separating high-purity nickel and iron from captured Mond-process vapors.</claim-text>
+    </claim>
+  </claims>
+  <abstract id="abstract" lang="en">
+    <p id="pa-0001" num="0001">A closed-loop thermodynamic, cavitation, and pulsed-plasma energy and fluid regeneration system (100) and multi-domain apparatus thereof. Waste enthalpy preheats working fluid in a thermal reservoir (102) to approximately 90 degrees Celsius prior to passage through a chemical-vapor-deposition (CVD) graphene-lined hydrodynamic cavitation chamber (104, 106) and a 33.6-kilovolt zero-voltage-switching (ZVS) nanosecond pulsed-plasma reactor (108, 110). Thermal-plasma expansion drives an opposed-piston free-piston linear alternator (112) supported on 5-micrometer oil-free aerostatic gas bearings (114), while a cold-sink condenser (118) outputs sterile distillate (120). Specialized embodiments integrate betavoltaic/gamma-voltaic nuclear remediation (400), metabolic-heat-assisted wearable exoskeleton life support (600), multi-morphology robotic companions (800) with 48-volt/90-degree-Celsius swarm docking (1000), a magnetically confined Martian plasma lance (1200), a 6,000-meter abyssal plasma torch (1400), and a zero-recoil asteroid plasma rock-splitter (1500).</p>
+  </abstract>
+</patent-application>
