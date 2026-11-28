@@ -1,0 +1,16 @@
+{
+  "name": "Cool Power Core™: Horizons Unbound",
+  "short_name": "CPC Horizons",
+  "description": "60 FPS Cross-Device Adaptive Simulation & CPC-COIN Reserve Ecosystem invented by Thomas Gabriel Coleman.",
+  "start_url": "./Cool_Power_Core_Horizons_Playable_Browser_Game.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#060B14",
+  "theme_color": "#00E5FF",
+  "categories": ["education", "games", "finance"],
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" }
+  ]
+}

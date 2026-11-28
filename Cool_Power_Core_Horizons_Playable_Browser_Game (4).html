@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#070d19" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" href="icon-192.png" />
+  <title>Cool Power Core™: Horizons Unbound (v6.4 — 3D WebGL Planet + ETF + Voice AI)</title>
+  <style>
+    :root {
+      --bg: #070d19; --panel: #0e172a; --border: #1e293b;
+      --cyan: #00e5ff; --amber: #f59e0b; --emerald: #10b981; --purple: #a855f7;
+      --text: #f1f5f9; --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x: hidden; }
+    header {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      padding: 10px 16px; background: #091122; border-bottom: 1px solid var(--border); gap: 10px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand h1 { font-size: 16px; letter-spacing: 0.4px; color: #fff; }
+    .brand span { font-size: 11px; color: var(--cyan); display: block; }
+    @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .spin-ring { transform-origin: 32px 32px; animation: spinSlow 14s linear infinite; }
+    .tier-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .tier-btn {
+      background: #111c33; color: var(--muted); border: 1px solid var(--border);
+      padding: 5px 9px; border-radius: 6px; font-size: 11px; cursor: pointer; font-weight: 600;
+    }
+    .tier-btn.active { background: rgba(0,229,255,0.14); color: var(--cyan); border-color: var(--cyan); }
+    .grid {
+      display: grid; grid-template-columns: 1.55fr 1fr; gap: 12px; padding: 12px; max-width: 1520px; margin: 0 auto;
+    }
+    @media (max-width: 1040px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+    }
+    .card h2 {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--cyan);
+      margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .viewport-wrap { position: relative; width: 100%; height: 420px; border-radius: 8px; overflow: hidden; border: 1px solid #26354f; background: #030711; }
+    canvas { display: block; width: 100%; height: 100%; }
+    .hud-overlay {
+      position: absolute; top: 8px; left: 8px; right: 8px; display: flex; justify-content: space-between;
+      pointer-events: none; font-size: 11px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .hud-pill { background: rgba(7,13,25,0.82); border: 1px solid rgba(0,229,255,0.35); padding: 4px 8px; border-radius: 6px; }
+    .controls-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    button.act {
+      background: #16233d; color: #fff; border: 1px solid #2d426b; padding: 7px 11px;
+      border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; transition: 0.15s;
+    }
+    button.act:hover { border-color: var(--cyan); background: #1d2f52; }
+    button.act.emerald { border-color: var(--emerald); color: #a7f3d0; }
+    button.act.amber { border-color: var(--amber); color: #fde68a; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
+    .kpi { background: #091122; border: 1px solid var(--border); border-radius: 7px; padding: 8px; }
+    .kpi .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+    .kpi .val { font-size: 15px; font-weight: 700; color: #fff; margin-top: 2px; font-family: ui-monospace, monospace; }
+    .etf-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+    .etf-table th, .etf-table td { padding: 5px 6px; border-bottom: 1px solid #1a263e; text-align: left; }
+    .etf-table th { color: var(--muted); font-weight: 600; }
+    .chat-box {
+      height: 145px; overflow-y: auto; background: #070d19; border: 1px solid var(--border);
+      border-radius: 6px; padding: 8px; font-size: 12px; line-height: 1.4; margin-bottom: 6px;
+    }
+    .chat-input { display: flex; gap: 6px; }
+    .chat-input input, .chat-input select {
+      background: #091122; color: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-size: 12px;
+    }
+    .chat-input input { flex: 1; }
+    .addr-row {
+      display: flex; justify-content: space-between; align-items: center; background: #091122;
+      border: 1px solid #1d2b44; padding: 5px 8px; border-radius: 6px; margin-bottom: 5px; font-size: 11px;
+    }
+    .addr-row code { color: var(--cyan); font-size: 10.5px; word-break: break-all; }
+    .copy-btn {
+      background: #162440; border: 1px solid var(--cyan); color: var(--cyan); padding: 3px 7px;
+      border-radius: 4px; font-size: 10px; cursor: pointer; margin-left: 6px; white-space: nowrap;
+    }
+    .sync-box { width: 100%; background: #070d19; color: var(--emerald); border: 1px solid var(--border); border-radius: 6px; padding: 6px; font-family: monospace; font-size: 10px; margin-top: 6px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="42" height="42" viewBox="0 0 64 64" aria-label="Cool Power Core Logo">
+      <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" fill="#0b1528" stroke="#00e5ff" stroke-width="2.5"/>
+      <g class="spin-ring">
+        <circle cx="32" cy="32" r="20" fill="none" stroke="#00e5ff" stroke-width="1.6" stroke-dasharray="10 6"/>
+        <circle cx="32" cy="12" r="3.2" fill="#00e5ff"/>
+        <circle cx="32" cy="52" r="3.2" fill="#f59e0b"/>
+      </g>
+      <polygon points="34,17 22,34 31,34 29,47 42,30 33,30" fill="#10b981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND <small style="color:#f59e0b;">v6.4</small></h1>
+      <span>3D WebGL Procedural Planet • Sanctuary City Builder • CPC-COIN Fair ETF Dividends • Voice AI</span>
+    </div>
+  </div>
+  <div class="tier-bar" id="tierBar">
+    <span style="font-size:11px;color:var(--muted);">Interface Rig:</span>
+    <button class="tier-btn" data-tier="0">T0: Android Mobile</button>
+    <button class="tier-btn" data-tier="1">T1: Console Gamepad</button>
+    <button class="tier-btn active" data-tier="2">T2: Desktop + Semi-Haptics</button>
+    <button class="tier-btn" data-tier="3">T3: Full-Body Haptic + Brain Hat</button>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- LEFT: 3D WEBGL PLANET & SANCTUARY CITY VIEWPORT -->
+  <div class="card">
+    <h2>
+      <span>3D WebGL / GLSL Procedural Planet & Sanctuary Dome</span>
+      <span id="webglBadge" style="color:var(--emerald);font-size:11px;">WebGL GLSL Active • 60 FPS</span>
+    </h2>
+    <div class="viewport-wrap">
+      <canvas id="planetCanvas"></canvas>
+      <div class="hud-overlay">
+        <div class="hud-pill" id="hudLeft">
+          THERMAL ΔT: 88.5 K (90°C / 1.5°C) | +342.4 We/core | 12.96 L/day H₂O
+        </div>
+        <div class="hud-pill" id="hudRight">
+          CORES: <span id="coreCount">12</span> | DOMES: <span id="domeCount">2</span> | HAPTIC: <span id="hapticMode">Vest+Triggers</span>
+        </div>
+      </div>
+    </div>
+    <div class="controls-row">
+      <button class="act emerald" onclick="deployCore()">+ Deploy CPC Core (+342.4 We)</button>
+      <button class="act" onclick="buildSanctuaryDome()">+ Build 21.5°C Sanctuary Dome</button>
+      <button class="act amber" onclick="fireVortexRig()">⚡ Vortex-Condenser / Plasma Saber</button>
+      <button class="act" onclick="cyclePlanetSeed()">🪐 Warp New Procedural Planet</button>
+      <button class="act" onclick="toggleAutoSpin()">⟳ Toggle Orbital Camera</button>
+    </div>
+
+    <div style="margin-top:12px;">
+      <h2><span>AI Advisor Council (Two-Way Web Speech Voice + Text)</span><span style="font-size:11px;color:var(--muted);">Ask Gemini, Venice, or Game Master</span></h2>
+      <div class="chat-box" id="chatLog">
+        <div><strong style="color:#00e5ff;">✦ Gemini AI (google.com):</strong> Welcome, Architect! Our 3D WebGL planetary shader is online at 60 FPS. Each Cool Power Core™ bridges 90°C graphene cavitation against ambient cold sinks for +342.4 We and 12.96 L/day pure water.</div>
+      </div>
+      <div class="chat-input">
+        <select id="aiPersona">
+          <option value="gemini">✦ Gemini AI (Physics & Tech)</option>
+          <option value="venice">◈ Venice.ai (DeFi, ETFs & Privacy)</option>
+          <option value="gm">❖ Game Master AI (Quests & World)</option>
+        </select>
+        <input id="aiQuery" type="text" placeholder="Ask about CPC physics, SCHD/JEPI/VOO/SGOV dividends, or Brain Hat..." onkeydown="if(event.key==='Enter') askAI()" />
+        <button class="act" onclick="askAI()">Ask</button>
+        <button class="act amber" onclick="startVoiceInput()" title="Speak using Microphone">🎙️ Speak</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: CPC-COIN FAIR ETF DIVIDENDS, CROSS-DEVICE SYNC & PATRONAGE -->
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div class="card">
+      <h2><span>CPC-COIN v6.0 — Multi-Currency + Fair ETF Dividends</span><span style="color:var(--emerald);font-size:11px;">+8.17% Base APY</span></h2>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="lbl">CPC-COIN NAV</div><div class="val" id="cpcNav">$1.0842</div></div>
+        <div class="kpi"><div class="lbl">Your CPC Balance</div><div class="val" id="cpcBal">2,500.00</div></div>
+        <div class="kpi"><div class="lbl">Claimable ETF USDC</div><div class="val" style="color:var(--emerald);" id="claimableUsdc">$14.82</div></div>
+      </div>
+      <div class="controls-row">
+        <button class="act emerald" onclick="depositReserve(500)">Deposit $500 Multi-Currency</button>
+        <button class="act" onclick="claimEtfDividends()">Claim Pro-Rata ETF USDC</button>
+        <button class="act amber" onclick="compoundEtfIntoNav()">Reinvest Into NAV</button>
+      </div>
+      <table class="etf-table">
+        <thead>
+          <tr><th>ETF / Yield Source</th><th>Chain</th><th>Weight</th><th>Yield</th><th>Accrued Pool</th></tr>
+        </thead>
+        <tbody id="etfBody">
+          <tr><td><strong>SCHD</strong> (US Dividend Equity)</td><td>Robinhood L2</td><td>35%</td><td>3.55%</td><td id="accSchd">$5.19</td></tr>
+          <tr><td><strong>JEPI</strong> (Equity Premium Income)</td><td>Robinhood L2</td><td>30%</td><td>7.40%</td><td id="accJepi">$4.45</td></tr>
+          <tr><td><strong>VOO</strong> (S&P 500 Index + Divs)</td><td>Robinhood L2</td><td>20%</td><td>1.35%</td><td id="accVoo">$2.96</td></tr>
+          <tr><td><strong>SGOV</strong> (0-3 Mo US T-Bills)</td><td>Robinhood L2</td><td>15%</td><td>4.85%</td><td id="accSgov">$2.22</td></tr>
+          <tr><td><strong>Aerodrome + Lido/Beefy</strong></td><td>Base / ETH</td><td>Core</td><td>8.80%</td><td style="color:var(--cyan);">Auto-NAV</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2><span>Continuous Cross-Device State Sync (CPC-SYNC://)</span><span style="font-size:11px;color:var(--muted);">Zero-Loss Portability</span></h2>
+      <div class="controls-row">
+        <button class="act" onclick="exportSyncToken()">Generate Sync Token</button>
+        <button class="act emerald" onclick="importSyncToken()">Load Sync Token</button>
+      </div>
+      <textarea id="syncToken" class="sync-box" rows="2" placeholder="Click 'Generate Sync Token' to move your continuous game state between Android, Console, Desktop, and Brain Hat..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2><span>Inventor Patronage & Treasury (Thomas Gabriel Coleman)</span><span style="color:var(--amber);font-size:11px;">100% Direct</span></h2>
+      <div class="addr-row">
+        <div><strong>Gnosis Safe Treasury:</strong><br/><code>0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</code></div>
+        <button class="copy-btn" onclick="copyText('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37', this)">Copy</button>
+      </div>
+      <div class="addr-row">
+        <div><strong>Donate EVM (ETH/USDC/Base):</strong><br/><code>0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</code></div>
+        <button class="copy-btn" onclick="copyText('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf', this)">Copy</button>
+      </div>
+      <div class="addr-row">
+        <div><strong>Donate BTC / Sats (Cake Pay):</strong><br/><code>howeyecrypto@cake.cash</code></div>
+        <button class="copy-btn" onclick="copyText('howeyecrypto@cake.cash', this)">Copy</button>
+      </div>
+      <div class="addr-row" style="margin-bottom:0;">
+        <div><strong>Donate Solana (SOL):</strong><br/><code>2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</code></div>
+        <button class="copy-btn" onclick="copyText('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr', this)">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- GAME & ETF STATE ---
+const state = {
+  tier: 2,
+  cores: 12,
+  domes: 2,
+  planetSeed: 42.7,
+  autoSpin: true,
+  rotY: 0.4,
+  rotX: 0.25,
+  pulse: 0.0,
+  cpcNav: 1.0842,
+  cpcBal: 2500.00,
+  claimableUsdc: 14.82
+};
+
+const TIER_META = [
+  { name: "T0: Android Mobile", haptic: "Phone Vibration", ability: "Single-Shot Vortex + CPC-RES-1" },
+  { name: "T1: Console Gamepad", haptic: "Dual-Motor Rumble", ability: "Tri-Mode Vortex + Plasma Saber" },
+  { name: "T2: Desktop + Semi-Haptics", haptic: "Vest + Adaptive Triggers", ability: "MK-6 Flight Suit + Stock HUD" },
+  { name: "T3: Full-Body Suit + Brain Hat", haptic: "64-Zone Suit + Zero-RF EEG", ability: "Thought-Cast + 4-Tentacle Mind-Link" }
+];
+
+// --- WEBGL 3D PROCEDURAL PLANET & SANCTUARY DOME SHADER ---
+const canvas = document.getElementById("planetCanvas");
+const gl = canvas.getContext("webgl");
+
+const VS_SRC = `
+  attribute vec2 aPos;
+  varying vec2 vUv;
+  void main() {
+    vUv = aPos;
+    gl_Position = vec4(aPos, 0.0, 1.0);
+  }
+`;
+
+const FS_SRC = `
+  precision highp float;
+  varying vec2 vUv;
+  uniform vec2 uRes;
+  uniform float uTime;
+  uniform float uRotY;
+  uniform float uRotX;
+  uniform float uSeed;
+  uniform float uDomes;
+  uniform float uPulse;
+  uniform float uTier;
+
+  float hash(vec3 p) {
+    p = fract(p * 0.3183099 + vec3(0.1, 0.2, 0.3));
+    p *= 17.0;
+    return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+  }
+
+  float noise(vec3 x) {
+    vec3 i = floor(x);
+    vec3 f = fract(x);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(
+      mix(mix(hash(i + vec3(0,0,0)), hash(i + vec3(1,0,0)), f.x),
+          mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+      mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x),
+          mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y), f.z);
+  }
+
+  float fbm(vec3 p) {
+    float v = 0.0;
+    float a = 0.5;
+    for (int i = 0; i < 5; i++) {
+      v += a * noise(p);
+      p = p * 2.03 + vec3(1.7, 9.2, 4.1);
+      a *= 0.5;
+    }
+    return v;
+  }
+
+  mat3 rotY(float a) {
+    float c = cos(a), s = sin(a);
+    return mat3(c, 0.0, s, 0.0, 1.0, 0.0, -s, 0.0, c);
+  }
+
+  mat3 rotX(float a) {
+    float c = cos(a), s = sin(a);
+    return mat3(1.0, 0.0, 0.0, 0.0, c, -s, 0.0, s, c);
+  }
+
+  void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * uRes.xy) / uRes.y;
+    vec3 ro = vec3(0.0, 0.0, 2.55);
+    vec3 rd = normalize(vec3(uv, -1.45));
+
+    // Starfield background
+    vec3 col = vec3(0.015, 0.03, 0.065);
+    float star = hash(floor(vec3(uv * 260.0, uSeed)));
+    if (star > 0.994) col += vec3(0.75, 0.9, 1.0) * (star - 0.994) * 160.0;
+
+    // Ray-sphere intersection for procedural planet (radius 1.0)
+    float b = dot(ro, rd);
+    float c = dot(ro, ro) - 1.0;
+    float h = b * b - c;
+
+    if (h > 0.0) {
+      float t = -b - sqrt(h);
+      vec3 pos = ro + rd * t;
+      vec3 nor = normalize(pos);
+      vec3 pRot = rotX(uRotX) * rotY(uRotY) * nor;
+
+      float elev = fbm(pRot * 3.2 + vec3(uSeed));
+      float detail = fbm(pRot * 12.0 - vec3(uSeed * 0.5));
+      float hVal = elev * 0.82 + detail * 0.18;
+
+      // Biome palette (Ocean, Coastal Shelf, Fertile Terrace, Highland Ridge, Polar Ice)
+      vec3 ocean = vec3(0.03, 0.22, 0.45);
+      vec3 coast = vec3(0.04, 0.48, 0.58);
+      vec3 land  = vec3(0.09, 0.44, 0.28);
+      vec3 ridge = vec3(0.45, 0.36, 0.28);
+      vec3 snow  = vec3(0.88, 0.95, 1.0);
+
+      vec3 surf = hVal < 0.48 ? mix(ocean, coast, smoothstep(0.32, 0.48, hVal))
+                : hVal < 0.68 ? mix(land, ridge, smoothstep(0.56, 0.68, hVal))
+                : mix(ridge, snow, smoothstep(0.68, 0.80, hVal));
+
+      // Polar ice caps
+      float lat = abs(pRot.y);
+      surf = mix(surf, snow, smoothstep(0.76, 0.92, lat));
+
+      // Glowing 21.5°C ETFE Sanctuary City Domes & CPC-LOOP Transit Arcs on surface
+      float cityGrid = sin(pRot.x * 18.0) * sin(pRot.z * 18.0);
+      float domeMask = smoothstep(0.92 - min(uDomes * 0.015, 0.18), 0.98, cityGrid) * step(0.47, hVal);
+      vec3 domeGlow = vec3(0.0, 0.95, 1.0) * domeMask * (1.2 + 0.4 * sin(uTime * 4.0));
+
+      // Transit corridor energy ring
+      float ringBand = smoothstep(0.035, 0.0, abs(pRot.y - 0.12 * sin(pRot.x * 3.0))) * step(0.46, hVal);
+      vec3 transitGlow = vec3(0.96, 0.62, 0.04) * ringBand * 0.85;
+
+      // Directional sunlight + Fresnel atmospheric rim
+      vec3 lightDir = normalize(vec3(0.75, 0.45, 0.55));
+      float diff = max(dot(nor, lightDir), 0.08);
+      float rim = pow(1.0 - max(dot(nor, -rd), 0.0), 3.2);
+      vec3 atmoColor = uTier > 2.5 ? vec3(0.66, 0.33, 0.97) : vec3(0.0, 0.88, 1.0);
+
+      col = surf * diff + domeGlow + transitGlow + atmoColor * rim * 0.72;
+
+      // Vortex / Plasma pulse flash
+      col += vec3(0.0, 0.9, 1.0) * uPulse * 0.45;
+    } else {
+      // Outer atmospheric corona glow
+      float dist = length(cross(ro, rd));
+      float halo = exp(-max(dist - 1.0, 0.0) * 9.5);
+      col += vec3(0.0, 0.75, 1.0) * halo * 0.45;
+    }
+
+    gl_FragColor = vec4(col, 1.0);
+  }
+`;
+
+function compileShader(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  return s;
+}
+
+let prog, uRes, uTime, uRotY, uRotX, uSeed, uDomes, uPulse, uTier;
+if (gl) {
+  prog = gl.createProgram();
+  gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, VS_SRC));
+  gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, FS_SRC));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, "aPos");
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  uRes = gl.getUniformLocation(prog, "uRes");
+  uTime = gl.getUniformLocation(prog, "uTime");
+  uRotY = gl.getUniformLocation(prog, "uRotY");
+  uRotX = gl.getUniformLocation(prog, "uRotX");
+  uSeed = gl.getUniformLocation(prog, "uSeed");
+  uDomes = gl.getUniformLocation(prog, "uDomes");
+  uPulse = gl.getUniformLocation(prog, "uPulse");
+  uTier = gl.getUniformLocation(prog, "uTier");
+}
+
+// Mouse / Touch drag rotation for 3D planet
+let dragging = false, lastX = 0, lastY = 0;
+canvas.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+window.addEventListener("pointerup", () => dragging = false);
+window.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  state.rotY += (e.clientX - lastX) * 0.008;
+  state.rotX = Math.max(-1.2, Math.min(1.2, state.rotX + (e.clientY - lastY) * 0.008));
+  lastX = e.clientX; lastY = e.clientY;
+});
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = Math.max(300, Math.floor(rect.width * (state.tier === 0 ? 1.0 : 1.5)));
+  canvas.height = Math.max(240, Math.floor(rect.height * (state.tier === 0 ? 1.0 : 1.5)));
+  if (gl) gl.viewport(0, 0, canvas.width, canvas.height);
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function renderLoop(now) {
+  const t = now * 0.001;
+  if (state.autoSpin && !dragging) state.rotY += 0.004;
+  if (state.pulse > 0.001) state.pulse *= 0.92;
+
+  // Live continuous ETF dividend + NAV micro-tick
+  state.claimableUsdc += 0.00018 * (state.cpcBal / 2500);
+  state.cpcNav += 0.0000004;
+
+  if (gl) {
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, t);
+    gl.uniform1f(uRotY, state.rotY);
+    gl.uniform1f(uRotX, state.rotX);
+    gl.uniform1f(uSeed, state.planetSeed);
+    gl.uniform1f(uDomes, state.domes);
+    gl.uniform1f(uPulse, state.pulse);
+    gl.uniform1f(uTier, state.tier);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+
+  if (Math.floor(now) % 10 === 0) updateHUD();
+  requestAnimationFrame(renderLoop);
+}
+
+function updateHUD() {
+  document.getElementById("coreCount").textContent = state.cores;
+  document.getElementById("domeCount").textContent = state.domes;
+  document.getElementById("hapticMode").textContent = TIER_META[state.tier].haptic;
+  document.getElementById("cpcNav").textContent = "$" + state.cpcNav.toFixed(4);
+  document.getElementById("cpcBal").textContent = state.cpcBal.toFixed(2);
+  document.getElementById("claimableUsdc").textContent = "$" + state.claimableUsdc.toFixed(2);
+
+  const c = state.claimableUsdc;
+  document.getElementById("accSchd").textContent = "$" + (c * 0.35).toFixed(2);
+  document.getElementById("accJepi").textContent = "$" + (c * 0.30).toFixed(2);
+  document.getElementById("accVoo").textContent  = "$" + (c * 0.20).toFixed(2);
+  document.getElementById("accSgov").textContent = "$" + (c * 0.15).toFixed(2);
+}
+
+// --- PLAYER ACTIONS ---
+document.querySelectorAll(".tier-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tier-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.tier = Number(btn.dataset.tier);
+    resizeCanvas();
+    if (navigator.vibrate) navigator.vibrate(35);
+    appendChat("gm", `Interface switched to ${TIER_META[state.tier].name}. Active abilities: ${TIER_META[state.tier].ability}.`);
+  });
+});
+
+function deployCore() {
+  state.cores += 1;
+  state.pulse = 0.8;
+  updateHUD();
+}
+function buildSanctuaryDome() {
+  state.domes += 1;
+  state.cores += 10;
+  state.pulse = 1.0;
+  updateHUD();
+  appendChat("gm", `21.5°C ETFE Sanctuary Dome #${state.domes} constructed! Zero-septic utilities online.`);
+}
+function fireVortexRig() {
+  state.pulse = 1.2;
+  if (navigator.vibrate) navigator.vibrate([40, 20, 60]);
+}
+function cyclePlanetSeed() {
+  state.planetSeed = Number((Math.random() * 199 + 1).toFixed(2));
+  state.pulse = 1.0;
+  appendChat("gm", `Warped to procedural sector seed #${state.planetSeed}.`);
+}
+function toggleAutoSpin() { state.autoSpin = !state.autoSpin; }
+
+function depositReserve(usd) {
+  state.cpcBal += usd / state.cpcNav;
+  updateHUD();
+  appendChat("venice", `Deposited $${usd} into multi-currency reserve. Minted ${(usd / state.cpcNav).toFixed(2)} CPC-COIN backed by Aerodrome, Lido/Beefy & Robinhood ETFs.`);
+}
+function claimEtfDividends() {
+  const amt = state.claimableUsdc.toFixed(2);
+  state.claimableUsdc = 0;
+  updateHUD();
+  appendChat("venice", `Claimed $${amt} USDC in pro-rata SCHD/JEPI/VOO/SGOV dividends via 128-bit Magnified Dividend Accumulator.`);
+}
+function compoundEtfIntoNav() {
+  const amt = state.claimableUsdc;
+  state.cpcBal += amt / state.cpcNav;
+  state.cpcNav += 0.0008;
+  state.claimableUsdc = 0;
+  updateHUD();
+  appendChat("venice", `Compounded $${amt.toFixed(2)} ETF dividends directly into CPC-COIN NAV without token dilution!`);
+}
+
+// --- AI ADVISOR COUNCIL + TWO-WAY VOICE ---
+function appendChat(persona, msg) {
+  const log = document.getElementById("chatLog");
+  const label = persona === "gemini" ? '<strong style="color:#00e5ff;">✦ Gemini AI:</strong>'
+              : persona === "venice" ? '<strong style="color:#a855f7;">◈ Venice.ai:</strong>'
+              : '<strong style="color:#f59e0b;">❖ Game Master AI:</strong>';
+  const div = document.createElement("div");
+  div.style.marginTop = "5px";
+  div.innerHTML = `${label} ${msg}`;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(msg);
+    u.pitch = persona === "gemini" ? 1.05 : persona === "venice" ? 0.92 : 1.0;
+    u.rate = 1.04;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function askAI() {
+  const input = document.getElementById("aiQuery");
+  const q = input.value.trim();
+  if (!q) return;
+  const persona = document.getElementById("aiPersona").value;
+  input.value = "";
+  const ql = q.toLowerCase();
+
+  let reply = "";
+  if (persona === "gemini") {
+    if (ql.includes("water") || ql.includes("core") || ql.includes("power")) {
+      reply = "Each Cool Power Core™ harvests 382.93 Wth via 90°C CVD-graphene cavitation and 33.6 kV ZVS plasma, exporting +342.4 We continuous power and distilling 12.96 L/day of <1 ppm TDS pure water.";
+    } else if (ql.includes("brain") || ql.includes("suit") || ql.includes("saber")) {
+      reply = "The MK-6 Briefcase Flight Suit deploys in 4.2 seconds with 1,880 N hybrid plasma+ion thrust, forearm Vortex-Condenser cannons, and a 0.42 m magnetic-mirror plasma blade.";
+    } else {
+      reply = `Your planetary grid currently runs ${state.cores} cores across ${state.domes} climate-controlled 21.5°C Sanctuary Domes, outputting ${(state.cores * 0.3424).toFixed(2)} kWe continuous.`;
+    }
+  } else if (persona === "venice") {
+    if (ql.includes("etf") || ql.includes("dividend") || ql.includes("schd")) {
+      reply = "CPC-COIN v6.0 allocates 25% on Robinhood Chain L2 across SCHD (35%), JEPI (30%), VOO (20%), and SGOV (15%). A 128-bit Magnified Dividend Accumulator ensures every holder earns fair pro-rata USDC dividends or zero-dilution NAV compounding.";
+    } else if (ql.includes("hijack") || ql.includes("hat") || ql.includes("security")) {
+      reply = "The wearable Brain Hat uses zero RF chips, dual-wall Mu-Metal Faraday shielding (>115 dB), unidirectional optical diodes, and a 0.4 ms somatic override—making remote control physically impossible.";
+    } else {
+      reply = "CPC-COIN combines Aerodrome Finance gauges on Base, Lido wstETH + Beefy.com autocompounding vaults, and Robinhood Chain ETF sweeps with a 15% instant any-currency redemption buffer.";
+    }
+  } else {
+    reply = `Quest Update: Expand to ${state.domes + 1} Sanctuary Domes on Planet Seed #${state.planetSeed} and trade surplus water with the 2,048 AI Merchant NPCs to boost CPC-COIN NAV!`;
+  }
+  appendChat(persona, reply);
+}
+
+function startVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    appendChat("gm", "SpeechRecognition not supported in this browser—type your question in the box.");
+    return;
+  }
+  const rec = new SR();
+  rec.lang = "en-US";
+  rec.onresult = (e) => {
+    document.getElementById("aiQuery").value = e.results[0][0].transcript;
+    askAI();
+  };
+  rec.start();
+}
+
+// --- CROSS-DEVICE SYNC TOKEN ---
+function exportSyncToken() {
+  const payload = btoa(JSON.stringify(state));
+  document.getElementById("syncToken").value = "CPC-SYNC://" + payload;
+}
+function importSyncToken() {
+  const raw = document.getElementById("syncToken").value.trim().replace("CPC-SYNC://", "");
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(atob(raw));
+    Object.assign(state, parsed);
+    updateHUD();
+    appendChat("gm", "Continuous cross-device state restored! All cores, domes, and CPC-COIN balances synced.");
+  } catch (e) {
+    appendChat("gm", "Invalid CPC-SYNC:// token.");
+  }
+}
+
+function copyText(txt, btn) {
+  navigator.clipboard.writeText(txt);
+  const old = btn.textContent;
+  btn.textContent = "Copied!";
+  setTimeout(() => btn.textContent = old, 1400);
+}
+
+requestAnimationFrame(renderLoop);
+</script>
+</body>
+</html>

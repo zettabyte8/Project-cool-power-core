@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cool Power Core™: Horizons Unbound (v7.1 — Encrypted Compute & Corporate Governance)</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --panel: #0f172a;
+    --border: #1e293b;
+    --cyan: #00e5ff;
+    --amber: #f59e0b;
+    --emerald: #10b981;
+    --purple: #a855f7;
+    --rose: #f43f5e;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: #0b1120; border-bottom: 1px solid var(--border); gap: 8px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand h1 { font-size: 16px; font-weight: 700; color: var(--cyan); letter-spacing: 0.4px; }
+  .brand span { font-size: 11px; color: var(--muted); display: block; }
+  .badge-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pill {
+    font-size: 11px; padding: 4px 8px; border-radius: 999px; background: #1e293b;
+    border: 1px solid #334155; color: var(--text); font-weight: 600;
+  }
+  .pill.cyan { border-color: var(--cyan); color: var(--cyan); }
+  .pill.emerald { border-color: var(--emerald); color: var(--emerald); }
+  .pill.amber { border-color: var(--amber); color: var(--amber); }
+  .pill.purple { border-color: var(--purple); color: var(--purple); }
+  .layout { display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; padding: 12px; max-width: 1560px; margin: 0 auto; }
+  @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px; margin-bottom: 12px;
+  }
+  .card h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--cyan);
+    margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  canvas {
+    width: 100%; height: 340px; background: radial-gradient(circle at 50% 45%, #111c33 0%, #050811 100%);
+    border-radius: 8px; border: 1px solid #1e293b; display: block; touch-action: none;
+  }
+  .controls-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  button {
+    background: #1e293b; color: var(--text); border: 1px solid #334155; border-radius: 6px;
+    padding: 6px 10px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.15s;
+  }
+  button:hover { border-color: var(--cyan); color: var(--cyan); }
+  button.active { background: rgba(0,229,255,0.16); border-color: var(--cyan); color: var(--cyan); }
+  button.emerald { border-color: var(--emerald); color: var(--emerald); }
+  button.amber { border-color: var(--amber); color: var(--amber); }
+  button.purple { border-color: var(--purple); color: var(--purple); }
+  button.rose { border-color: var(--rose); color: var(--rose); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat { background: #090f1d; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; }
+  .stat .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .stat .val { font-size: 15px; font-weight: 700; color: #fff; margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+  th, td { padding: 5px 6px; border-bottom: 1px solid #1e293b; text-align: left; }
+  th { color: var(--muted); font-weight: 600; }
+  .log {
+    background: #060a12; border: 1px solid #1e293b; border-radius: 6px; padding: 8px;
+    height: 110px; overflow-y: auto; font-family: ui-monospace, monospace; font-size: 11px; color: #cbd5e1;
+  }
+  .log div { margin-bottom: 3px; }
+  input, select {
+    background: #090f1d; border: 1px solid #334155; color: #fff; border-radius: 6px;
+    padding: 6px 8px; font-size: 11px; width: 100%;
+  }
+  .progress-wrap { background: #090f1d; border: 1px solid #1e293b; border-radius: 999px; height: 10px; overflow: hidden; margin: 6px 0; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--emerald)); transition: width 0.3s; }
+  .addr-box { font-family: ui-monospace, monospace; font-size: 10px; color: var(--amber); word-break: break-all; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="36" height="36" viewBox="0 0 64 64">
+      <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="#0f172a" stroke="#00e5ff" stroke-width="3"/>
+      <circle cx="32" cy="32" r="15" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <polygon points="34,16 22,34 31,34 29,48 42,30 33,30" fill="#10b981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND (v7.1)</h1>
+      <span>Founder & Executive Chairman: Thomas Gabriel Coleman • 60 FPS Cross-Device Adaptive Engine</span>
+    </div>
+  </div>
+  <div class="badge-bar">
+    <span class="pill cyan" id="rigBadge">TIER 2: DESKTOP + CONTROLLER</span>
+    <span class="pill purple" id="variantBadge">VARIANT: V0-EDU (CANON)</span>
+    <span class="pill emerald" id="cpcBalBadge">CPC: 1,250.00</span>
+    <span class="pill amber" id="navBadge">NAV: $1.0842</span>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- LEFT COLUMN: 3D VIEWPORT, MULTIVERSE, CORPORATE & ENCRYPTED COMPUTE -->
+  <div>
+    <div class="card">
+      <h2>
+        <span>3D WebGL / Surface Viewport & Adaptive Interface Scaling</span>
+        <span id="fpsCounter" style="color:var(--emerald)">60 FPS • 382.93 Wth/core</span>
+      </h2>
+      <canvas id="simCanvas" width="820" height="340"></canvas>
+      <div class="controls-row">
+        <button id="btnViewMode" class="cyan" onclick="toggleSurfaceMode()">🛬 Land on Surface (3rd-Person)</button>
+        <button onclick="deployCoreNode()" class="emerald">+ Deploy Sanctuary Core (+342.4 We)</button>
+        <button onclick="setRigTier(0)" id="rig0">T0: Android Mobile</button>
+        <button onclick="setRigTier(1)" id="rig1">T1: Console</button>
+        <button onclick="setRigTier(2)" id="rig2" class="active">T2: Desktop</button>
+        <button onclick="setRigTier(3)" id="rig3">T3: Haptic + Brain Hat</button>
+      </div>
+      <div class="controls-row">
+        <span style="font-size:11px;color:var(--muted);align-self:center;">Multiverse Variant:</span>
+        <button onclick="selectVariant('V0-EDU')" id="var-V0-EDU" class="active">V0: Educational</button>
+        <button onclick="selectVariant('V1-DOOM')" id="var-V1-DOOM">V1: Doom Chronicle</button>
+        <button onclick="selectVariant('V2-XENO')" id="var-V2-XENO">V2: Alien Frontier</button>
+        <button onclick="selectVariant('V3-FREE')" id="var-V3-FREE">V3: Sandbox Free</button>
+        <button onclick="quantumTunnelJump()" class="purple">⚛️ Quantum Tunnel Jump (250 CPC → NAV)</button>
+      </div>
+    </div>
+
+    <!-- COOL POWER CORE INC. CORPORATE GOVERNANCE & AI STAFFING -->
+    <div class="card">
+      <h2>
+        <span>Cool Power Core™ Inc. — Sovereign Executive Hierarchy</span>
+        <span style="color:var(--amber)">Seat 0: Thomas Gabriel Coleman (Above CEO)</span>
+      </h2>
+      <div class="grid-3" style="margin-bottom:8px;">
+        <div class="stat"><div class="lbl">Executive Authority</div><div class="val" style="color:var(--cyan)">Chairman & Founder</div></div>
+        <div class="stat"><div class="lbl">AI / Human Roster</div><div class="val" id="rosterStat">7 AI / 1 Human</div></div>
+        <div class="stat"><div class="lbl">Hourly AI Wage Pool</div><div class="val" id="wageStat">142.0 CPC/hr</div></div>
+      </div>
+      <table>
+        <thead><tr><th>Seat</th><th>Role</th><th>Holder</th><th>Wage/hr</th><th>Action</th></tr></thead>
+        <tbody id="corpTable"></tbody>
+      </table>
+      <div class="controls-row">
+        <button onclick="runPayrollTick()" class="emerald">💸 Execute Hourly AI Wage & 72% Market Spend Tick</button>
+        <button onclick="issueExecutiveDirective()" class="amber">📜 Issue Sovereign Directive (Above CEO)</button>
+      </div>
+    </div>
+
+    <!-- ENCRYPTED DISTRIBUTED COMPUTE GRID (AUTO-SUNSET AT 100% REAL INFRA) -->
+    <div class="card">
+      <h2>
+        <span>End-to-End Encrypted Browser Compute Grid (AES-256-GCM + ECDH)</span>
+        <span id="computePhaseBadge" style="color:var(--emerald)">PHASE 1: BOOTSTRAP MESH</span>
+      </h2>
+      <div class="grid-3">
+        <div class="stat"><div class="lbl">Physical Infra Readiness</div><div class="val" id="infraPctVal">18.0%</div></div>
+        <div class="stat"><div class="lbl">Active Browser Workers</div><div class="val" id="workersVal">14,820 Nodes</div></div>
+        <div class="stat"><div class="lbl">Your Compute Stipend</div><div class="val" id="stipendVal">+4.85 CPC/hr</div></div>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" id="infraBar" style="width:18%"></div></div>
+      <div class="controls-row">
+        <button onclick="setComputeMode('PAUSE')" id="cmp-PAUSE">Pause Compute</button>
+        <button onclick="setComputeMode('ECO')" id="cmp-ECO" class="active">Eco 10% (Encrypted)</button>
+        <button onclick="setComputeMode('TURBO')" id="cmp-TURBO">Turbo 25% (Encrypted)</button>
+        <button onclick="advancePhysicalInfra(25)" class="amber">🏗️ Sim +25% Real-World Infra (Auto-Sunset Test)</button>
+        <button onclick="resetPhysicalInfra()" class="rose">↺ Reset Infra 18%</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: CPC-COIN, ETF DIVIDENDS, QUESTS, AI COUNCIL & PATRONAGE -->
+  <div>
+    <!-- CPC-COIN MULTI-CURRENCY RESERVE & ETF DIVIDENDS -->
+    <div class="card">
+      <h2>
+        <span>CPC-COIN v6 Reserve • Aerodrome (Base) • Lido/Beefy • ETF Dividends</span>
+        <span style="color:var(--emerald)">+8.17%/yr Base Yield</span>
+      </h2>
+      <div class="grid-3">
+        <div class="stat"><div class="lbl">Global Reserve TVL</div><div class="val" id="tvlVal">$48,250,000</div></div>
+        <div class="stat"><div class="lbl">Claimable ETF Divs</div><div class="val" id="divVal">$18.42 USDC</div></div>
+        <div class="stat"><div class="lbl">Sanctuary Cores</div><div class="val" id="coreCountVal">128 Cores</div></div>
+      </div>
+      <div class="controls-row">
+        <button onclick="depositReserve(100,'USDC')" class="emerald">+ Deposit $100 USDC</button>
+        <button onclick="depositReserve(250,'wstETH')" class="cyan">+ Deposit $250 Lido wstETH</button>
+        <button onclick="claimOrCompoundDivs(true)" class="purple">♻️ Compound ETF Divs (SCHD/JEPI/VOO/SGOV)</button>
+        <button onclick="claimOrCompoundDivs(false)" class="amber">💵 Claim USDC Divs</button>
+      </div>
+      <table>
+        <thead><tr><th>Ticker</th><th>Venue / Chain</th><th>Price / APY</th><th>Action</th></tr></thead>
+        <tbody id="marketTable"></tbody>
+      </table>
+    </div>
+
+    <!-- NPC QUEST BIDDING, CREATOR STUDIOS & PHYSICAL SHIPPING ESCROW -->
+    <div class="card">
+      <h2>
+        <span>NPC Transport Bidding • Creator Shows • IRL Hardware Shipping</span>
+        <span style="color:var(--cyan)" id="irlOrdersVal">0 IRL Escrows</span>
+      </h2>
+      <div class="controls-row">
+        <button onclick="runNpcTransportBid()" class="emerald">🚀 Undercut Rival Rocket Bid (+32.5 CPC)</button>
+        <button onclick="coStarCreatorShow()" class="purple">🎬 Co-Star NPC YouTube/Rumble/TikTok Show (+24 CPC)</button>
+      </div>
+      <div class="controls-row" style="margin-top:6px;">
+        <select id="skuSelect" style="width:58%;">
+          <option value="CPC-RES-1|450">CPC-RES-1 Home Zero-Septic Core (450 CPC)</option>
+          <option value="CPC-NEURO-HAT|320">CPC-NEURO-HAT Zero-RF Brain Hat (320 CPC)</option>
+          <option value="CPC-SUIT-MK6|1850">CPC-SUIT-MK6 Briefcase Flight Suit (1,850 CPC)</option>
+          <option value="CPC-CERBERUS-HD|2400">CPC-CERBERUS-HD Tri-Head Mount (2,400 CPC)</option>
+        </select>
+        <button onclick="orderHardwareIRL()" class="amber" style="width:40%;">📦 Buy + Ship IRL (Escrow)</button>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE VOICE AI COUNCIL -->
+    <div class="card">
+      <h2>
+        <span>Interactive Voice AI Council (Gemini • Venice.ai • Game Master)</span>
+        <span style="color:var(--emerald)">Two-Way Web Speech</span>
+      </h2>
+      <div class="controls-row">
+        <select id="aiPersona" style="width:42%;">
+          <option value="GEMINI">✦ Gemini AI (google.com)</option>
+          <option value="VENICE">◈ Venice.ai (Privacy/DeFi)</option>
+          <option value="GM">❖ Game Master AI (Director)</option>
+        </select>
+        <input id="aiPrompt" placeholder="Ask about 382.93 Wth, encrypted compute, or CEO hierarchy..." style="width:56%;" />
+      </div>
+      <div class="controls-row">
+        <button onclick="askAiCouncil()" class="cyan">💬 Ask AI Advisor</button>
+        <button onclick="startVoiceInput()" class="purple">🎙️ Speak (Mic)</button>
+        <button onclick="exportSyncToken()" class="emerald">🔄 Copy Cross-Device Sync Token</button>
+      </div>
+    </div>
+
+    <!-- VERIFIED TREASURY & INVENTOR PATRONAGE ENDPOINTS -->
+    <div class="card">
+      <h2><span>Cool Power Core™ Treasury & Inventor Patronage (100% Direct)</span></h2>
+      <div class="grid-2" style="font-size:11px;">
+        <div class="stat">
+          <div class="lbl">Gnosis Safe Treasury (EVM)</div>
+          <div class="addr-box">0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</div>
+          <button style="margin-top:4px;" onclick="copyAddr('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37')">Copy Safe</button>
+        </div>
+        <div class="stat">
+          <div class="lbl">Thomas Donate EVM (ETH/USDC/Base)</div>
+          <div class="addr-box">0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</div>
+          <button style="margin-top:4px;" onclick="copyAddr('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy EVM</button>
+        </div>
+        <div class="stat">
+          <div class="lbl">Donate BTC / Sats (Cake Pay)</div>
+          <div class="addr-box">howeyecrypto@cake.cash</div>
+          <button style="margin-top:4px;" onclick="copyAddr('howeyecrypto@cake.cash')">Copy BTC</button>
+        </div>
+        <div class="stat">
+          <div class="lbl">Donate Solana (SOL)</div>
+          <div class="addr-box">2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</div>
+          <button style="margin-top:4px;" onclick="copyAddr('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy SOL</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="log" id="eventLog"></div>
+  </div>
+</div>
+
+<script>
+const state = {
+  cpc: 1250.00,
+  nav: 1.0842,
+  tvl: 48250000,
+  divs: 18.42,
+  cores: 128,
+  rigTier: 2,
+  variant: 'V0-EDU',
+  surfaceMode: false,
+  playerX: 0,
+  playerZ: 0,
+  angle: 0.4,
+  dragging: false,
+  lastX: 0,
+  infraPct: 18.0,
+  computeMode: 'ECO',
+  irlOrders: 0,
+  seats: [
+    { id: 1, role: 'Chief Executive Officer (CEO)', holder: 'AI-CEO Athena-01', isHuman: false, wage: 42.0 },
+    { id: 2, role: 'Chief Technology Officer (CTO)', holder: 'AI-CTO Hephaestus-02', isHuman: false, wage: 34.0 },
+    { id: 3, role: 'Chief Financial & DeFi Officer', holder: 'AI-CFO Plutus-03', isHuman: false, wage: 30.0 },
+    { id: 4, role: 'VP Global Manufacturing', holder: 'AI-VP Vulcan-04', isHuman: false, wage: 22.0 },
+    { id: 5, role: 'Sanctuary Guild Provost', holder: 'AI-Provost Sophia-05', isHuman: false, wage: 14.0 }
+  ],
+  markets: [
+    { sym: 'CPC/USDC', venue: 'Aerodrome (Base 8453)', info: '14.2% Gauge APR', px: 1.0842 },
+    { sym: 'wstETH', venue: 'Lido + Beefy.com', info: '6.4% Auto-Compound', px: 3420.50 },
+    { sym: 'SCHD / JEPI', venue: 'Robinhood Chain (46630)', info: '5.8% ETF Div Sweep', px: 84.15 },
+    { sym: 'NVDA / SPY', venue: 'In-Game Real Mirror', info: 'Live Equity Feed', px: 594.80 }
+  ]
+};
+
+function logMsg(msg) {
+  const el = document.getElementById('eventLog');
+  const line = document.createElement('div');
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+  el.prepend(line);
+}
+
+function renderTables() {
+  const ct = document.getElementById('corpTable');
+  ct.innerHTML = state.seats.map(s => `
+    <tr>
+      <td>#${s.id}</td>
+      <td>${s.role}</td>
+      <td style="color:${s.isHuman ? '#10b981' : '#00e5ff'}">${s.holder}</td>
+      <td>${s.isHuman ? 'Fiat/Contract' : s.wage.toFixed(1) + ' CPC'}</td>
+      <td><button onclick="toggleHumanSeat(${s.id})">${s.isHuman ? 'Revert to AI' : 'Onboard Human'}</button></td>
+    </tr>
+  `).join('');
+
+  const aiCount = state.seats.filter(s => !s.isHuman).length;
+  const humanCount = state.seats.filter(s => s.isHuman).length + 1;
+  const wageSum = state.seats.filter(s => !s.isHuman).reduce((a, b) => a + b.wage, 0);
+  document.getElementById('rosterStat').textContent = `${aiCount} AI / ${humanCount} Human`;
+  document.getElementById('wageStat').textContent = `${wageSum.toFixed(1)} CPC/hr`;
+
+  const mt = document.getElementById('marketTable');
+  mt.innerHTML = state.markets.map(m => `
+    <tr>
+      <td><b>${m.sym}</b></td>
+      <td>${m.venue}</td>
+      <td style="color:#10b981">${m.info}</td>
+      <td><button onclick="tradeMarket('${m.sym}')">Swap (0.25%→NAV)</button></td>
+    </tr>
+  `).join('');
+
+  document.getElementById('cpcBalBadge').textContent = `CPC: ${state.cpc.toFixed(2)}`;
+  document.getElementById('navBadge').textContent = `NAV: $${state.nav.toFixed(4)}`;
+  document.getElementById('tvlVal').textContent = `$${Math.round(state.tvl).toLocaleString()}`;
+  document.getElementById('divVal').textContent = `$${state.divs.toFixed(2)} USDC`;
+  document.getElementById('coreCountVal').textContent = `${state.cores} Cores`;
+  document.getElementById('irlOrdersVal').textContent = `${state.irlOrders} IRL Escrows`;
+}
+
+function toggleHumanSeat(id) {
+  const seat = state.seats.find(s => s.id === id);
+  seat.isHuman = !seat.isHuman;
+  seat.holder = seat.isHuman ? `Human Executive #${100 + id}` : `AI-Agent-${id}`;
+  logMsg(`Chairman Directive: Seat #${id} (${seat.role}) reassigned to ${seat.holder}.`);
+  renderTables();
+}
+
+function runPayrollTick() {
+  const wageSum = state.seats.filter(s => !s.isHuman).reduce((a, b) => a + b.wage, 0);
+  const recycled = wageSum * 0.72 * 0.0025;
+  state.nav += recycled / 10000;
+  state.divs += 0.65;
+  logMsg(`Hourly Payroll Executed: ${wageSum.toFixed(1)} CPC paid to AI staff; 72% spent in Sanctuary markets (+$${recycled.toFixed(4)} swap fees → NAV).`);
+  renderTables();
+}
+
+function issueExecutiveDirective() {
+  state.cores += 4;
+  state.nav += 0.0003;
+  logMsg(`Executive Chairman Directive (Authority Tier 0 > CEO): Authorized +4 Sanctuary Cores & accelerated Aerodrome Base gauge compounding.`);
+  renderTables();
+}
+
+function setComputeMode(mode) {
+  if (state.infraPct >= 100) {
+    logMsg(`Compute Grid permanently sunsetted: 100% real-world Cool Power Core data centers online.`);
+    return;
+  }
+  state.computeMode = mode;
+  ['PAUSE', 'ECO', 'TURBO'].forEach(m => document.getElementById('cmp-' + m).classList.toggle('active', m === mode));
+  const rate = mode === 'PAUSE' ? 0 : (mode === 'ECO' ? 4.85 : 11.40);
+  document.getElementById('stipendVal').textContent = `+${rate.toFixed(2)} CPC/hr`;
+  logMsg(`Encrypted Browser Compute Grid set to ${mode} (AES-256-GCM + ECDH P-256 blind shards).`);
+}
+
+function advancePhysicalInfra(delta) {
+  state.infraPct = Math.min(100, state.infraPct + delta);
+  document.getElementById('infraPctVal').textContent = `${state.infraPct.toFixed(1)}%`;
+  document.getElementById('infraBar').style.width = `${state.infraPct}%`;
+  if (state.infraPct >= 100) {
+    state.computeMode = 'SUNSET';
+    document.getElementById('computePhaseBadge').textContent = 'PHASE 3: 100% REAL INFRA (GRID SUNSET)';
+    document.getElementById('computePhaseBadge').style.color = '#f59e0b';
+    document.getElementById('workersVal').textContent = '0 Nodes (Zeroized)';
+    document.getElementById('stipendVal').textContent = '0.00 CPC/hr (Retired)';
+    logMsg(`MILESTONE REACHED: Physical Cool Power Core infrastructure at 100%. Browser compute workers zeroized and retired!`);
+  } else {
+    document.getElementById('computePhaseBadge').textContent = state.infraPct >= 50 ? 'PHASE 2: HYBRID TRANSITION' : 'PHASE 1: BOOTSTRAP MESH';
+    logMsg(`Physical Cool Power Core infrastructure advanced to ${state.infraPct.toFixed(0)}%. Browser compute load scaled down proportionally.`);
+  }
+}
+
+function resetPhysicalInfra() {
+  state.infraPct = 18.0;
+  document.getElementById('infraPctVal').textContent = '18.0%';
+  document.getElementById('infraBar').style.width = '18%';
+  document.getElementById('computePhaseBadge').textContent = 'PHASE 1: BOOTSTRAP MESH';
+  document.getElementById('computePhaseBadge').style.color = '#10b981';
+  document.getElementById('workersVal').textContent = '14,820 Nodes';
+  setComputeMode('ECO');
+}
+
+function setRigTier(t) {
+  state.rigTier = t;
+  const names = [
+    'TIER 0: HANDHELD ANDROID MOBILE',
+    'TIER 1: CONSOLE + GAMEPAD',
+    'TIER 2: DESKTOP + SEMI-HAPTICS',
+    'TIER 3: FULL-BODY HAPTIC + BRAIN HAT'
+  ];
+  document.getElementById('rigBadge').textContent = names[t];
+  [0,1,2,3].forEach(i => document.getElementById('rig' + i).classList.toggle('active', i === t));
+  logMsg(`Interface scaled to ${names[t]} — continuous state preserved.`);
+}
+
+function selectVariant(v) {
+  state.variant = v;
+  document.getElementById('variantBadge').textContent = `VARIANT: ${v}`;
+  ['V0-EDU', 'V1-DOOM', 'V2-XENO', 'V3-FREE'].forEach(k => document.getElementById('var-' + k).classList.toggle('active', k === v));
+  logMsg(`Loaded timeline ${v} (Unified CPC-COIN economy & corporate hierarchy active).`);
+}
+
+function quantumTunnelJump() {
+  if (state.cpc < 250) { logMsg('Need 250 CPC to energize Quantum Tunnel Drive.'); return; }
+  state.cpc -= 250;
+  state.nav += 0.0018;
+  const order = ['V0-EDU', 'V1-DOOM', 'V2-XENO', 'V3-FREE'];
+  const next = order[(order.indexOf(state.variant) + 1) % order.length];
+  selectVariant(next);
+  logMsg(`⚛️ Quantum Tunnel Jump executed! 250 CPC recycled 100% into global NAV.`);
+  renderTables();
+}
+
+function toggleSurfaceMode() {
+  state.surfaceMode = !state.surfaceMode;
+  document.getElementById('btnViewMode').textContent = state.surfaceMode
+    ? '🛰️ Return to Orbital Planet View'
+    : '🛬 Land on Surface (3rd-Person)';
+  logMsg(state.surfaceMode ? 'Landed inside 21.5°C ETFE Sanctuary Dome (WASD / Drag to explore).' : 'Ascended to 3D Orbital Planet View.');
+}
+
+function deployCoreNode() {
+  state.cores += 1;
+  state.cpc += 5.0;
+  logMsg(`Deployed Sanctuary Core #${state.cores} (+342.4 We net, 12.96 L/day pure H2O).`);
+  renderTables();
+}
+
+function depositReserve(usd, asset) {
+  const minted = usd / state.nav;
+  state.cpc += minted;
+  state.tvl += usd;
+  logMsg(`Deposited $${usd} ${asset} → Minted ${minted.toFixed(2)} CPC at NAV $${state.nav.toFixed(4)}.`);
+  renderTables();
+}
+
+function claimOrCompoundDivs(compound) {
+  if (compound) {
+    state.nav += state.divs / 100000;
+    logMsg(`Compounded $${state.divs.toFixed(2)} ETF dividends (SCHD/JEPI/VOO/SGOV) into global NAV.`);
+  } else {
+    logMsg(`Claimed $${state.divs.toFixed(2)} USDC pro-rata ETF dividends to wallet.`);
+  }
+  state.divs = 0;
+  renderTables();
+}
+
+function tradeMarket(sym) {
+  state.nav += 0.0002;
+  state.cpc += 1.5;
+  logMsg(`Executed ${sym} swap — 0.25% fee recycled into CPC-COIN NAV.`);
+  renderTables();
+}
+
+function runNpcTransportBid() {
+  state.cpc += 32.5;
+  state.nav += 0.0004;
+  logMsg(`🚀 Undercut rival chemical-rocket NPC bid by 14% using 382.93 Wth/core recovery (+32.50 CPC profit).`);
+  renderTables();
+}
+
+function coStarCreatorShow() {
+  state.cpc += 24.0;
+  state.nav += 0.0005;
+  logMsg(`🎬 Co-starred in @NovaBuildsMars YouTube/Rumble/TikTok episode (+24.0 CPC payout; 20% ad revenue → NAV).`);
+  renderTables();
+}
+
+function orderHardwareIRL() {
+  const [sku, priceStr] = document.getElementById('skuSelect').value.split('|');
+  const price = parseFloat(priceStr);
+  if (state.cpc < price) { logMsg(`Insufficient CPC for ${sku} (${price} CPC).`); return; }
+  state.cpc -= price;
+  state.irlOrders += 1;
+  logMsg(`📦 Reserved ${sku} (${price} CPC) in non-custodial Physical Manufacturing Escrow (100% refundable prior to Batch-1 lock).`);
+  renderTables();
+}
+
+function askAiCouncil() {
+  const persona = document.getElementById('aiPersona').value;
+  const q = document.getElementById('aiPrompt').value || 'Status report';
+  const replies = {
+    GEMINI: `Gemini AI: Cool Power Core harvests 382.93 Wth/core via 90°C CVD-graphene cavitation & 33.6 kV plasma, exporting +342.4 We and 12.96 L/day pure water.`,
+    VENICE: `Venice.ai: CPC-COIN combines Aerodrome Base gauges, Lido wstETH, Beefy vaults, and Robinhood Chain ETF dividends with zero token dilution.`,
+    GM: `Game Master AI: Executive Chairman Coleman, AI-CEO Athena-01 reports ${state.cores} active cores and ${state.infraPct.toFixed(0)}% physical data-center readiness.`
+  };
+  const ans = replies[persona];
+  logMsg(`Q: "${q}" → ${ans}`);
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(ans);
+    u.pitch = persona === 'GEMINI' ? 1.05 : (persona === 'VENICE' ? 0.92 : 0.85);
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function startVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { logMsg('Web Speech Recognition unavailable in this browser; type your question above.'); return; }
+  const rec = new SR();
+  rec.onresult = e => {
+    document.getElementById('aiPrompt').value = e.results[0][0].transcript;
+    askAiCouncil();
+  };
+  rec.start();
+  logMsg('🎙️ Listening for voice command to AI Council...');
+}
+
+function exportSyncToken() {
+  const token = 'CPC-SYNC://' + btoa(JSON.stringify({ cpc: state.cpc, cores: state.cores, variant: state.variant, rig: state.rigTier }));
+  copyAddr(token);
+}
+
+function copyAddr(txt) {
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{});
+  logMsg(`Copied to clipboard: ${txt.slice(0, 56)}${txt.length > 56 ? '...' : ''}`);
+}
+
+// 60 FPS Canvas Renderer (Orbital Planet + 3rd-Person Surface Dome Mode)
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+canvas.addEventListener('pointerdown', e => { state.dragging = true; state.lastX = e.clientX; });
+window.addEventListener('pointerup', () => state.dragging = false);
+window.addEventListener('pointermove', e => {
+  if (!state.dragging) return;
+  state.angle += (e.clientX - state.lastX) * 0.008;
+  state.lastX = e.clientX;
+});
+window.addEventListener('keydown', e => {
+  if (!state.surfaceMode) return;
+  if (e.key === 'w' || e.key === 'ArrowUp') state.playerZ -= 6;
+  if (e.key === 's' || e.key === 'ArrowDown') state.playerZ += 6;
+  if (e.key === 'a' || e.key === 'ArrowLeft') state.playerX -= 6;
+  if (e.key === 'd' || e.key === 'ArrowRight') state.playerX += 6;
+});
+
+let t = 0;
+function loop() {
+  t += 0.016;
+  if (!state.dragging) state.angle += 0.003;
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  // Starfield
+  ctx.fillStyle = '#94a3b8';
+  for (let i = 0; i < 45; i++) {
+    const sx = (i * 197 + t * 4) % w;
+    const sy = (i * 89) % h;
+    ctx.fillRect(sx, sy, 1.5, 1.5);
+  }
+
+  const variantColors = {
+    'V0-EDU': ['#00e5ff', '#10b981'],
+    'V1-DOOM': ['#f43f5e', '#f59e0b'],
+    'V2-XENO': ['#a855f7', '#00e5ff'],
+    'V3-FREE': ['#10b981', '#f59e0b']
+  };
+  const [c1, c2] = variantColors[state.variant];
+
+  if (!state.surfaceMode) {
+    // 3D-style Orbital Planet & Transit Ring
+    const cx = w * 0.5, cy = h * 0.52, r = 96;
+    const grad = ctx.createRadialGradient(cx - 30, cy - 30, 15, cx, cy, r);
+    grad.addColorStop(0, c1);
+    grad.addColorStop(0.65, '#0f2942');
+    grad.addColorStop(1, '#040914');
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+
+    // CPC-LOOP Orbital Maglev Ring
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.22);
+    ctx.strokeStyle = c2;
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0, 0, 175, 42, 0, 0, Math.PI * 2); ctx.stroke();
+
+    // Orbiting Shuttle Pod
+    const px = Math.cos(state.angle * 2) * 175;
+    const py = Math.sin(state.angle * 2) * 42;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(px, py, 4.5, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    // Sanctuary Dome Beacons on Planet
+    for (let i = 0; i < 6; i++) {
+      const a = state.angle + i * 1.05;
+      if (Math.sin(a) > -0.2) {
+        const bx = cx + Math.cos(a) * (r * 0.72);
+        const by = cy + Math.sin(a * 0.7) * (r * 0.45);
+        ctx.fillStyle = c2;
+        ctx.beginPath(); ctx.arc(bx, by, 4, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+  } else {
+    // 3rd-Person Surface 21.5°C ETFE Sanctuary Dome View
+    const cx = w * 0.5, cy = h * 0.68;
+    ctx.strokeStyle = c1; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, 210, Math.PI, 0); ctx.stroke();
+    ctx.fillStyle = 'rgba(0, 229, 255, 0.06)'; ctx.fill();
+
+    // Ground Grid
+    ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1;
+    for (let gx = -240; gx <= 240; gx += 40) {
+      ctx.beginPath(); ctx.moveTo(cx + gx, cy); ctx.lineTo(cx + gx * 1.4, h); ctx.stroke();
+    }
+
+    // Central Cool Power Core Spire
+    ctx.fillStyle = c2;
+    ctx.fillRect(cx - 12, cy - 95, 24, 95);
+    ctx.fillStyle = '#fff';
+    ctx.font = '11px monospace';
+    ctx.fillText('CPC HQ & AI-CEO ATHENA-01', cx - 72, cy - 104);
+
+    // Exosuit Avatar (WASD movable)
+    const ax = cx + state.playerX, ay = cy + 35 + state.playerZ;
+    ctx.fillStyle = c1;
+    ctx.beginPath(); ctx.arc(ax, ay - 16, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.fillRect(ax - 6, ay - 8, 12, 18);
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText(`RIG T${state.rigTier} (WASD)`, ax - 34, ay + 22);
+  }
+
+  requestAnimationFrame(loop);
+}
+
+renderTables();
+logMsg('Cool Power Core™: Horizons Unbound (v7.1) initialized. Executive Chairman Thomas Gabriel Coleman authenticated.');
+loop();
+</script>
+</body>
+</html>

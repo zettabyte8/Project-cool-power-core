@@ -1,0 +1,26 @@
+{
+  "name": "cool-power-core-horizons-unbound",
+  "version": "6.2.0",
+  "description": "Cool Power Core (CPC): Horizons Unbound — 60 FPS Cross-Device Adaptive Browser Game, Voice AI Advisor Council, and Shared-World Multiplayer Sanctuary Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Thomas Gabriel Coleman (Corona, CA)",
+  "license": "Proprietary - All Patent Rights Reserved (CPC-PAT-2026-001 through 016-CIP & CPC-PCT-2026-001-WO)",
+  "keywords": [
+    "cool-power-core",
+    "cpc-coin",
+    "sanctuary-city",
+    "webgpu",
+    "pwa",
+    "aerodrome",
+    "robinhood-chain",
+    "lido",
+    "beefy"
+  ]
+}

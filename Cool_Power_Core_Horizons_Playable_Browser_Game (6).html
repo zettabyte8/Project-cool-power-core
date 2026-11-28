@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cool Power Core™: Horizons Unbound — Multiverse & Quantum Tunneling (v6.7)</title>
+<style>
+  :root {
+    --bg: #060b14;
+    --panel: rgba(12, 22, 38, 0.90);
+    --border: rgba(0, 229, 255, 0.28);
+    --cyan: #00e5ff;
+    --amber: #f59e0b;
+    --emerald: #10b981;
+    --crimson: #ef4444;
+    --violet: #a855f7;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: linear-gradient(90deg, #071224, #0d1d36);
+    border-bottom: 1px solid var(--border); gap: 10px; position: sticky; top: 0; z-index: 50;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 38px; height: 38px; flex-shrink: 0; }
+  .brand-title { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.5px; color: #fff; }
+  .brand-sub { font-size: 0.72rem; color: var(--cyan); }
+  .variant-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .v-btn {
+    padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(15, 23, 42, 0.85); color: var(--text); cursor: pointer;
+    font-size: 0.76rem; font-weight: 700; transition: all 0.18s;
+  }
+  .v-btn:hover { border-color: var(--cyan); }
+  .v-btn.active[data-v="0"] { background: rgba(0,229,255,0.2); border-color: var(--cyan); color: #fff; }
+  .v-btn.active[data-v="1"] { background: rgba(239,68,68,0.25); border-color: var(--crimson); color: #fecaca; }
+  .v-btn.active[data-v="2"] { background: rgba(16,185,129,0.25); border-color: var(--emerald); color: #a7f3d0; }
+  .v-btn.active[data-v="3"] { background: rgba(168,85,247,0.25); border-color: var(--violet); color: #e9d5ff; }
+
+  .hud-strip {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 8px; padding: 8px 16px; background: rgba(8, 15, 28, 0.95);
+    border-bottom: 1px solid var(--border);
+  }
+  .kpi { background: rgba(15, 28, 48, 0.75); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 10px; }
+  .kpi-label { font-size: 0.66rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; }
+  .kpi-val { font-size: 0.95rem; font-weight: 800; color: #fff; margin-top: 2px; }
+
+  .main-grid {
+    display: grid; grid-template-columns: 1.25fr 1fr; gap: 12px; padding: 12px 16px;
+  }
+  @media (max-width: 980px) { .main-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  }
+  .card h2 {
+    font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.7px;
+    color: var(--cyan); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  #glCanvas {
+    width: 100%; height: 340px; border-radius: 8px; display: block;
+    background: #02050a; border: 1px solid rgba(0,229,255,0.22); cursor: grab;
+  }
+  .action-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  button.btn {
+    padding: 7px 11px; border-radius: 6px; border: 1px solid var(--border);
+    background: rgba(0, 229, 255, 0.12); color: #fff; font-weight: 600;
+    font-size: 0.76rem; cursor: pointer; transition: 0.15s;
+  }
+  button.btn:hover { background: rgba(0, 229, 255, 0.25); }
+  button.btn.amber { background: rgba(245, 158, 11, 0.18); border-color: rgba(245, 158, 11, 0.45); }
+  button.btn.emerald { background: rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.45); }
+  button.btn.violet { background: rgba(168, 85, 247, 0.22); border-color: rgba(168, 85, 247, 0.55); }
+  button.btn.crimson { background: rgba(239, 68, 68, 0.22); border-color: rgba(239, 68, 68, 0.55); }
+
+  .progress-wrap { background: rgba(255,255,255,0.08); border-radius: 99px; height: 10px; overflow: hidden; margin: 6px 0; }
+  .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--violet)); transition: width 0.25s; }
+
+  .log-box {
+    background: rgba(3, 8, 16, 0.85); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; padding: 8px; height: 115px; overflow-y: auto;
+    font-size: 0.75rem; line-height: 1.4; color: #cbd5e1; margin-top: 8px;
+  }
+  .sub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 12px; padding: 0 16px 16px; }
+  .pill { font-size: 0.68rem; padding: 2px 7px; border-radius: 99px; font-weight: 700; }
+  .pill.edu { background: rgba(0,229,255,0.2); color: var(--cyan); }
+  .pill.doom { background: rgba(239,68,68,0.25); color: #fca5a5; }
+  .pill.xeno { background: rgba(16,185,129,0.25); color: #6ee7b7; }
+  .pill.free { background: rgba(168,85,247,0.25); color: #d8b4fe; }
+
+  .ai-tabs { display: flex; gap: 6px; margin-bottom: 6px; }
+  .ai-input-row { display: flex; gap: 6px; margin-top: 6px; }
+  input[type="text"], select {
+    flex: 1; background: rgba(5, 11, 22, 0.9); border: 1px solid var(--border);
+    color: #fff; padding: 6px 8px; border-radius: 6px; font-size: 0.78rem;
+  }
+  .addr-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(5, 11, 22, 0.75); padding: 5px 8px; border-radius: 5px;
+    margin-bottom: 5px; font-size: 0.71rem; border: 1px solid rgba(255,255,255,0.07);
+  }
+  .addr-code { font-family: monospace; color: var(--cyan); overflow: hidden; text-overflow: ellipsis; max-width: 68%; }
+  .tunnel-flash {
+    position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    background: radial-gradient(circle, rgba(168,85,247,0.65), rgba(0,229,255,0.45), transparent 75%);
+    opacity: 0; transition: opacity 0.35s ease-out;
+  }
+</style>
+</head>
+<body>
+<div id="tunnelFlash" class="tunnel-flash"></div>
+
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="#091526" stroke="#00e5ff" stroke-width="4"/>
+      <circle cx="50" cy="50" r="28" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="14 6"/>
+      <polygon points="53,24 36,53 49,53 45,76 64,46 51,46" fill="#10b981"/>
+    </svg>
+    <div>
+      <div class="brand-title">COOL POWER CORE™: HORIZONS UNBOUND</div>
+      <div class="brand-sub">60 FPS Multiverse Engine • Shared CPC-COIN Economy • Inventor: Thomas Gabriel Coleman</div>
+    </div>
+  </div>
+
+  <div class="variant-bar" id="variantBar">
+    <button class="v-btn active" data-v="0" onclick="selectVariant(0, false)">🎓 Educational Canon</button>
+    <button class="v-btn" data-v="1" onclick="selectVariant(1, false)">🔥 Doom Chronicle</button>
+    <button class="v-btn" data-v="2" onclick="selectVariant(2, false)">👽 Alien Frontier</button>
+    <button class="v-btn" data-v="3" onclick="selectVariant(3, false)">🌀 Unrestricted Sandbox</button>
+  </div>
+</header>
+
+<div class="hud-strip">
+  <div class="kpi"><div class="kpi-label">Active Variant</div><div class="kpi-val" id="kpiVariant">V0: Educational</div></div>
+  <div class="kpi"><div class="kpi-label">CPC-COIN Balance (Shared)</div><div class="kpi-val" id="kpiCpc" style="color:var(--emerald)">120.00 CPC</div></div>
+  <div class="kpi"><div class="kpi-label">CPC-COIN NAV (Basket + Yield)</div><div class="kpi-val" id="kpiNav">$1.0428</div></div>
+  <div class="kpi"><div class="kpi-label">ETF Dividends (SCHD/JEPI/VOO)</div><div class="kpi-val" id="kpiDiv">$0.0000</div></div>
+  <div class="kpi"><div class="kpi-label">Core Capacitor & Cores</div><div class="kpi-val" id="kpiCore">100% | 10 Cores</div></div>
+  <div class="kpi"><div class="kpi-label">Quantum Tunneling Drive</div><div class="kpi-val" id="kpiQt" style="color:var(--violet)">24% (Charging)</div></div>
+</div>
+
+<div class="main-grid">
+  <div class="card">
+    <h2>
+      <span>3D Procedural Multiverse Planet & Sanctuary Dome</span>
+      <span id="variantBadge" class="pill edu">RESTRICTIONS: STEM & SAFETY INTERLOCKS ON</span>
+    </h2>
+    <canvas id="glCanvas"></canvas>
+    <div class="action-row">
+      <button class="btn" onclick="deployCore()">+ Deploy CPC Core (+342.4 We)</button>
+      <button class="btn amber" id="btnVariantAction" onclick="runVariantMission()">Run STEM Certification Quest</button>
+      <button class="btn emerald" onclick="runNpcTransportBid()">Undercut NPC Transport Bid (+CPC)</button>
+      <button class="btn violet" onclick="runCreatorShow()">Film NPC Creator Show (YT/TikTok)</button>
+    </div>
+    <div class="log-box" id="eventLog"></div>
+  </div>
+
+  <div class="card">
+    <h2>
+      <span>⚛️ Deep Mechanic: Quantum Tunneling Tech</span>
+      <span id="qtStatusPill" class="pill free">PHASE-COHERENCE ENGINE</span>
+    </h2>
+    <p style="font-size:0.76rem; color:var(--muted); line-height:1.45;">
+      Buried in the <strong>33.6 kV ZVS plasma + 4H-SiC betavoltaic lattice</strong> of every Cool Power Core™ is a macroscopic quantum phase-tunneling harmonic. Charge coherence to <strong>100%</strong> and stake <strong>250 CPC</strong> (recycled 100% into global NAV) to unlock <strong>instant mid-mission Quantum Tunnel Jumps</strong> across all four game variants with your rig, cargo, and shared economy intact.
+    </p>
+    <div style="margin-top:8px; font-size:0.75rem; display:flex; justify-content:space-between;">
+      <span>Quantum Phase Coherence:</span>
+      <strong id="qtPctLabel">24.0% / 100.0%</strong>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="qtBar" style="width:24%"></div></div>
+
+    <div class="action-row">
+      <button class="btn" onclick="chargeQuantum()">⚡ Pulse 33.6 kV ZVS Coherence (+19%)</button>
+      <button class="btn violet" id="btnUnlockQt" onclick="unlockQuantumTunnel()">🔓 Unlock Quantum Tunnel Drive (250 CPC)</button>
+    </div>
+
+    <div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">
+      <div style="font-size:0.74rem; font-weight:700; color:var(--cyan); margin-bottom:5px;">
+        INSTANT QUANTUM TUNNEL JUMP (ACTIVE ONCE UNLOCKED):
+      </div>
+      <div class="action-row">
+        <button class="btn" onclick="selectVariant(0, true)">🌀 Tunnel → Educational</button>
+        <button class="btn crimson" onclick="selectVariant(1, true)">🌀 Tunnel → Doom Chronicle</button>
+        <button class="btn emerald" onclick="selectVariant(2, true)">🌀 Tunnel → Alien Frontier</button>
+        <button class="btn violet" onclick="selectVariant(3, true)">🌀 Tunnel → Sandbox Chaos</button>
+      </div>
+    </div>
+
+    <div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">
+      <div style="font-size:0.74rem; font-weight:700; color:var(--amber); margin-bottom:4px;">
+        CROSS-DEVICE RIG & CONTINUOUS STATE SYNC (`CPC-SYNC://`):
+      </div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <select id="rigSelect" onchange="changeRig()">
+          <option value="0">Tier 0: Android Handheld Mobile Browser (Touch + Vibration)</option>
+          <option value="1">Tier 1: Console / Smart TV Browser (Dual-Motor Gamepad)</option>
+          <option value="2" selected>Tier 2: Desktop + Controller & Semi-Haptic Vest</option>
+          <option value="3">Tier 3: Full-Body Haptic Suit + Zero-RF Brain Hat</option>
+        </select>
+        <button class="btn emerald" onclick="exportSyncToken()">Copy Sync Token</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sub-grid">
+  <div class="card">
+    <h2><span>💰 Shared CPC-COIN Reserve, ETF Dividends & Stock Mirror</span></h2>
+    <p style="font-size:0.74rem; color:var(--muted); margin-bottom:6px;">
+      100% shared across all 4 variants. Backed by multi-currency deposits compounded via <strong>Aerodrome (Base)</strong>, <strong>Lido wstETH + Beefy.com</strong>, and <strong>Robinhood Chain ETFs (SCHD, JEPI, VOO, SGOV)</strong>.
+    </p>
+    <div class="action-row">
+      <button class="btn emerald" onclick="depositCurrency('USDC', 50)">Deposit 50 USDC</button>
+      <button class="btn emerald" onclick="depositCurrency('ETH', 0.05)">Deposit 0.05 ETH</button>
+      <button class="btn amber" onclick="claimDividends()">Claim ETF Dividends</button>
+      <button class="btn" onclick="tradeStockMirror()">Trade Stock Mirror (NVDA/SPY)</button>
+    </div>
+    <div style="margin-top:8px; font-size:0.74rem; color:#cbd5e1;" id="marketTicker">
+      Live Mirror: SPY $598.40 (+0.6%) | NVDA $142.80 (+1.8%) | SCHD $86.15 (3.5% Div) | AI NPCs Active: 2,048
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span>🤖 Interactive AI Council (Ask Questions or Speak)</span></h2>
+    <div class="ai-tabs">
+      <button class="v-btn active" id="aiTab0" onclick="setAiPersona(0)">✦ Gemini AI (google.com)</button>
+      <button class="v-btn" id="aiTab1" onclick="setAiPersona(1)">◈ Venice.ai</button>
+      <button class="v-btn" id="aiTab2" onclick="setAiPersona(2)">❖ Game Master AI</button>
+    </div>
+    <div class="log-box" id="aiChatBox" style="height:82px;">
+      <strong>✦ Gemini AI:</strong> Welcome to Horizons Unbound! Ask me how Cool Power Core™ physics work, how to unlock Quantum Tunneling across variants, or how CPC-COIN compounds yield.
+    </div>
+    <div class="ai-input-row">
+      <input type="text" id="aiQuestion" placeholder="Ask Gemini, Venice.ai, or Game Master..." onkeydown="if(event.key==='Enter')askAi()" />
+      <button class="btn" onclick="askAi()">Ask</button>
+      <button class="btn amber" onclick="voiceAsk()">🎙️ Speak</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span>🏛️ Support Inventor Thomas Gabriel Coleman</span></h2>
+    <div class="addr-row">
+      <span><strong>Gnosis Safe:</strong> <span class="addr-code">0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</span></span>
+      <button class="btn" onclick="copyAddr('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37','Investment Gnosis Safe')">Copy</button>
+    </div>
+    <div class="addr-row">
+      <span><strong>EVM Donate:</strong> <span class="addr-code">0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</span></span>
+      <button class="btn emerald" onclick="copyAddr('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf','Thomas EVM Donate')">Copy</button>
+    </div>
+    <div class="addr-row">
+      <span><strong>BTC / Sats:</strong> <span class="addr-code">howeyecrypto@cake.cash</span></span>
+      <button class="btn amber" onclick="copyAddr('howeyecrypto@cake.cash','Cake Pay BTC/Sats')">Copy</button>
+    </div>
+    <div class="addr-row">
+      <span><strong>Solana (SOL):</strong> <span class="addr-code">2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</span></span>
+      <button class="btn violet" onclick="copyAddr('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr','Solana Donate')">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const VARIANTS = [
+  {
+    id: 0, code: "V0-EDU", name: "Educational Canon",
+    badge: "RESTRICTIONS: STEM & SAFETY INTERLOCKS ON", badgeClass: "pill edu",
+    actionLabel: "Run STEM Certification Quest",
+    colorA: [0.02, 0.38, 0.58], colorB: [0.06, 0.72, 0.50], atmosphere: [0.0, 0.85, 1.0],
+    intro: "Educational Canon active: Real-world 382.93 Wth/core physics, safety interlocks, and STEM certification quests enforced."
+  },
+  {
+    id: 1, code: "V1-DOOM", name: "Doom Chronicle",
+    badge: "NO RESTRICTIONS • ARGENT BREACH ESCALATING", badgeClass: "pill doom",
+    actionLabel: "Repel Phobos Breach Wave (+42 CPC)",
+    colorA: [0.42, 0.05, 0.05], colorB: [0.85, 0.22, 0.08], atmosphere: [1.0, 0.25, 0.12],
+    intro: "Doom Chronicle active: Dimensional breach clock ticking! All educational locks disabled—overdrive plasma bayonets & flight suits!"
+  },
+  {
+    id: 2, code: "V2-XENO", name: "Alien Resource Frontier",
+    badge: "NO RESTRICTIONS • XENO FACTIONS COMPETING", badgeClass: "pill xeno",
+    actionLabel: "Outbid Vaelari Alien Harvester (+38 CPC)",
+    colorA: [0.04, 0.32, 0.22], colorB: [0.18, 0.78, 0.45], atmosphere: [0.15, 1.0, 0.55],
+    intro: "Alien Frontier active: Extraterrestrial Vaelari & Krell fleets are competing for He-3 and lava-tube slots. Outbid or defend!"
+  },
+  {
+    id: 3, code: "V3-FREE", name: "Unrestricted Sandbox",
+    badge: "ZERO RESTRICTIONS • ANYTHING GOES ENTERTAINMENT", badgeClass: "pill free",
+    actionLabel: "Trigger Hyper-Chaos Mega-Stunt (+55 CPC)",
+    colorA: [0.24, 0.08, 0.46], colorB: [0.68, 0.28, 0.96], atmosphere: [0.75, 0.35, 1.0],
+    intro: "Unrestricted Sandbox active: Zero quests, zero safety caps, pure entertainment—while keeping 100% of your shared CPC-COIN economy!"
+  }
+];
+
+const state = {
+  variant: 0,
+  cpc: 120.00,
+  nav: 1.0428,
+  dividends: 0.0000,
+  cores: 10,
+  capPct: 100.0,
+  qtCoherence: 24.0,
+  qtUnlocked: false,
+  doomThreat: 12.0,
+  rigTier: 2,
+  aiPersona: 0,
+  fame: 140
+};
+
+function logEvent(msg) {
+  const box = document.getElementById("eventLog");
+  const t = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  box.innerHTML = `<div><span style="color:var(--cyan)">[${t}]</span> ${msg}</div>` + box.innerHTML;
+}
+
+function updateHud() {
+  const v = VARIANTS[state.variant];
+  document.getElementById("kpiVariant").textContent = `${v.code}: ${v.name}`;
+  document.getElementById("kpiCpc").textContent = `${state.cpc.toFixed(2)} CPC`;
+  document.getElementById("kpiNav").textContent = `$${state.nav.toFixed(4)}`;
+  document.getElementById("kpiDiv").textContent = `$${state.dividends.toFixed(4)}`;
+  document.getElementById("kpiCore").textContent = `${state.capPct.toFixed(0)}% | ${state.cores} Cores`;
+  document.getElementById("kpiQt").textContent = state.qtUnlocked
+    ? "UNLOCKED (Phase Jump Ready)"
+    : `${state.qtCoherence.toFixed(0)}% (${state.qtCoherence >= 100 ? "Ready to Unlock" : "Charging"})`;
+  document.getElementById("qtPctLabel").textContent = `${state.qtCoherence.toFixed(1)}% / 100.0%`;
+  document.getElementById("qtBar").style.width = `${Math.min(100, state.qtCoherence)}%`;
+
+  const badge = document.getElementById("variantBadge");
+  badge.textContent = v.badge;
+  badge.className = v.badgeClass;
+  document.getElementById("btnVariantAction").textContent = v.actionLabel;
+
+  document.querySelectorAll("#variantBar .v-btn").forEach(btn => {
+    btn.classList.toggle("active", Number(btn.dataset.v) === state.variant);
+  });
+}
+
+function selectVariant(idx, viaQuantumTunnel) {
+  if (viaQuantumTunnel && !state.qtUnlocked) {
+    logEvent("⚠️ Quantum Tunneling Drive is still locked! Charge Quantum Phase Coherence to 100% and stake 250 CPC to unlock.");
+    return;
+  }
+  if (viaQuantumTunnel) {
+    if (state.capPct < 15) {
+      logEvent("⚠️ Supercapacitor below 15%—wait 2 seconds for Cool Power Core™ recharge.");
+      return;
+    }
+    state.capPct -= 15;
+    const flash = document.getElementById("tunnelFlash");
+    flash.style.opacity = "1";
+    setTimeout(() => flash.style.opacity = "0", 350);
+    logEvent(`🌀 <strong>QUANTUM TUNNEL JUMP COMPLETE!</strong> Phase-shifted intact into <strong>${VARIANTS[idx].name}</strong> with all ${state.cpc.toFixed(2)} CPC & rig gear preserved.`);
+  } else {
+    logEvent(`🌐 Switched Multiverse Timeline to <strong>${VARIANTS[idx].name}</strong>. ${VARIANTS[idx].intro}`);
+  }
+  state.variant = idx;
+  updateHud();
+}
+
+function deployCore() {
+  state.cores += 5;
+  state.qtCoherence = Math.min(100, state.qtCoherence + 8);
+  state.nav += 0.0003;
+  logEvent(`⚙️ Deployed 5 Cool Power Core™ units (Total: ${state.cores}). Exporting +${(state.cores*0.3424).toFixed(2)} kWe & +${(state.cores*12.96).toFixed(0)} L/day pure water.`);
+  updateHud();
+}
+
+function chargeQuantum() {
+  if (state.qtUnlocked) {
+    logEvent("⚛️ Quantum Tunneling Drive already unlocked at 100% phase coherence!");
+    return;
+  }
+  state.qtCoherence = Math.min(100, state.qtCoherence + 19);
+  logEvent(`⚛️ Pulsed 33.6 kV ZVS plasma harmonic into 4H-SiC lattice → Quantum Coherence now ${state.qtCoherence.toFixed(1)}%.`);
+  updateHud();
+}
+
+function unlockQuantumTunnel() {
+  if (state.qtUnlocked) {
+    logEvent("⚛️ Quantum Tunneling Drive is already active! Use the Quantum Tunnel Jump buttons anytime.");
+    return;
+  }
+  if (state.qtCoherence < 100) {
+    logEvent(`⚠️ Need 100% Quantum Phase Coherence first (currently ${state.qtCoherence.toFixed(1)}%).`);
+    return;
+  }
+  if (state.cpc < 250) {
+    logEvent(`⚠️ Need 250.00 CPC reserve stake to initialize Quantum Tunneling Drive (currently ${state.cpc.toFixed(2)} CPC).`);
+    return;
+  }
+  state.cpc -= 250;
+  state.nav += 0.0042;
+  state.qtUnlocked = true;
+  logEvent("🔓 <strong>QUANTUM TUNNELING DRIVE UNLOCKED!</strong> 250 CPC recycled into global reserve NAV. You can now quantum-tunnel mid-mission across all 4 game variants!");
+  updateHud();
+}
+
+function runVariantMission() {
+  if (state.variant === 0) {
+    if (state.capPct < 20) { logEvent("⚠️ Safety Interlock (V0-EDU): Supercapacitor must be ≥20% before running field lab."); return; }
+    state.capPct -= 15;
+    state.cpc += 28.5;
+    state.qtCoherence = Math.min(100, state.qtCoherence + 12);
+    logEvent("🎓 [V0-EDU] Completed 90°C CVD-Graphene Cavitation & Etched-Core Thermodynamic Certification! Earned +28.50 CPC.");
+  } else if (state.variant === 1) {
+    state.doomThreat = Math.min(100, state.doomThreat + 7.5);
+    state.cpc += 42.0;
+    state.qtCoherence = Math.min(100, state.qtCoherence + 15);
+    logEvent(`🔥 [V1-DOOM] Repelled Phobos Argent-Plasma Breach Wave (Breach Level: ${state.doomThreat.toFixed(1)}%) with 0.38m Magnetic Plasma Bayonet! Looted +42.00 CPC.`);
+  } else if (state.variant === 2) {
+    state.cpc += 38.0;
+    state.qtCoherence = Math.min(100, state.qtCoherence + 14);
+    logEvent("👽 [V2-XENO] Outmaneuvered Vaelari Alien Harvester Fleet for Lunar He-3 & Lava-Tube Dock! Secured +38.00 CPC.");
+  } else {
+    state.cpc += 55.0;
+    state.qtCoherence = Math.min(100, state.qtCoherence + 18);
+    logEvent("🌀 [V3-FREE] Executed Mach-4 Briefcase Flight-Suit Orbital Barrel-Roll through Sanctuary Dome! Crowd tipped +55.00 CPC.");
+  }
+  updateHud();
+}
+
+function runNpcTransportBid() {
+  const rivalQuote = 78.0;
+  const yourBid = 64.5;
+  const netProfit = 24.8;
+  state.cpc += netProfit;
+  state.nav += 0.0005;
+  state.qtCoherence = Math.min(100, state.qtCoherence + 9);
+  logEvent(`🚀 Undercut rival chemical-rocket NPC (${rivalQuote} CPC → ${yourBid} CPC) to transport 4 guild engineers to Mars Lava Tube! Net profit: +${netProfit.toFixed(2)} CPC.`);
+  updateHud();
+}
+
+function runCreatorShow() {
+  const platforms = ["YouTube", "Rumble", "Instagram Reels", "TikTok"];
+  const plat = platforms[Math.floor(Math.random() * platforms.length)];
+  const views = Math.floor(45000 + Math.random() * 140000);
+  const payout = +(views * 0.00024).toFixed(2);
+  state.cpc += payout;
+  state.fame += Math.floor(views / 1000);
+  state.nav += 0.0006;
+  logEvent(`🎬 Co-starred with @NovaBuildsMars on <strong>${plat}</strong> (${views.toLocaleString()} real-world views)! Earned +${payout} CPC & boosted global NAV.`);
+  updateHud();
+}
+
+function depositCurrency(sym, amt) {
+  const usdVal = sym === "ETH" ? amt * 3450 : amt;
+  const minted = usdVal / state.nav;
+  state.cpc += minted;
+  logEvent(`🏦 Deposited ${amt} ${sym} ($${usdVal.toFixed(2)}) into multi-currency reserve → Minted +${minted.toFixed(2)} CPC (85% routed to Aerodrome/Lido/Beefy/Robinhood ETFs).`);
+  updateHud();
+}
+
+function claimDividends() {
+  if (state.dividends < 0.0001) {
+    logEvent("ℹ️ Blue-chip ETF dividends (SCHD, JEPI, VOO, SGOV) accrue continuously every second—wait a moment and claim!");
+    return;
+  }
+  const claimed = state.dividends;
+  state.dividends = 0;
+  logEvent(`💵 Claimed $${claimed.toFixed(4)} USDC in pro-rata Robinhood Chain ETF dividends without selling any CPC-COIN principal!`);
+  updateHud();
+}
+
+function tradeStockMirror() {
+  const gain = +(6.5 + Math.random() * 11.5).toFixed(2);
+  state.cpc += gain;
+  logEvent(`📈 Executed mirrored NVDA / SPY momentum swing in Sanctuary Underground Exchange → +${gain} CPC realized!`);
+  updateHud();
+}
+
+function changeRig() {
+  state.rigTier = Number(document.getElementById("rigSelect").value);
+  const names = [
+    "Tier 0: Android Handheld Mobile Browser",
+    "Tier 1: Console / Smart TV Browser",
+    "Tier 2: Desktop + Semi-Haptic Vest",
+    "Tier 3: Full-Body Haptic Suit + Zero-RF Brain Hat"
+  ];
+  logEvent(`🦾 Scaled interface & rig capabilities to <strong>${names[state.rigTier]}</strong> with 100% continuous save state.`);
+}
+
+function exportSyncToken() {
+  const payload = btoa(JSON.stringify({
+    v: state.variant, cpc: +state.cpc.toFixed(2), cores: state.cores,
+    qt: state.qtUnlocked, coh: +state.qtCoherence.toFixed(1), rig: state.rigTier
+  }));
+  const token = `CPC-SYNC://${payload}`;
+  navigator.clipboard?.writeText(token);
+  logEvent(`🔗 Copied portable cross-device token to clipboard: <code>${token.slice(0, 38)}...</code>`);
+}
+
+function copyAddr(addr, label) {
+  navigator.clipboard?.writeText(addr);
+  logEvent(`📋 Copied <strong>${label}</strong> address to clipboard: <code>${addr}</code>`);
+}
+
+function setAiPersona(p) {
+  state.aiPersona = p;
+  [0,1,2].forEach(i => document.getElementById(`aiTab${i}`).classList.toggle("active", i === p));
+  const intros = [
+    "<strong>✦ Gemini AI (google.com):</strong> Ready! Ask me about Cool Power Core™ thermodynamics, Quantum Tunneling across variants, or STEM mechanics.",
+    "<strong>◈ Venice.ai:</strong> Sovereign privacy & DeFi node online. Ask about CPC-COIN's Aerodrome/Lido/Beefy/ETF reserve or zero-RF Brain Hat security.",
+    "<strong>❖ Game Master AI:</strong> Multiverse Director ready! Ask about Doom Chronicle breach waves, Alien Frontier fleets, or NPC Creator Studios."
+  ];
+  document.getElementById("aiChatBox").innerHTML = intros[p];
+}
+
+function askAi(overrideText) {
+  const input = document.getElementById("aiQuestion");
+  const q = (overrideText || input.value).trim();
+  if (!q) return;
+  input.value = "";
+  const ql = q.toLowerCase();
+  let reply = "";
+
+  if (state.aiPersona === 0) {
+    if (ql.includes("quantum") || ql.includes("tunnel") || ql.includes("variant")) {
+      reply = "Quantum Tunneling exploits phase coherence between the 33.6 kV ZVS plasma chamber and 4H-SiC betavoltaic lattice. Reach 100% coherence and stake 250 CPC to jump across Educational, Doom, Alien, and Sandbox variants mid-mission!";
+    } else {
+      reply = "Each Cool Power Core™ bridges 90°C CVD-graphene cavitation against ambient cold sinks (382.93 Wth/core) to export +342.4 We continuous power and 12.96 L/day pure distilled water—powering all 4 game variants identically.";
+    }
+  } else if (state.aiPersona === 1) {
+    if (ql.includes("etf") || ql.includes("coin") || ql.includes("aerodrome") || ql.includes("lido")) {
+      reply = "CPC-COIN pools every deposited currency into one unified global reserve—compounding via Aerodrome gauges on Base, Lido wstETH + Beefy.com, and Robinhood Chain ETF dividends (SCHD, JEPI, VOO, SGOV) across all 4 variants.";
+    } else {
+      reply = "Your Brain Hat interface uses zero RF transceivers, dual Mu-Metal Faraday shielding, unidirectional optical diodes, and 0.4 ms somatic muscle override—making external takeover physically impossible in every timeline.";
+    }
+  } else {
+    if (ql.includes("doom") || ql.includes("alien") || ql.includes("sandbox")) {
+      reply = "You can switch variants anytime from the top bar, or unlock Quantum Tunneling to phase-jump mid-combat! Only V0-Educational enforces STEM & safety locks; Doom, Alien Frontier, and Sandbox are completely unrestricted.";
+    } else {
+      reply = "Tip: Undercut rival NPC transport bids and co-star in NPC Creator Studio shows (YouTube, Rumble, IG, TikTok) to earn fast CPC-COIN and reach 100% Quantum Phase Coherence!";
+    }
+  }
+  const names = ["✦ Gemini AI", "◈ Venice.ai", "❖ Game Master AI"];
+  const box = document.getElementById("aiChatBox");
+  box.innerHTML = `<div><strong>You:</strong> ${q}</div><div style="margin-top:4px;color:var(--cyan)"><strong>${names[state.aiPersona]}:</strong> ${reply}</div>`;
+  if ("speechSynthesis" in window) {
+    const u = new SpeechSynthesisUtterance(reply);
+    u.pitch = state.aiPersona === 0 ? 1.05 : (state.aiPersona === 1 ? 0.92 : 0.85);
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function voiceAsk() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    askAi("How does Quantum Tunneling connect all four game variants?");
+    return;
+  }
+  const rec = new SR();
+  rec.lang = "en-US";
+  rec.onresult = (e) => askAi(e.results[0][0].transcript);
+  rec.start();
+}
+
+// 60 FPS Simulation & Economic Tick
+setInterval(() => {
+  state.capPct = Math.min(100, state.capPct + 1.8);
+  state.nav += 0.000008;
+  state.dividends += (state.cpc * state.nav * 0.000018);
+  if (!state.qtUnlocked) {
+    state.qtCoherence = Math.min(100, state.qtCoherence + 0.15 * (state.cores / 10));
+  }
+  if (state.variant === 1) {
+    state.doomThreat = Math.min(100, state.doomThreat + 0.12);
+  }
+  updateHud();
+}, 1000);
+
+// 60 FPS WebGL Ray-Marched Procedural Multiverse Planet
+(function initWebGL() {
+  const canvas = document.getElementById("glCanvas");
+  const gl = canvas.getContext("webgl");
+  if (!gl) return;
+
+  const vs = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+  const fs = `
+    precision highp float;
+    uniform vec2 uRes;
+    uniform float uTime;
+    uniform float uYaw;
+    uniform vec3 uColA;
+    uniform vec3 uColB;
+    uniform vec3 uAtmo;
+    uniform float uQt;
+
+    float hash(vec3 p) {
+      p = fract(p * 0.3183099 + 0.1);
+      p *= 17.0;
+      return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+    }
+    float noise(vec3 x) {
+      vec3 i = floor(x);
+      vec3 f = fract(x);
+      f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(mix(hash(i+vec3(0,0,0)), hash(i+vec3(1,0,0)), f.x),
+                     mix(hash(i+vec3(0,1,0)), hash(i+vec3(1,1,0)), f.x), f.y),
+                 mix(mix(hash(i+vec3(0,0,1)), hash(i+vec3(1,0,1)), f.x),
+                     mix(hash(i+vec3(0,1,1)), hash(i+vec3(1,1,1)), f.x), f.y), f.z);
+    }
+    float fbm(vec3 p) {
+      float v = 0.0; float a = 0.5;
+      for (int i = 0; i < 4; i++) { v += a * noise(p); p *= 2.05; a *= 0.5; }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+      vec3 ro = vec3(0.0, 0.15, 2.75);
+      vec3 rd = normalize(vec3(uv, -1.35));
+
+      float b = dot(ro, rd);
+      float c = dot(ro, ro) - 1.0;
+      float h = b * b - c;
+
+      vec3 col = vec3(0.01, 0.02, 0.05) + 0.03 * vec3(uv.y + 0.5);
+      // Quantum tunneling phase lattice background
+      float grid = smoothstep(0.97, 1.0, sin(uv.x * 38.0 + uTime) * cos(uv.y * 38.0 - uTime));
+      col += uAtmo * grid * (0.06 + 0.14 * uQt);
+
+      if (h > 0.0) {
+        float t = -b - sqrt(h);
+        vec3 pos = ro + t * rd;
+        vec3 n = normalize(pos);
+        float ang = uTime * 0.22 + uYaw;
+        mat2 rot = mat2(cos(ang), -sin(ang), sin(ang), cos(ang));
+        vec3 sp = n;
+        sp.xz = rot * sp.xz;
+
+        float terrain = fbm(sp * 3.8);
+        vec3 surf = mix(uColA, uColB, smoothstep(0.32, 0.72, terrain));
+        // Glowing Sanctuary City Domes & CPC-LOOP transit arcs
+        float domes = smoothstep(0.84, 0.90, noise(sp * 16.0));
+        float loopArc = smoothstep(0.985, 1.0, cos(sp.y * 18.0) * sin(sp.x * 12.0 + uTime * 2.0));
+        surf += vec3(0.0, 0.95, 1.0) * domes * 1.4 + vec3(1.0, 0.75, 0.2) * loopArc * 1.6;
+
+        vec3 lightDir = normalize(vec3(0.75, 0.55, 0.65));
+        float diff = max(dot(n, lightDir), 0.12);
+        float rim = pow(1.0 - max(dot(n, -rd), 0.0), 3.0);
+        col = surf * diff + uAtmo * rim * 0.75;
+      } else {
+        float glow = exp(-4.5 * abs(length(ro - rd * b) - 1.0));
+        col += uAtmo * glow * 0.35;
+      }
+      gl_FragColor = vec4(col, 1.0);
+    }
+  `;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p");
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  let yaw = 0, dragging = false, lastX = 0;
+  canvas.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; });
+  window.addEventListener("pointerup", () => dragging = false);
+  window.addEventListener("pointermove", e => { if (dragging) { yaw += (e.clientX - lastX) * 0.01; lastX = e.clientX; } });
+
+  function render(ms) {
+    if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    const v = VARIANTS[state.variant];
+    gl.uniform2f(gl.getUniformLocation(prog, "uRes"), canvas.width, canvas.height);
+    gl.uniform1f(gl.getUniformLocation(prog, "uTime"), ms * 0.001);
+    gl.uniform1f(gl.getUniformLocation(prog, "uYaw"), yaw);
+    gl.uniform3fv(gl.getUniformLocation(prog, "uColA"), v.colorA);
+    gl.uniform3fv(gl.getUniformLocation(prog, "uColB"), v.colorB);
+    gl.uniform3fv(gl.getUniformLocation(prog, "uAtmo"), v.atmosphere);
+    gl.uniform1f(gl.getUniformLocation(prog, "uQt"), state.qtUnlocked ? 1.0 : state.qtCoherence / 100.0);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  requestAnimationFrame(render);
+})();
+
+logEvent("🚀 Welcome to Cool Power Core™: Horizons Unbound (v6.7 Multiverse Edition). All 4 game variants share your unified CPC-COIN economy!");
+updateHud();
+</script>
+</body>
+</html>

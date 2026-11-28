@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cool Power Core™: Horizons Unbound (v7.0 Corporate & Multiverse Edition)</title>
+<style>
+  :root {
+    --bg: #070b14; --panel: #0f172a; --border: #1e293b; --cyan: #00e5ff;
+    --amber: #f59e0b; --green: #10b981; --purple: #a855f7; --red: #ef4444; --text: #f1f5f9; --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  body { margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: #0b1120; border-bottom: 1px solid var(--border); gap: 8px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.4px; }
+  .badge { padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; background: rgba(0,229,255,0.12); color: var(--cyan); border: 1px solid rgba(0,229,255,0.35); }
+  .exec-pill { background: rgba(245,158,11,0.16); color: var(--amber); border: 1px solid rgba(245,158,11,0.45); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+  .grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 12px; padding: 12px; max-width: 1520px; margin: 0 auto; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .card h2 { margin: 0 0 8px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--cyan); display: flex; justify-content: space-between; align-items: center; }
+  canvas { width: 100%; height: 320px; background: #030712; border-radius: 8px; border: 1px solid #1e293b; display: block; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+  .kpi { background: #090f1d; border: 1px solid #1e293b; border-radius: 8px; padding: 8px; }
+  .kpi .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .kpi .val { font-size: 15px; font-weight: 800; color: var(--green); margin-top: 2px; }
+  .btn-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  button, select, input {
+    background: #131c31; color: var(--text); border: 1px solid #334155;
+    border-radius: 6px; padding: 6px 10px; font-size: 12px; cursor: pointer;
+  }
+  button:hover { border-color: var(--cyan); }
+  button.primary { background: rgba(0,229,255,0.16); border-color: var(--cyan); color: var(--cyan); font-weight: 700; }
+  button.gold { background: rgba(245,158,11,0.16); border-color: var(--amber); color: var(--amber); font-weight: 700; }
+  button.green { background: rgba(16,185,129,0.16); border-color: var(--green); color: var(--green); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-top: 6px; }
+  th, td { padding: 6px 6px; border-bottom: 1px solid #1e293b; text-align: left; }
+  th { color: var(--muted); font-weight: 700; font-size: 10.5px; text-transform: uppercase; }
+  .tag-ai { background: rgba(168,85,247,0.18); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.4); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .tag-human { background: rgba(16,185,129,0.18); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .tag-chair { background: rgba(245,158,11,0.22); color: #fde68a; border: 1px solid rgba(245,158,11,0.5); padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; }
+  .log { height: 110px; overflow-y: auto; background: #050914; border: 1px solid #1e293b; border-radius: 6px; padding: 8px; font-family: ui-monospace, SFMono-Regular, monospace; font-size: 11px; color: #cbd5e1; margin-top: 8px; }
+  .patron-box { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; font-size: 11px; }
+  .addr { background: #070d1a; border: 1px solid #1e293b; padding: 6px 8px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .addr code { color: var(--cyan); font-size: 10.5px; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 64 64"><polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="#0f172a" stroke="#00e5ff" stroke-width="3"/><circle cx="32" cy="32" r="12" fill="none" stroke="#f59e0b" stroke-width="2.5"/><polygon points="34,18 24,34 32,34 30,46 40,30 32,30" fill="#10b981"/></svg>
+    <span>COOL POWER CORE™: HORIZONS UNBOUND</span>
+    <span class="badge">v7.0 • 60 FPS • FULL CORPORATE &amp; MULTIVERSE</span>
+  </div>
+  <div class="exec-pill">👑 EXECUTIVE CHAIRMAN &amp; FOUNDER (ABOVE CEO): THOMAS GABRIEL COLEMAN</div>
+</header>
+
+<div class="grid">
+  <!-- LEFT COLUMN: 60 FPS VIEWPORT, MULTIVERSE, DEVICE SCALING & TREASURY -->
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <div class="card">
+      <h2>
+        <span>3D Orbital &amp; Sanctuary Dome Viewport (<span id="modeLabel">ORBITAL VIEW</span>)</span>
+        <span id="fpsLabel" style="color:var(--green); font-size:11px;">60 FPS LOCKED</span>
+      </h2>
+      <canvas id="simCanvas" width="760" height="320"></canvas>
+      <div class="kpi-row">
+        <div class="kpi"><div class="lbl">Your CPC-COIN</div><div class="val" id="cpcBal">1,250.00 CPC</div></div>
+        <div class="kpi"><div class="lbl">CPC NAV (Yield+ETF)</div><div class="val" id="cpcNav">$1.0842</div></div>
+        <div class="kpi"><div class="lbl">Thermal Output</div><div class="val" style="color:var(--cyan);">382.93 Wth/core</div></div>
+        <div class="kpi"><div class="lbl">NPC Wage Pool Recycled</div><div class="val" id="npcRecycled">0.00 CPC</div></div>
+      </div>
+      <div class="btn-bar">
+        <select id="variantSelect" onchange="switchVariant()">
+          <option value="V0-EDU">V0-EDU: Educational Canon (Physics &amp; Safety Rules)</option>
+          <option value="V1-DOOM">V1-DOOM: Doom Chronicle (Argent Breach — Unrestricted)</option>
+          <option value="V2-XENO">V2-XENO: Alien Resource Frontier (Unrestricted)</option>
+          <option value="V3-FREE">V3-FREE: Unrestricted Sandbox (Anything Goes)</option>
+        </select>
+        <select id="tierSelect" onchange="switchTier()">
+          <option value="T0">T0: Android Handheld Browser</option>
+          <option value="T1">T1: Console / Smart TV</option>
+          <option value="T2" selected>T2: Desktop + Controller &amp; Semi-Haptics</option>
+          <option value="T3">T3: Full-Body Haptic Suit + Air-Gapped Brain Hat</option>
+        </select>
+        <button class="primary" onclick="toggleSurface()">🛬 Toggle 3rd-Person Surface</button>
+        <button class="gold" onclick="quantumTunnel()">⚛️ Quantum Tunnel Jump</button>
+        <button class="green" onclick="runTransportQuest()">🚀 Undercut NPC Bid (+CPC)</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span>CPC-COIN Multi-Chain Reserve, ETF Dividends &amp; Physical Shipping</span><span style="color:var(--amber); font-size:11px;">Aerodrome • Lido/Beefy • Robinhood L2</span></h2>
+      <div class="btn-bar">
+        <button class="green" onclick="depositReserve(100)">+ Deposit $100 (Mint CPC)</button>
+        <button class="primary" onclick="claimEtfDividend()">💵 Claim SCHD/JEPI/VOO/SGOV Dividend</button>
+        <button class="gold" onclick="orderHardware('CPC-RES-1', 760)">📦 Buy CPC-RES-1 + Ship IRL (760 CPC)</button>
+        <button onclick="exportSync()">🔗 Copy Cross-Device Sync Token</button>
+      </div>
+      <div class="patron-box">
+        <div class="addr"><span>Safe:</span><code title="0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37">0xB386...8b37</code><button onclick="copyText('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37')">Copy</button></div>
+        <div class="addr"><span>EVM Donate:</span><code title="0x1419734ee0d1e213f4496d6bf088cc3b480ccedf">0x1419...cedf</code><button onclick="copyText('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy</button></div>
+        <div class="addr"><span>BTC/Sat:</span><code>howeyecrypto@cake.cash</code><button onclick="copyText('howeyecrypto@cake.cash')">Copy</button></div>
+        <div class="addr"><span>Solana:</span><code title="2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr">2eRUAN...6H3Nr</code><button onclick="copyText('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy</button></div>
+      </div>
+      <div class="log" id="eventLog">[SYSTEM] Cool Power Core™ Inc. fully staffed by autonomous AI NPCs under Executive Chairman Thomas Gabriel Coleman (Authority Tier-0 above CEO).<br></div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: FULL COMPANY ORG CHART & AI/HUMAN STAFFING ROSTER -->
+  <div class="card">
+    <h2>
+      <span>Cool Power Core™ Inc. — Live Org Chart &amp; Wage Engine</span>
+      <span id="staffSummary" style="color:var(--green); font-size:11px;">1 Chairman • 11 AI NPCs • 0 Human Hires</span>
+    </h2>
+    <div style="font-size:11.5px; color:var(--muted); margin-bottom:6px;">
+      Autonomous AI NPCs staff every corporate seat below <strong>Executive Chairman Thomas Gabriel Coleman</strong> (above CEO). Each AI NPC earns an hourly <strong>CPC-COIN</strong> wage and actively spends 72% back into the game economy (buying Sanctuary goods, stocks, and creator media) until you onboard a real human into that role.
+    </div>
+    <div class="btn-bar" style="margin-bottom:6px;">
+      <button class="green" onclick="runPayrollCycle(8)">⏱️ Run 8-Hr Corporate Payroll &amp; NPC Spending Cycle</button>
+      <button class="gold" onclick="issueChairmanDirective()">📜 Issue Executive Chairman Directive (Above CEO)</button>
+    </div>
+    <div style="max-height: 440px; overflow-y: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Seat &amp; Title</th>
+            <th>Holder</th>
+            <th>Wage/Hr</th>
+            <th>Wallet / Spent</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orgTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  cpc: 1250.00,
+  nav: 1.0842,
+  npcRecycledTotal: 0.00,
+  surfaceMode: false,
+  variant: 'V0-EDU',
+  tier: 'T2',
+  angle: 0,
+  playerX: 0,
+  playerZ: 0,
+  org: [
+    { id: 0, title: 'Executive Chairman & Founder (ABOVE CEO)', name: 'Thomas Gabriel Coleman', type: 'CHAIRMAN', wage: 0.00, wallet: 0.00, spent: 0.00, perks: 'Sovereign Veto, IP & Treasury Safe Control' },
+    { id: 1, title: 'Chief Executive Officer (CEO)', name: 'AI-CEO "Athena-01"', type: 'AI_NPC', wage: 18.50, wallet: 148.00, spent: 412.00, perks: 'Executes Chairman Directives & Global Licensing' },
+    { id: 2, title: 'Chief Technology Officer (CTO)', name: 'AI-CTO "Vulcan-02"', type: 'AI_NPC', wage: 15.00, wallet: 120.00, spent: 340.00, perks: '382.93 Wth/core Cavitation & Plasma R&D' },
+    { id: 3, title: 'Chief Financial Officer (CFO)', name: 'AI-CFO "Aurelia-03"', type: 'AI_NPC', wage: 14.50, wallet: 116.00, spent: 318.00, perks: 'Aerodrome Base, Lido/Beefy & Robinhood ETF Ops' },
+    { id: 4, title: 'Chief Operating Officer (COO)', name: 'AI-COO "Atlas-04"', type: 'AI_NPC', wage: 14.00, wallet: 112.00, spent: 295.00, perks: 'Sanctuary City 90-Day Builds & IRL Mfg Fulfillment' },
+    { id: 5, title: 'Chief Legal & IP Officer (CLO)', name: 'AI-CLO "Justitia-05"', type: 'AI_NPC', wage: 13.50, wallet: 108.00, spent: 274.00, perks: '83-Claim USPTO/PCT Portfolio & P3 Land Leases' },
+    { id: 6, title: 'VP of Sanctuary Cities & Civic', name: 'AI-VP "Eden-06"', type: 'AI_NPC', wage: 11.00, wallet: 88.00, spent: 220.00, perks: '21.5°C ETFE Domes & 85/15 Artisanal Guilds' },
+    { id: 7, title: 'VP of Robotics & Exoskeletons', name: 'AI-VP "Cerberus-07"', type: 'AI_NPC', wage: 11.00, wallet: 88.00, spent: 215.00, perks: 'MK-6 Flight Suits, Brain Hats & Tri-Head Mounts' },
+    { id: 8, title: 'VP of Intercity & Subsea Transit', name: 'AI-VP "Hyperion-08"', type: 'AI_NPC', wage: 10.50, wallet: 84.00, spent: 198.00, perks: '920 km/h CPC-LOOP & Transoceanic Tubes' },
+    { id: 9, title: 'Lead ZLD & Plasma Metallurgist', name: 'AI-ENG "Helios-09"', type: 'AI_NPC', wage: 8.25, wallet: 66.00, spent: 164.00, perks: '33.6 kV ZVS Plasma, Li2CO3 & U3O8 Extraction' },
+    { id: 10, title: 'Director of Creator Media Studios', name: 'AI-DIR "Nova-10"', type: 'AI_NPC', wage: 7.75, wallet: 62.00, spent: 152.00, perks: 'YouTube, Rumble, IG & TikTok NPC Show Syndication' },
+    { id: 11, title: 'Master Guild & Apprentice Dean', name: 'AI-DEAN "Solon-11"', type: 'AI_NPC', wage: 6.50, wallet: 52.00, spent: 130.00, perks: 'Free Tuition Academies & IRL Kit Onboarding' }
+  ]
+};
+
+function log(msg) {
+  const el = document.getElementById('eventLog');
+  el.innerHTML += msg + '<br>';
+  el.scrollTop = el.scrollHeight;
+}
+
+function renderOrg() {
+  const tbody = document.getElementById('orgTableBody');
+  tbody.innerHTML = '';
+  let aiCount = 0, humanCount = 0;
+  state.org.forEach(seat => {
+    if (seat.type === 'AI_NPC') aiCount++;
+    if (seat.type === 'HUMAN') humanCount++;
+    const badge = seat.type === 'CHAIRMAN'
+      ? `<span class="tag-chair">EXECUTIVE CHAIRMAN</span>`
+      : seat.type === 'AI_NPC'
+        ? `<span class="tag-ai">AI NPC STAFF</span>`
+        : `<span class="tag-human">HUMAN HIRE</span>`;
+    const actionBtn = seat.type === 'CHAIRMAN'
+      ? `<span style="color:var(--amber);font-size:10.5px;">Top Authority</span>`
+      : seat.type === 'AI_NPC'
+        ? `<button class="green" onclick="hireHuman(${seat.id})">Fill w/ Human</button>`
+        : `<button onclick="revertToAI(${seat.id})">Revert to AI</button>`;
+    tbody.innerHTML += `<tr>
+      <td><strong>${seat.title}</strong><br><span style="color:var(--muted);font-size:10px;">${seat.perks}</span></td>
+      <td>${seat.name}<br>${badge}</td>
+      <td>${seat.type === 'CHAIRMAN' ? 'Equity/IP' : seat.wage.toFixed(2) + ' CPC'}</td>
+      <td>${seat.type === 'CHAIRMAN' ? 'Treasury Safe' : seat.wallet.toFixed(1) + ' / ' + seat.spent.toFixed(1) + ' CPC'}</td>
+      <td>${actionBtn}</td>
+    </tr>`;
+  });
+  document.getElementById('staffSummary').textContent = `1 Chairman • ${aiCount} AI NPCs • ${humanCount} Human Hires`;
+  document.getElementById('cpcBal').textContent = state.cpc.toFixed(2) + ' CPC';
+  document.getElementById('cpcNav').textContent = '$' + state.nav.toFixed(4);
+  document.getElementById('npcRecycled').textContent = state.npcRecycledTotal.toFixed(2) + ' CPC';
+}
+
+function runPayrollCycle(hours) {
+  let totalSpent = 0;
+  state.org.forEach(seat => {
+    if (seat.type === 'CHAIRMAN') return;
+    const pay = seat.wage * hours;
+    seat.wallet += pay;
+    if (seat.type === 'AI_NPC') {
+      const spend = seat.wallet * 0.72;
+      seat.wallet -= spend;
+      seat.spent += spend;
+      totalSpent += spend;
+    }
+  });
+  const feeToNav = totalSpent * 0.0025;
+  state.npcRecycledTotal += totalSpent;
+  state.nav += feeToNav / 10000;
+  log(`[PAYROLL] ${hours}h cycle complete. AI NPC staff spent ${totalSpent.toFixed(2)} CPC into Sanctuary markets & stocks (+${feeToNav.toFixed(4)} CPC recycled into NAV).`);
+  renderOrg();
+}
+
+function hireHuman(id) {
+  const seat = state.org.find(s => s.id === id);
+  const humanName = prompt(`Enter real-world human name to fill "${seat.title}" (replaces ${seat.name}):`, "Human Specialist #" + id);
+  if (!humanName) return;
+  seat.type = 'HUMAN';
+  seat.name = humanName;
+  seat.wallet = 0;
+  log(`[HR ONBOARD] Executive Chairman Thomas Gabriel Coleman appointed ${humanName} to ${seat.title}. AI NPC cleanly stood down.`);
+  renderOrg();
+}
+
+function revertToAI(id) {
+  const seat = state.org.find(s => s.id === id);
+  seat.type = 'AI_NPC';
+  seat.name = `AI-STAFF-"Core-${id}"`;
+  log(`[HR AUTO-FILL] ${seat.title} transitioned back to autonomous wage-earning AI NPC (${seat.name}).`);
+  renderOrg();
+}
+
+function issueChairmanDirective() {
+  const ceo = state.org[1];
+  log(`[DIRECTIVE] Executive Chairman Thomas Gabriel Coleman issued priority order to ${ceo.name} (CEO): "Accelerate Batch-1 CPC-RES-1 production & expand Sanctuary City #2."`);
+}
+
+function toggleSurface() {
+  state.surfaceMode = !state.surfaceMode;
+  document.getElementById('modeLabel').textContent = state.surfaceMode ? '3RD-PERSON SANCTUARY DOME' : 'ORBITAL VIEW';
+  log(`[VIEW] Switched to ${state.surfaceMode ? '3rd-Person Surface Exploration inside 21.5°C ETFE Dome' : '60 FPS Orbital Planet View'}.`);
+}
+
+function switchVariant() {
+  state.variant = document.getElementById('variantSelect').value;
+  log(`[MULTIVERSE] Active timeline set to ${state.variant}. Unified CPC-COIN economy preserved.`);
+}
+
+function switchTier() {
+  state.tier = document.getElementById('tierSelect').value;
+  log(`[HARDWARE SCALING] Interface profile adapted to ${state.tier}. Continuous game state synchronized.`);
+}
+
+function quantumTunnel() {
+  const order = ['V0-EDU', 'V1-DOOM', 'V2-XENO', 'V3-FREE'];
+  const next = order[(order.indexOf(state.variant) + 1) % order.length];
+  state.variant = next;
+  document.getElementById('variantSelect').value = next;
+  log(`[QUANTUM TUNNEL] CPC-QT-DRIVE phase-shifted timeline to ${next} with active rig & corporate roster intact!`);
+}
+
+function runTransportQuest() {
+  const profit = 34.50;
+  state.cpc += profit;
+  state.nav += 0.0004;
+  log(`[QUEST] Undercut rival chemical-rocket NPC bid by 14% on Mars Sanctuary cargo run! Earned +${profit.toFixed(2)} CPC.`);
+  renderOrg();
+}
+
+function depositReserve(usd) {
+  const minted = usd / state.nav;
+  state.cpc += minted;
+  log(`[RESERVE] Deposited $${usd.toFixed(2)} into CPC-COIN basket (Aerodrome Base + Lido/Beefy + Robinhood L2). Minted +${minted.toFixed(2)} CPC.`);
+  renderOrg();
+}
+
+function claimEtfDividend() {
+  const div = state.cpc * 0.0068;
+  state.cpc += div;
+  log(`[ETF DIVIDEND] Claimed pro-rata SCHD/JEPI/VOO/SGOV sweep (+${div.toFixed(2)} CPC equivalent).`);
+  renderOrg();
+}
+
+function orderHardware(sku, cost) {
+  if (state.cpc < cost) { log(`[ESCROW] Insufficient CPC for ${sku} (${cost} CPC required).`); return; }
+  state.cpc -= cost;
+  log(`[IRL ESCROW] Locked ${cost} CPC in CoolPowerCoreHardwareFulfillment escrow for physical ${sku} delivery once Batch-1 manufacturing opens (100% refundable prior to lock).`);
+  renderOrg();
+}
+
+function exportSync() {
+  const token = 'CPC-SYNC://' + btoa(JSON.stringify({ cpc: state.cpc.toFixed(2), variant: state.variant, tier: state.tier }));
+  copyText(token);
+}
+
+function copyText(txt) {
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  log(`[COPIED] ${txt}`);
+}
+
+// 60 FPS Canvas Renderer
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+function loop() {
+  state.angle += 0.012;
+  ctx.fillStyle = '#030712';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const variantColor = state.variant === 'V0-EDU' ? '#00e5ff' :
+                       state.variant === 'V1-DOOM' ? '#ef4444' :
+                       state.variant === 'V2-XENO' ? '#a855f7' : '#10b981';
+
+  if (!state.surfaceMode) {
+    // Orbital Planet & CPC-LOOP Ring
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+    const grad = ctx.createRadialGradient(cx - 25, cy - 25, 15, cx, cy, 92);
+    grad.addColorStop(0, variantColor);
+    grad.addColorStop(1, '#09192f');
+    ctx.beginPath(); ctx.arc(cx, cy, 88, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+
+    // Orbital Maglev Ring
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(-0.28);
+    ctx.beginPath(); ctx.ellipse(0, 0, 175, 42, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(245,158,11,0.65)'; ctx.lineWidth = 2; ctx.stroke();
+    const sx = Math.cos(state.angle * 2) * 175, sy = Math.sin(state.angle * 2) * 42;
+    ctx.beginPath(); ctx.arc(sx, sy, 5, 0, Math.PI * 2); ctx.fillStyle = '#10b981'; ctx.fill();
+    ctx.restore();
+
+    ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 13px sans-serif';
+    ctx.fillText(`TIMELINE: ${state.variant}  |  RIG TIER: ${state.tier}`, 16, 26);
+    ctx.fillStyle = '#94a3b8'; ctx.font = '11px sans-serif';
+    ctx.fillText(`Cool Power Core™ HQ Dome • Executive Chairman: Thomas Gabriel Coleman`, 16, 44);
+  } else {
+    // 3rd-Person Surface Exploration inside 21.5°C ETFE Sanctuary Dome
+    ctx.strokeStyle = 'rgba(0,229,255,0.22)';
+    for (let x = 0; x < canvas.width; x += 38) {
+      ctx.beginPath(); ctx.moveTo(x, 190); ctx.lineTo((x - 380) * 1.8 + 380, 320); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(380, 220, 210, Math.PI, 0); ctx.strokeStyle = variantColor; ctx.lineWidth = 2; ctx.stroke();
+    // Central CPC Spire
+    ctx.fillStyle = '#1e293b'; ctx.fillRect(365, 110, 30, 110);
+    ctx.fillStyle = '#10b981'; ctx.fillRect(374, 120, 12, 90);
+    // Walking Suit Avatar + AI Staff NPCs
+    const px = 380 + Math.sin(state.angle) * 90;
+    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(px, 232, 9, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f8fafc'; ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(`3RD-PERSON SANCTUARY DOME (${state.variant}) — Central 382.93 Wth/core Spire & Corporate HQ`, 16, 26);
+  }
+  requestAnimationFrame(loop);
+}
+renderOrg();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

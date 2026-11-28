@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cool Power Core™: Horizons Unbound (v6.9 — 3D Surface Exploration &amp; Real-World Fulfillment)</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<style>
+  :root {
+    --bg: #060b14; --panel: rgba(11, 20, 36, 0.92); --border: #1e3a5f;
+    --cyan: #00e5ff; --amber: #f59e0b; --green: #10b981; --purple: #a855f7;
+    --red: #ef4444; --text: #e2e8f0; --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: #08101e; border-bottom: 1px solid var(--border); gap: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand h1 { font-size: 1.05rem; letter-spacing: 0.4px; color: #fff; }
+  .brand span { color: var(--cyan); font-size: 0.75rem; display: block; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .badge {
+    padding: 4px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 600;
+    background: #0f213b; border: 1px solid var(--border); color: var(--cyan);
+  }
+  .grid {
+    display: grid; grid-template-columns: 1.45fr 1fr; gap: 12px; padding: 12px; max-width: 1560px; margin: 0 auto;
+  }
+  @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  }
+  .card h2 {
+    font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.8px; color: var(--cyan);
+    margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  #glCanvas {
+    width: 100%; height: 390px; border-radius: 10px; border: 1px solid #264b78;
+    display: block; background: #02050a; touch-action: none; cursor: grab;
+  }
+  .controls-bar {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; justify-content: space-between;
+  }
+  button, select, input {
+    background: #0f2340; color: #fff; border: 1px solid #2b5485; border-radius: 7px;
+    padding: 6px 10px; font-size: 0.78rem; cursor: pointer; transition: 0.15s;
+  }
+  button:hover { border-color: var(--cyan); background: #16325a; }
+  button.active { background: #0891b2; border-color: #22d3ee; font-weight: 700; }
+  button.amber { border-color: var(--amber); color: #fde68a; }
+  button.green { border-color: var(--green); color: #a7f3d0; }
+  button.purple { border-color: var(--purple); color: #e9d5ff; }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+  @media (max-width: 600px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { background: #081324; border: 1px solid #1b3557; border-radius: 8px; padding: 8px; }
+  .kpi .lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; }
+  .kpi .val { font-size: 0.98rem; font-weight: 700; color: #fff; margin-top: 2px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+  .list-item {
+    background: #081324; border: 1px solid #1b3557; border-radius: 8px; padding: 8px;
+    margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .list-item small { color: var(--muted); display: block; font-size: 0.72rem; }
+  .chat-log {
+    height: 155px; overflow-y: auto; background: #050b14; border: 1px solid #1b3557;
+    border-radius: 8px; padding: 8px; font-size: 0.78rem; margin-bottom: 7px; line-height: 1.4;
+  }
+  .dpad { display: inline-flex; gap: 4px; align-items: center; }
+  .addr-box {
+    font-family: monospace; font-size: 0.71rem; background: #050b14; padding: 5px 8px;
+    border-radius: 6px; border: 1px solid #1e3a5f; display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 5px; gap: 6px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg width="36" height="36" viewBox="0 0 100 100">
+      <polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="#0b192c" stroke="#00e5ff" stroke-width="5"/>
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="14 6"/>
+      <polygon points="53,26 35,53 49,53 46,74 65,47 51,47" fill="#10b981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND <span style="display:inline;color:#f59e0b;">v6.9</span></h1>
+      <span>3D Orbital &amp; Surface Landing Engine • Unified CPC-COIN Economy • Real-World Mfg Escrow</span>
+    </div>
+  </div>
+  <div class="badges">
+    <span class="badge" id="fpsBadge">60 FPS • WebGL</span>
+    <span class="badge" id="camBadge">MODE: ORBITAL VIEW</span>
+    <span class="badge" id="variantBadge">TIMELINE: V0-EDU (CANON)</span>
+    <select id="tierSelect" title="Adaptive Hardware Interface Tier">
+      <option value="0">Tier 0: Android / Mobile Browser</option>
+      <option value="1">Tier 1: Console / Gamepad</option>
+      <option value="2" selected>Tier 2: Desktop + Semi-Haptics</option>
+      <option value="3">Tier 3: Full-Body Haptic + Brain Hat</option>
+    </select>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- LEFT: 3D WEBGL VIEWPORT + SURFACE EXPLORATION -->
+  <div class="card">
+    <h2>
+      <span id="viewportTitle">3D Procedural World &amp; Sanctuary Dome Viewport</span>
+      <span style="display:flex;gap:5px;">
+        <button id="toggleLandBtn" class="green" onclick="toggleSurfaceLanding()">🛬 Land on Surface (3rd-Person)</button>
+        <button class="purple" onclick="quantumTunnelJump()">⚛️ Quantum Tunnel</button>
+      </span>
+    </h2>
+    <canvas id="glCanvas" width="900" height="440"></canvas>
+
+    <div class="controls-bar">
+      <div class="dpad">
+        <span style="font-size:0.74rem;color:var(--muted);">Surface Move (WASD / Touch):</span>
+        <button onpointerdown="moveInput.z=1" onpointerup="moveInput.z=0" onpointerleave="moveInput.z=0">▲ W</button>
+        <button onpointerdown="moveInput.x=-1" onpointerup="moveInput.x=0" onpointerleave="moveInput.x=0">◄ A</button>
+        <button onpointerdown="moveInput.z=-1" onpointerup="moveInput.z=0" onpointerleave="moveInput.z=0">▼ S</button>
+        <button onpointerdown="moveInput.x=1" onpointerup="moveInput.x=0" onpointerleave="moveInput.x=0">► D</button>
+        <button class="amber" onclick="triggerRigAbility()">⚡ Rig Pulse</button>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="font-size:0.74rem;color:var(--muted);">Timeline:</span>
+        <select id="variantSelect" onchange="switchVariant(this.value)">
+          <option value="V0-EDU">V0-EDU: Educational Canon</option>
+          <option value="V1-DOOM">V1-DOOM: Argent Breach</option>
+          <option value="V2-XENO">V2-XENO: Alien Frontier</option>
+          <option value="V3-FREE">V3-FREE: Unrestricted Sandbox</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">CPC-COIN Balance</div><div class="val" id="cpcBalVal">1,500.00 CPC</div></div>
+      <div class="kpi"><div class="lbl">Live Reserve NAV</div><div class="val" style="color:var(--green);" id="navVal">$1.0482</div></div>
+      <div class="kpi"><div class="lbl">Core Output (382.93 Wth)</div><div class="val" style="color:var(--cyan);" id="powerVal">+342.4 We</div></div>
+      <div class="kpi"><div class="lbl">Quantum Coherence</div><div class="val" style="color:var(--purple);" id="qtVal">100% READY</div></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: UNIFIED ECONOMY, REAL-WORLD SHIPPING, AI COUNCIL & PATRONAGE -->
+  <div class="card">
+    <div class="tabs">
+      <button class="active" onclick="openTab('tabStore', this)">📦 Tech &amp; Real-World Ship</button>
+      <button onclick="openTab('tabQuests', this)">🚀 NPC Bids &amp; Shows</button>
+      <button onclick="openTab('tabVault', this)">🏦 CPC-COIN &amp; ETFs</button>
+      <button onclick="openTab('tabAI', this)">🎙️ Voice AI Council</button>
+      <button onclick="openTab('tabPatron', this)">💛 Inventor &amp; Sync</button>
+    </div>
+
+    <!-- TAB 1: IN-GAME TECH + REAL-WORLD MANUFACTURING SHIPPING ESCROW -->
+    <div id="tabStore" class="tab-pane active">
+      <p style="font-size:0.75rem;color:var(--muted);margin-bottom:8px;">
+        Buy Cool Power Core™ tech to equip immediately in-game, or lock <b>Real-World Mfg Escrow</b> (100% refundable until Corona, CA Batch-1 opens).
+      </p>
+      <div id="skuList"></div>
+      <div style="font-size:0.74rem;color:#a7f3d0;margin-top:6px;" id="orderStatusBox">No active physical pre-orders yet.</div>
+    </div>
+
+    <!-- TAB 2: NPC TRANSPORT BIDDING WARS & CREATOR SHOWS -->
+    <div id="tabQuests" class="tab-pane">
+      <div class="list-item">
+        <div>
+          <strong>Undercut Rival Chemical Rocket NPC (Mars Phobos Run)</strong>
+          <small>Rival Quote: 85.0 CPC • Your CPC Thermal Bid: 68.0 CPC (+42.5 CPC Net Profit)</small>
+        </div>
+        <button class="green" onclick="completeTransportBid(42.5)">Win Bid</button>
+      </div>
+      <div class="list-item">
+        <div>
+          <strong>Co-Star on @NovaBuildsMars Show (YouTube / Rumble / TikTok)</strong>
+          <small>284K Views • +45% Co-Star Reach • 20% Ad Revenue Compounds CPC-COIN NAV</small>
+        </div>
+        <button class="amber" onclick="filmCreatorShow()">Film Episode (+28 CPC)</button>
+      </div>
+      <div class="list-item">
+        <div>
+          <strong>Build 21.5°C ETFE Sanctuary Dome District</strong>
+          <small>Houses 1,000 residents • Distills 253,584 L/day pure water • +15 Reputation</small>
+        </div>
+        <button onclick="buildDome()">Deploy Dome (+35 CPC)</button>
+      </div>
+    </div>
+
+    <!-- TAB 3: MULTI-CURRENCY CPC-COIN RESERVE & FAIR ETF DIVIDENDS -->
+    <div id="tabVault" class="tab-pane">
+      <div class="list-item">
+        <div>
+          <strong>Multi-Currency Deposit (USDC / ETH / wstETH / cbBTC / EURC)</strong>
+          <small>85% Yield-Routed (Aerodrome Base + Lido/Beefy + Robinhood L2) • 15% Instant Exit</small>
+        </div>
+        <button class="green" onclick="depositReserve(250)">Deposit +250 CPC</button>
+      </div>
+      <div class="list-item">
+        <div>
+          <strong>Fair Blue-Chip ETF Dividend Sweep (SCHD • JEPI • VOO • SGOV)</strong>
+          <small>Accrued Pro-Rata Dividends: <b id="divAccrued">$14.85 USDC</b></small>
+        </div>
+        <button class="amber" onclick="claimDividends()">Claim USDC</button>
+      </div>
+      <div class="list-item">
+        <div>
+          <strong>Live Real-World Stock Mirror</strong>
+          <small id="stockTicker">SPY: $598.40 (+0.62%) | NVDA: $146.20 (+1.85%) | SCHD: $86.15 (+0.41%)</small>
+        </div>
+        <button onclick="refreshStocks()">Refresh Feed</button>
+      </div>
+    </div>
+
+    <!-- TAB 4: TWO-WAY VOICE INTERACTIVE AI COUNCIL -->
+    <div id="tabAI" class="tab-pane">
+      <div style="display:flex;gap:6px;margin-bottom:6px;">
+        <select id="aiPersona">
+          <option value="Gemini AI (google.com)">✦ Gemini AI (Systems &amp; Physics)</option>
+          <option value="Venice.ai">◈ Venice.ai (DeFi &amp; Zero-RF Privacy)</option>
+          <option value="Game Master AI">❖ Game Master AI (Multiverse &amp; Quests)</option>
+        </select>
+        <button class="amber" onclick="startVoiceInput()">🎙️ Speak</button>
+        <button onclick="ttsEnabled=!ttsEnabled;this.textContent=ttsEnabled?'🔊 Voice ON':'🔇 Voice OFF'">🔊 Voice ON</button>
+      </div>
+      <div class="chat-log" id="chatLog">
+        <div><b style="color:var(--cyan);">✦ Gemini AI:</b> Welcome to v6.9! Click <b>Land on Surface</b> to explore your 21.5°C ETFE Sanctuary Dome on foot, or ask me about Cool Power Core™ physics.</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <input id="chatInput" style="flex:1;" placeholder="Ask Gemini, Venice.ai, or Game Master..." onkeydown="if(event.key==='Enter')sendChat()" />
+        <button class="green" onclick="sendChat()">Ask</button>
+      </div>
+    </div>
+
+    <!-- TAB 5: INVENTOR PATRONAGE & CROSS-DEVICE SYNC -->
+    <div id="tabPatron" class="tab-pane">
+      <p style="font-size:0.74rem;color:var(--muted);margin-bottom:6px;">
+        100% direct patronage to creator <b>Thomas Gabriel Coleman</b> (Corona, CA):
+      </p>
+      <div class="addr-box"><span><b>EVM Donate:</b> 0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</span><button onclick="copyText('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy</button></div>
+      <div class="addr-box"><span><b>BTC / CakePay:</b> howeyecrypto@cake.cash</span><button onclick="copyText('howeyecrypto@cake.cash')">Copy</button></div>
+      <div class="addr-box"><span><b>Solana:</b> 2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</span><button onclick="copyText('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy</button></div>
+      <div class="addr-box"><span><b>CPC Gnosis Safe:</b> 0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</span><button onclick="copyText('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37')">Copy</button></div>
+      <div style="margin-top:8px;display:flex;gap:6px;">
+        <button class="purple" onclick="exportSyncToken()">🔗 Export Cross-Device Sync Token</button>
+        <button onclick="importSyncToken()">📥 Load Sync Token</button>
+      </div>
+      <div id="syncOut" style="font-size:0.7rem;color:var(--cyan);margin-top:5px;word-break:break-all;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  cpc: 1500.00,
+  nav: 1.0482,
+  dividends: 14.85,
+  surfaceMode: false,
+  variant: "V0-EDU",
+  playerX: 0.0,
+  playerZ: 0.0,
+  yaw: 0.4,
+  pitch: 0.25,
+  pulse: 0.0,
+  orders: []
+};
+const moveInput = { x: 0, z: 0 };
+const keys = {};
+let ttsEnabled = true;
+
+const SKUS = [
+  { id: 1, code: "CPC-RES-1", name: "Home Zero-Septic Core (342 We + 12.96 L/d H2O)", price: 1250 },
+  { id: 2, code: "CPC-NEURO-HAT", name: "Air-Gapped Zero-RF Neural Brain Hat", price: 650 },
+  { id: 3, code: "CPC-SUIT-MK6", name: "4.2s Briefcase Flight & Vortex Exosuit", price: 4800 },
+  { id: 4, code: "CPC-CERBERUS-HD", name: "Tri-Headed Rescue Mount (2-Rider Saddle)", price: 6200 }
+];
+
+function renderSKUs() {
+  const el = document.getElementById("skuList");
+  el.innerHTML = SKUS.map(s => `
+    <div class="list-item">
+      <div>
+        <strong>${s.code} — ${s.name}</strong>
+        <small>Cost: ${s.price.toLocaleString()} CPC • Mfg Status: Pre-Production Escrow Open</small>
+      </div>
+      <div style="display:flex;gap:4px;">
+        <button onclick="buyTech(${s.id}, false)">In-Game</button>
+        <button class="green" onclick="buyTech(${s.id}, true)">📦 +Ship IRL</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function buyTech(id, shipIRL) {
+  const sku = SKUS.find(x => x.id === id);
+  if (state.cpc < sku.price) { alert("Insufficient CPC-COIN! Complete NPC transport bids or deposit reserve currency."); return; }
+  state.cpc -= sku.price;
+  updateHUD();
+  if (shipIRL) {
+    const dest = prompt("Enter City/State or Postal Code for privacy-hashed SHA-256 shipping reservation:", "Corona, CA 92879");
+    if (!dest) { state.cpc += sku.price; updateHUD(); return; }
+    const hash = "0x" + Array.from(dest).reduce((a,c)=>((a<<5)-a+c.charCodeAt(0))|0, 0).toString(16).replace("-","f") + "9a4e7c";
+    state.orders.push({ id: state.orders.length + 1, code: sku.code, price: sku.price, hash });
+    renderOrders();
+  } else {
+    alert(`${sku.code} equipped in-game across all synced devices!`);
+  }
+}
+
+function renderOrders() {
+  const box = document.getElementById("orderStatusBox");
+  if (!state.orders.length) { box.textContent = "No active physical pre-orders yet."; return; }
+  box.innerHTML = state.orders.map(o =>
+    `Order #${o.id}: <b>${o.code}</b> (${o.price} CPC in Escrow | Ship Hash ${o.hash}) <button style="padding:2px 6px;font-size:0.68rem;" onclick="refundOrder(${o.id})">Cancel &amp; 100% Refund</button>`
+  ).join("<br/>");
+}
+
+function refundOrder(id) {
+  const idx = state.orders.findIndex(o => o.id === id);
+  if (idx >= 0) {
+    state.cpc += state.orders[idx].price;
+    state.orders.splice(idx, 1);
+    updateHUD();
+    renderOrders();
+  }
+}
+
+function toggleSurfaceLanding() {
+  state.surfaceMode = !state.surfaceMode;
+  const btn = document.getElementById("toggleLandBtn");
+  const badge = document.getElementById("camBadge");
+  const title = document.getElementById("viewportTitle");
+  if (state.surfaceMode) {
+    btn.textContent = "🚀 Launch to Orbit View";
+    badge.textContent = "MODE: 3RD-PERSON SURFACE";
+    title.textContent = "3D Surface Exploration — 21.5°C ETFE Sanctuary Dome (WASD / Drag)";
+  } else {
+    btn.textContent = "🛬 Land on Surface (3rd-Person)";
+    badge.textContent = "MODE: ORBITAL VIEW";
+    title.textContent = "3D Procedural World & Sanctuary Dome Viewport";
+  }
+}
+
+function switchVariant(v) {
+  state.variant = v;
+  document.getElementById("variantBadge").textContent = "TIMELINE: " + v;
+}
+
+function quantumTunnelJump() {
+  const order = ["V0-EDU", "V1-DOOM", "V2-XENO", "V3-FREE"];
+  const next = order[(order.indexOf(state.variant) + 1) % order.length];
+  document.getElementById("variantSelect").value = next;
+  switchVariant(next);
+  state.pulse = 1.0;
+}
+
+function triggerRigAbility() { state.pulse = 1.0; }
+function completeTransportBid(reward) { state.cpc += reward; state.nav += 0.0004; updateHUD(); }
+function filmCreatorShow() { state.cpc += 28.0; state.nav += 0.0007; updateHUD(); }
+function buildDome() { state.cpc += 35.0; state.nav += 0.0005; updateHUD(); }
+function depositReserve(amt) { state.cpc += amt; updateHUD(); }
+function claimDividends() {
+  if (state.dividends <= 0) return;
+  alert(`Claimed $${state.dividends.toFixed(2)} USDC pro-rata ETF dividends (SCHD/JEPI/VOO/SGOV)!`);
+  state.dividends = 0;
+  updateHUD();
+}
+function refreshStocks() {
+  const spy = (596 + Math.random()*5).toFixed(2);
+  const nvda = (144 + Math.random()*5).toFixed(2);
+  const schd = (85.5 + Math.random()*1.5).toFixed(2);
+  document.getElementById("stockTicker").textContent = `SPY: $${spy} | NVDA: $${nvda} | SCHD: $${schd}`;
+}
+
+function updateHUD() {
+  document.getElementById("cpcBalVal").textContent = state.cpc.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + " CPC";
+  document.getElementById("navVal").textContent = "$" + state.nav.toFixed(4);
+  document.getElementById("divAccrued").textContent = "$" + state.dividends.toFixed(2) + " USDC";
+}
+
+function openTab(id, btn) {
+  document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  btn.classList.add("active");
+}
+
+function copyText(t) { navigator.clipboard?.writeText(t); alert("Copied: " + t); }
+
+function exportSyncToken() {
+  const tok = "CPC-SYNC://" + btoa(JSON.stringify({ cpc: state.cpc, v: state.variant, orders: state.orders.length }));
+  document.getElementById("syncOut").textContent = tok;
+}
+function importSyncToken() {
+  const tok = prompt("Paste CPC-SYNC:// token:");
+  if (!tok || !tok.startsWith("CPC-SYNC://")) return;
+  const data = JSON.parse(atob(tok.replace("CPC-SYNC://", "")));
+  state.cpc = data.cpc || state.cpc;
+  updateHUD();
+}
+
+function sendChat(preset) {
+  const input = document.getElementById("chatInput");
+  const q = preset || input.value.trim();
+  if (!q) return;
+  input.value = "";
+  const persona = document.getElementById("aiPersona").value;
+  const log = document.getElementById("chatLog");
+  log.innerHTML += `<div><b>You:</b> ${q}</div>`;
+  let reply = "";
+  if (persona.includes("Gemini")) {
+    reply = "Cool Power Core™ converts 382.93 Wth/core of low-grade heat via 90°C CVD-graphene cavitation and 33.6 kV plasma into +342.4 We continuous power and 12.96 L/day pure water. In 3D Surface Mode, use WASD to walk beneath the 21.5°C ETFE Sanctuary Dome.";
+  } else if (persona.includes("Venice")) {
+    reply = "CPC-COIN routes 85% of multi-currency reserves across Aerodrome on Base, Lido wstETH + Beefy, and Robinhood L2 ETF dividends (SCHD/JEPI/VOO/SGOV), while your Brain Hat uses zero RF chips and Mu-Metal shielding.";
+  } else {
+    reply = `Timeline ${state.variant} active! Undercut rival chemical-rocket NPCs on the Quests tab or reserve physical hardware in Mfg Escrow.`;
+  }
+  log.innerHTML += `<div><b style="color:var(--cyan);">${persona}:</b> ${reply}</div>`;
+  log.scrollTop = log.scrollHeight;
+  if (ttsEnabled && "speechSynthesis" in window) {
+    const u = new SpeechSynthesisUtterance(reply);
+    u.pitch = persona.includes("Venice") ? 0.9 : (persona.includes("Game Master") ? 0.82 : 1.08);
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function startVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert("Speech recognition not supported in this browser; type in the box below."); return; }
+  const rec = new SR();
+  rec.onresult = (e) => sendChat(e.results[0][0].transcript);
+  rec.start();
+}
+
+// --- 60 FPS WEBGL RAY-MARCHED ORBITAL & 3RD-PERSON SURFACE SHADER ---
+const canvas = document.getElementById("glCanvas");
+const gl = canvas.getContext("webgl");
+
+const vsSrc = `attribute vec2 aPos; void main() { gl_Position = vec4(aPos, 0.0, 1.0); }`;
+const fsSrc = `
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform float uSurface;
+uniform vec2 uPlayer;
+uniform vec2 uCam;
+uniform float uVariant;
+uniform float uPulse;
+
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
+float noise(vec2 p) {
+  vec2 i = floor(p), f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+             mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+vec3 getBiomeTint() {
+  if (uVariant < 0.5) return vec3(0.05, 0.78, 0.95);      // V0-EDU Cyan/Emerald
+  if (uVariant < 1.5) return vec3(0.95, 0.25, 0.12);      // V1-DOOM Argent Crimson
+  if (uVariant < 2.5) return vec3(0.68, 0.32, 0.96);      // V2-XENO Violet/Gold
+  return vec3(0.12, 0.92, 0.58);                          // V3-FREE Jade Sandbox
+}
+
+float sdCapsule(vec3 p, vec3 a, vec3 b, float r) {
+  vec3 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+  return length(pa - ba * h) - r;
+}
+
+float mapSurface(vec3 p) {
+  float terrain = (noise(p.xz * 0.22) - 0.5) * 0.85 * smoothstep(2.8, 7.5, length(p.xz));
+  float ground = p.y - terrain;
+
+  // Central 21.5C ETFE Sanctuary Dome Shell (Cutaway Arch Rings)
+  float dSphere = abs(length(p - vec3(0.0, 0.0, 0.0)) - 4.6) - 0.08;
+  float domeArch = max(dSphere, -p.y + 0.1);
+  float rib = abs(sin(atan(p.z, p.x) * 6.0)) * 0.18 + abs(sin(p.y * 2.5)) * 0.12;
+  float dome = max(domeArch, rib - 0.09);
+
+  // Central Cool Power Core Spire
+  float corePillar = length(p.xz) - (0.35 + 0.08 * sin(p.y * 6.0 - uTime * 3.0));
+  corePillar = max(corePillar, abs(p.y - 1.6) - 1.6);
+
+  // Third-Person Exosuit Explorer at uPlayer
+  vec3 pp = p - vec3(uPlayer.x, 0.0, uPlayer.y);
+  float torso = sdCapsule(pp, vec3(0.0, 0.45, 0.0), vec3(0.0, 1.05, 0.0), 0.22);
+  float head = length(pp - vec3(0.0, 1.32, 0.0)) - 0.16;
+  float legL = sdCapsule(pp, vec3(-0.11, 0.02, 0.0), vec3(-0.11, 0.45, 0.0), 0.09);
+  float legR = sdCapsule(pp, vec3(0.11, 0.02, 0.0), vec3(0.11, 0.45, 0.0), 0.09);
+  float avatar = min(min(torso, head), min(legL, legR));
+
+  return min(min(ground, dome), min(corePillar, avatar));
+}
+
+vec3 calcNormal(vec3 p) {
+  vec2 e = vec2(0.01, 0.0);
+  return normalize(vec3(
+    mapSurface(p + e.xyy) - mapSurface(p - e.xyy),
+    mapSurface(p + e.yxy) - mapSurface(p - e.yxy),
+    mapSurface(p + e.yyx) - mapSurface(p - e.yyx)
+  ));
+}
+
+void main() {
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes.xy) / uRes.y;
+  vec3 tint = getBiomeTint();
+
+  if (uSurface > 0.5) {
+    // 3RD-PERSON SURFACE EXPLORATION MODE
+    vec3 target = vec3(uPlayer.x, 0.9, uPlayer.y);
+    float distCam = 3.4;
+    vec3 ro = target + vec3(sin(uCam.x) * distCam, 1.35 + uCam.y * 1.4, cos(uCam.x) * distCam);
+    vec3 fwd = normalize(target - ro);
+    vec3 right = normalize(cross(fwd, vec3(0.0, 1.0, 0.0)));
+    vec3 up = cross(right, fwd);
+    vec3 rd = normalize(fwd + uv.x * right + uv.y * up);
+
+    float t = 0.0;
+    for (int i = 0; i < 64; i++) {
+      float d = mapSurface(ro + rd * t);
+      if (d < 0.008 || t > 28.0) break;
+      t += d;
+    }
+
+    vec3 col = mix(vec3(0.02, 0.05, 0.11), tint * 0.35, clamp(uv.y + 0.4, 0.0, 1.0));
+    if (t < 28.0) {
+      vec3 p = ro + rd * t;
+      vec3 n = calcNormal(p);
+      float diff = max(dot(n, normalize(vec3(0.6, 0.85, 0.4))), 0.18);
+      float coreDist = length(p.xz);
+      vec3 mat = coreDist < 0.55 ? tint * 1.5 : (p.y < 0.05 ? vec3(0.08, 0.28, 0.22) : vec3(0.75, 0.86, 0.95));
+      if (length(p.xz - uPlayer) < 0.45 && p.y > 0.04) mat = vec3(0.95, 0.65, 0.15); // Exosuit gold-amber
+      col = mat * diff + tint * (0.25 / (0.4 + coreDist));
+    }
+    col += tint * uPulse * 0.45;
+    gl_FragColor = vec4(col, 1.0);
+    return;
+  }
+
+  // ORBITAL 3D PROCEDURAL PLANET VIEWPORT
+  vec3 ro = vec3(0.0, 0.3, 3.1);
+  vec3 rd = normalize(vec3(uv, -1.35));
+  float b = dot(ro, rd);
+  float c = dot(ro, ro) - 1.05;
+  float h = b * b - c;
+
+  vec3 col = vec3(0.015, 0.03, 0.065);
+  // Starfield
+  float star = step(0.9965, hash(floor(gl_FragCoord.xy * 0.5)));
+  col += vec3(star * 0.85);
+
+  if (h > 0.0) {
+    float t = -b - sqrt(h);
+    vec3 p = ro + rd * t;
+    vec3 n = normalize(p);
+    float ang = uTime * 0.18 + uCam.x;
+    vec3 rotP = vec3(p.x * cos(ang) - p.z * sin(ang), p.y, p.x * sin(ang) + p.z * cos(ang));
+    float elev = noise(rotP.xy * 3.8 + rotP.z * 2.2);
+    vec3 surf = elev > 0.48 ? mix(vec3(0.09, 0.42, 0.32), vec3(0.75, 0.62, 0.45), (elev - 0.48)*2.0) : vec3(0.04, 0.18, 0.38);
+    // Glowing Sanctuary City Domes on surface
+    float cityGlow = smoothstep(0.92, 0.98, noise(rotP.xz * 14.0));
+    surf += tint * cityGlow * 1.4;
+    float diff = max(dot(n, normalize(vec3(0.7, 0.5, 0.6))), 0.15);
+    float rim = pow(1.0 - max(dot(n, -rd), 0.0), 3.0);
+    col = surf * diff + tint * rim * 0.85;
+  }
+
+  // Orbital CPC-LOOP Transit & Quantum Tunneling Ring
+  float ringDist = abs(length(vec2(uv.x * 0.72, uv.y * 2.1)) - 0.92);
+  if (ringDist < 0.025 && (uv.y > 0.0 || h <= 0.0)) {
+    col += tint * (1.0 - ringDist / 0.025) * (0.9 + 0.4 * sin(uTime * 5.0));
+  }
+  col += tint * uPulse * 0.4;
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+function compileShader(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSrc));
+gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSrc));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+
+const buf = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const aPos = gl.getAttribLocation(prog, "aPos");
+gl.enableVertexAttribArray(aPos);
+gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+const uRes = gl.getUniformLocation(prog, "uRes");
+const uTime = gl.getUniformLocation(prog, "uTime");
+const uSurface = gl.getUniformLocation(prog, "uSurface");
+const uPlayer = gl.getUniformLocation(prog, "uPlayer");
+const uCam = gl.getUniformLocation(prog, "uCam");
+const uVariant = gl.getUniformLocation(prog, "uVariant");
+const uPulse = gl.getUniformLocation(prog, "uPulse");
+
+let dragging = false, lastX = 0, lastY = 0;
+canvas.addEventListener("pointerdown", e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+window.addEventListener("pointerup", () => dragging = false);
+window.addEventListener("pointermove", e => {
+  if (!dragging) return;
+  state.yaw += (e.clientX - lastX) * 0.01;
+  state.pitch = Math.max(-0.3, Math.min(0.8, state.pitch + (e.clientY - lastY) * 0.008));
+  lastX = e.clientX; lastY = e.clientY;
+});
+window.addEventListener("keydown", e => keys[e.key.toLowerCase()] = true);
+window.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
+
+let lastFrame = performance.now(), frameCount = 0;
+function loop(now) {
+  const dt = Math.min(0.05, (now - lastFrame) / 1000);
+  lastFrame = now;
+  frameCount++;
+
+  // Update 3rd-person movement inside Sanctuary Dome
+  const mx = (keys["d"] || keys["arrowright"] ? 1 : 0) - (keys["a"] || keys["arrowleft"] ? 1 : 0) + moveInput.x;
+  const mz = (keys["w"] || keys["arrowup"] ? 1 : 0) - (keys["s"] || keys["arrowdown"] ? 1 : 0) + moveInput.z;
+  if (state.surfaceMode && (mx !== 0 || mz !== 0)) {
+    const speed = 2.6 * dt;
+    state.playerX = Math.max(-3.8, Math.min(3.8, state.playerX + (mx * Math.cos(state.yaw) - mz * Math.sin(state.yaw)) * speed));
+    state.playerZ = Math.max(-3.8, Math.min(3.8, state.playerZ + (-mx * Math.sin(state.yaw) - mz * Math.cos(state.yaw)) * speed));
+  }
+  state.pulse = Math.max(0, state.pulse - dt * 1.8);
+  state.dividends += dt * 0.012;
+  if (frameCount % 30 === 0) updateHUD();
+
+  const vIdx = ["V0-EDU", "V1-DOOM", "V2-XENO", "V3-FREE"].indexOf(state.variant);
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform2f(uRes, canvas.width, canvas.height);
+  gl.uniform1f(uTime, now * 0.001);
+  gl.uniform1f(uSurface, state.surfaceMode ? 1.0 : 0.0);
+  gl.uniform2f(uPlayer, state.playerX, state.playerZ);
+  gl.uniform2f(uCam, state.yaw, state.pitch);
+  gl.uniform1f(uVariant, vIdx);
+  gl.uniform1f(uPulse, state.pulse);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+  requestAnimationFrame(loop);
+}
+
+renderSKUs();
+updateHUD();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

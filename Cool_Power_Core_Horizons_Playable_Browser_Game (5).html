@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Cool Power Core™: Horizons Unbound (v6.5 — 3D WebGL, NPC Quests &amp; CPC-COIN)</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#070d19" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='32,3 58,18 58,46 32,61 6,46 6,18' fill='%230b1528' stroke='%2300e5ff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23f59e0b' stroke-width='2.5' stroke-dasharray='8 4'/%3E%3Cpath d='M34 15 L21 34 H31 L29 49 L43 29 H33 Z' fill='%2310b981'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --bg: #060b16; --panel: #0e182b; --border: #1e3256;
+    --cyan: #00e5ff; --amber: #f59e0b; --green: #10b981;
+    --purple: #a855f7; --red: #ef4444; --text: #e2e8f0; --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: linear-gradient(90deg, #091326, #0f1e3a);
+    border-bottom: 1px solid var(--border); gap: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 38px; height: 38px; filter: drop-shadow(0 0 6px rgba(0,229,255,0.45)); }
+  .spin-slow { transform-origin: 32px 32px; animation: spin 16s linear infinite; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .brand h1 { font-size: 1.02rem; letter-spacing: 0.4px; color: #fff; }
+  .brand span { font-size: 0.72rem; color: var(--cyan); display: block; }
+  .tier-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tier-btn {
+    background: #12213d; color: var(--muted); border: 1px solid var(--border);
+    padding: 5px 9px; border-radius: 6px; font-size: 0.73rem; cursor: pointer; transition: 0.15s;
+  }
+  .tier-btn.active { background: rgba(0,229,255,0.16); color: var(--cyan); border-color: var(--cyan); font-weight: 600; }
+  .grid {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; padding: 12px; max-width: 1520px; margin: 0 auto;
+  }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+  .card h2 {
+    font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.7px; color: var(--cyan);
+    margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  #glCanvas {
+    width: 100%; height: 360px; border-radius: 8px; display: block;
+    background: #02050c; border: 1px solid #1d355e; cursor: grab; touch-action: none;
+  }
+  #glCanvas:active { cursor: grabbing; }
+  .hud-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px;
+  }
+  .kpi {
+    background: #091224; border: 1px solid #1a2d50; border-radius: 7px; padding: 7px 9px;
+  }
+  .kpi label { font-size: 0.68rem; color: var(--muted); display: block; }
+  .kpi strong { font-size: 0.92rem; color: #fff; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+  button.act {
+    background: linear-gradient(180deg, #163059, #0f2242); color: #fff;
+    border: 1px solid #2b5292; padding: 6px 11px; border-radius: 6px;
+    font-size: 0.76rem; cursor: pointer; font-weight: 600;
+  }
+  button.act:hover { border-color: var(--cyan); color: var(--cyan); }
+  button.act.emerald { background: linear-gradient(180deg, #0d4a38, #083326); border-color: #10b981; color: #a7f3d0; }
+  button.act.amber { background: linear-gradient(180deg, #523608, #382405); border-color: #f59e0b; color: #fde68a; }
+  button.act.purple { background: linear-gradient(180deg, #3b1764, #260e42); border-color: #a855f7; color: #e9d5ff; }
+  .quest-box {
+    background: #081122; border: 1px solid #1f3968; border-radius: 8px; padding: 10px; margin-top: 8px;
+  }
+  .quest-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .badge {
+    font-size: 0.68rem; padding: 2px 7px; border-radius: 99px; font-weight: 700;
+    background: rgba(16,185,129,0.18); color: var(--green); border: 1px solid rgba(16,185,129,0.4);
+  }
+  .bid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 8px; }
+  .bid-card {
+    background: #0c182e; border: 1px solid #243f70; border-radius: 7px; padding: 8px; text-align: center;
+  }
+  .bid-card h4 { font-size: 0.75rem; color: var(--amber); margin-bottom: 3px; }
+  .bid-card p { font-size: 0.70rem; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar {
+    height: 8px; background: #050a14; border-radius: 99px; overflow: hidden; border: 1px solid #1e355e; margin-top: 7px;
+  }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--green)); transition: width 0.15s; }
+  .chat-log {
+    height: 155px; overflow-y: auto; background: #070e1d; border: 1px solid #1a2e52;
+    border-radius: 7px; padding: 8px; font-size: 0.76rem; line-height: 1.4; margin-bottom: 7px;
+  }
+  .msg { margin-bottom: 6px; }
+  .msg b.gem { color: #38bdf8; } .msg b.ven { color: #c084fc; } .msg b.gm { color: #34d399; } .msg b.sys { color: #fbbf24; }
+  .chat-input { display: flex; gap: 6px; }
+  .chat-input input {
+    flex: 1; background: #081122; border: 1px solid #244073; color: #fff;
+    padding: 6px 9px; border-radius: 6px; font-size: 0.78rem;
+  }
+  .addr-row {
+    display: flex; justify-content: space-between; align-items: center; background: #081122;
+    border: 1px solid #1a2e52; padding: 5px 8px; border-radius: 6px; margin-top: 5px; font-size: 0.71rem;
+  }
+  .addr-row code { color: var(--cyan); font-family: monospace; }
+  .log-strip {
+    font-size: 0.73rem; color: #a7f3d0; background: #071915; border: 1px solid #114235;
+    padding: 6px 9px; border-radius: 6px; margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-label="Cool Power Core Logo">
+      <polygon points="32,3 58,18 58,46 32,61 6,46 6,18" fill="#0b1528" stroke="#00e5ff" stroke-width="2.6"/>
+      <g class="spin-slow">
+        <circle cx="32" cy="32" r="18" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-dasharray="7 5"/>
+        <circle cx="32" cy="14" r="3" fill="#00e5ff"/>
+        <circle cx="32" cy="50" r="3" fill="#f59e0b"/>
+      </g>
+      <path d="M34 15 L21 34 H31 L29 49 L43 29 H33 Z" fill="#10b981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND <small style="color:#f59e0b">v6.5</small></h1>
+      <span>60 FPS 3D WebGL • NPC Transport &amp; Negotiation Quests • CPC-COIN Treasury</span>
+    </div>
+  </div>
+  <div class="tier-bar" id="tierBar">
+    <button class="tier-btn active" onclick="setTier(0)">T0: Android Mobile</button>
+    <button class="tier-btn" onclick="setTier(1)">T1: Console Pad</button>
+    <button class="tier-btn" onclick="setTier(2)">T2: Desktop + Semi-Haptics</button>
+    <button class="tier-btn" onclick="setTier(3)">T3: Full Haptic Suit + Brain Hat</button>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- LEFT COLUMN: 3D WEBGL PLANET + INTERPLANETARY NPC QUEST BOARD -->
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <div class="card">
+      <h2>
+        <span>3D Procedural Planet &amp; Sanctuary Dome Renderer (60 FPS WebGL)</span>
+        <span id="fpsTag" style="color:var(--green); font-size:0.75rem;">60 FPS • TIER 0</span>
+      </h2>
+      <canvas id="glCanvas"></canvas>
+      <div class="hud-strip">
+        <div class="kpi"><label>CPC-COIN Wallet</label><strong id="cpcBal" style="color:var(--green)">125.00 CPC</strong></div>
+        <div class="kpi"><label>CPC NAV (Backing)</label><strong id="cpcNav">$1.0842</strong></div>
+        <div class="kpi"><label>Active Cores (382.93 Wth)</label><strong id="coreCount">12 Cores (+4.11 kWe)</strong></div>
+        <div class="kpi"><label>Reputation / Rank</label><strong id="repRank" style="color:var(--amber)">Apprentice (100)</strong></div>
+      </div>
+      <div class="btn-row">
+        <button class="act" onclick="deployCore()">+ Deploy Sanctuary CPC Core (-15 CPC)</button>
+        <button class="act emerald" onclick="depositUSD()">Deposit $100 &rarr; Mint CPC</button>
+        <button class="act amber" onclick="claimETF()">Claim ETF Divs (<span id="divPool">$0.42</span>)</button>
+        <button class="act purple" onclick="exportSync()">Copy Cross-Device Sync</button>
+      </div>
+    </div>
+
+    <!-- NPC QUESTS, BIDDING WARS & INTERPLANETARY TRANSPORT -->
+    <div class="card">
+      <h2>
+        <span>NPC Task Board: Undercut Rival Bids &amp; Interplanetary Transit</span>
+        <button class="act" style="padding:3px 8px; font-size:0.71rem;" onclick="rollNewQuest()">New NPC Contract</button>
+      </h2>
+      <div class="quest-box" id="questBox">
+        <div class="quest-header">
+          <strong id="qTitle" style="color:#fff; font-size:0.86rem;">Loading NPC Contract...</strong>
+          <span class="badge" id="qType">INTERPLANETARY TRANSIT</span>
+        </div>
+        <p id="qDesc" style="font-size:0.76rem; color:var(--muted); line-height:1.4;"></p>
+        <div style="display:flex; justify-content:space-between; font-size:0.73rem; margin-top:6px; color:#cbd5e1;">
+          <span id="qRival">Rival NPC Quote: 58.0 CPC</span>
+          <span id="qFuelCost">CPC Core Transit Cost: 9.5 CPC</span>
+          <span id="qBonus">Tier Efficiency Bonus: +0%</span>
+        </div>
+        <div class="bid-grid">
+          <div class="bid-card">
+            <h4>Aggressive Undercut (-22%)</h4>
+            <p>Beat rival easily (96% win). Instant escrow lock.</p>
+            <button class="act emerald" style="width:100%;" onclick="bidQuest(0.78, 0.96, 'Aggressive Undercut')">Bid <span id="bidLow">45.2</span> CPC</button>
+          </div>
+          <div class="bid-card">
+            <h4>Balanced Value (-12%)</h4>
+            <p>High margin + strong win odds (82% win).</p>
+            <button class="act" style="width:100%;" onclick="bidQuest(0.88, 0.82, 'Balanced Value')">Bid <span id="bidMid">51.0</span> CPC</button>
+          </div>
+          <div class="bid-card">
+            <h4>Premium Express (-4%)</h4>
+            <p>Max CPC profit if accepted (58% win).</p>
+            <button class="act amber" style="width:100%;" onclick="bidQuest(0.96, 0.58, 'Premium Express')">Bid <span id="bidHigh">55.7</span> CPC</button>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="missionBar"></div></div>
+        <div id="missionStatus" style="font-size:0.72rem; color:var(--cyan); margin-top:4px;">Select a bid tier to undercut rival NPCs and launch mission.</div>
+      </div>
+      <div class="log-strip" id="eventLog">System Ready: Drag 3D planet to orbit. Negotiate NPC transport &amp; thermal contracts to earn real-backed CPC-COIN!</div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: AI COUNCIL (GEMINI, VENICE, GAME MASTER) + STOCKS + PATRONAGE -->
+  <div style="display:flex; flex-direction:column; gap:12px;">
+    <div class="card">
+      <h2>
+        <span>Interactive AI Council (Voice + Text)</span>
+        <div>
+          <button class="act" style="padding:3px 7px; font-size:0.69rem;" onclick="setPersona('gemini')">✦ Gemini</button>
+          <button class="act purple" style="padding:3px 7px; font-size:0.69rem;" onclick="setPersona('venice')">◈ Venice.ai</button>
+          <button class="act emerald" style="padding:3px 7px; font-size:0.69rem;" onclick="setPersona('gm')">❖ Game Master</button>
+        </div>
+      </h2>
+      <div class="chat-log" id="chatLog">
+        <div class="msg"><b class="gm">❖ Game Master AI:</b> Welcome to <i>Horizons Unbound</i>! Undercut rival NPC freighters on the Quest Board—because your Cool Power Core™ harvests transit heat (382.93 Wth/core) instead of burning rocket fuel, you can beat their price by 20% and pocket pure CPC-COIN profit!</div>
+      </div>
+      <div class="chat-input">
+        <input id="chatIn" placeholder="Ask Gemini, Venice.ai, or Game Master about quests, physics, or CPC-COIN..." onkeydown="if(event.key==='Enter')sendChat()" />
+        <button class="act" onclick="startVoice()">🎙️</button>
+        <button class="act emerald" onclick="sendChat()">Ask</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span>Subterranean Sanctuary Stock &amp; ETF Mirror</span><span style="color:var(--green); font-size:0.72rem;">ROBINHOOD L2 + BASE</span></h2>
+      <div class="hud-strip" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="kpi"><label>SCHD / JEPI Div</label><strong id="stSchd">$84.15 (+0.6%)</strong></div>
+        <div class="kpi"><label>VOO / SPY Mirror</label><strong id="stVoo">$548.90 (+0.9%)</strong></div>
+        <div class="kpi"><label>NVDA Tech Index</label><strong id="stNvda">$142.30 (+1.4%)</strong></div>
+      </div>
+      <p style="font-size:0.71rem; color:var(--muted); margin-top:7px;">
+        Every NPC contract &amp; AI Merchant swap recycles 0.25% fees + Aerodrome Base gauges + Lido wstETH + Beefy.com + SCHD/JEPI/VOO/SGOV dividends into CPC-COIN NAV.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2><span>Inventor Patronage &amp; Treasury Endpoints (Thomas G. Coleman)</span></h2>
+      <div class="addr-row"><span>EVM Direct Donate: <code>0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</code></span><button class="act" style="padding:2px 7px;" onclick="copyAddr('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy</button></div>
+      <div class="addr-row"><span>BTC / Cake Pay: <code>howeyecrypto@cake.cash</code></span><button class="act" style="padding:2px 7px;" onclick="copyAddr('howeyecrypto@cake.cash')">Copy</button></div>
+      <div class="addr-row"><span>Solana Donate: <code>2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</code></span><button class="act" style="padding:2px 7px;" onclick="copyAddr('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy</button></div>
+      <div class="addr-row"><span>Investment Gnosis Safe: <code>0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</code></span><button class="act" style="padding:2px 7px;" onclick="copyAddr('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37')">Copy</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- GAME STATE ---
+const state = {
+  tier: 0,
+  cpc: 125.00,
+  nav: 1.0842,
+  cores: 12,
+  rep: 100,
+  divPool: 0.42,
+  persona: 'gm',
+  rotX: 0.35, rotY: 0.6,
+  activeQuest: null,
+  missionActive: false,
+  missionProg: 0,
+  missionPayout: 0,
+  missionNetProfit: 0,
+  missionLabel: ''
+};
+
+const TIER_NAMES = [
+  "TIER 0: Android Mobile Web (720p Dynamic)",
+  "TIER 1: Console Gamepad (1080p60 HDR)",
+  "TIER 2: Desktop + Semi-Haptics (4K Ray-Atmosphere)",
+  "TIER 3: Full-Body Haptic Suit + Air-Gapped Brain Hat"
+];
+const TIER_FUEL_DISCOUNT = [0.00, 0.12, 0.25, 0.40]; // Higher rigs recover more transit waste heat!
+
+// --- PROCEDURAL NPC QUEST & NEGOTIATION GENERATOR ---
+const QUEST_TEMPLATES = [
+  {
+    title: "Relocate Dr. Aris Thorne (Corona Sanctuary → Mars Arsia Lava-Tube)",
+    type: "INTERPLANETARY PASSENGER",
+    desc: "Dr. Thorne needs safe zero-G ECLSS transit with 420 kg of hydroponic seed vaults. Chemical-rocket NPCs charge huge fuel markups—undercut them using your closed-loop CPC-LOOP / Orbital Shuttle!",
+    rivalQuote: 64.0, baseCost: 11.0, repGain: 25
+  },
+  {
+    title: "Undercut Guild Broker Vex: Haul 4.5 Tons of Graphene to Lunar South Pole",
+    type: "CARGO BIDDING WAR",
+    desc: "Broker Vex quoted 82.0 CPC using conventional cryofuel. Because your CPC-SHUTTLE harvests linear-stator braking heat, your marginal energy cost is tiny. Cut a better deal!",
+    rivalQuote: 82.0, baseCost: 14.5, repGain: 35
+  },
+  {
+    title: "Escort 18 Sanctuary Apprentices (Inland SoCal → Floating Pacific Atoll Hub)",
+    type: "SUBSEA MAGLEV TRANSIT",
+    desc: "Subsea NPC ferry operators want 48.0 CPC for the -200m transoceanic tunnel crossing. Offer a lower fare powered by abyssal 2°C seawater thermal harvesting.",
+    rivalQuote: 48.0, baseCost: 7.5, repGain: 20
+  },
+  {
+    title: "Emergency Cryo-Medical Core Delivery to Europa Sub-Glacial Outpost",
+    type: "HIGH-PRIORITY EXPEDITION",
+    desc: "Time-critical medical isotope & pure-water core transfer. Rival autonomous haulers demand 115.0 CPC. Win the bid and collect bonus ETF-backed CPC-COIN!",
+    rivalQuote: 115.0, baseCost: 19.0, repGain: 50
+  }
+];
+
+function rollNewQuest() {
+  if (state.missionActive) { logEvent("Finish your active transport mission before bidding on a new contract!"); return; }
+  const tpl = QUEST_TEMPLATES[Math.floor(Math.random() * QUEST_TEMPLATES.length)];
+  const jitter = 0.92 + Math.random() * 0.18;
+  const rival = +(tpl.rivalQuote * jitter).toFixed(1);
+  const disc = TIER_FUEL_DISCOUNT[state.tier];
+  const netCost = +(tpl.baseCost * (1 - disc)).toFixed(1);
+  state.activeQuest = { ...tpl, rival, netCost };
+
+  document.getElementById('qTitle').textContent = tpl.title;
+  document.getElementById('qType').textContent = tpl.type;
+  document.getElementById('qDesc').textContent = tpl.desc;
+  document.getElementById('qRival').textContent = `Rival NPC Quote: ${rival.toFixed(1)} CPC`;
+  document.getElementById('qFuelCost').textContent = `Your CPC Core Cost: ${netCost.toFixed(1)} CPC`;
+  document.getElementById('qBonus').textContent = `Rig Heat-Recovery Discount: -${Math.round(disc*100)}%`;
+
+  document.getElementById('bidLow').textContent = (rival * 0.78).toFixed(1);
+  document.getElementById('bidMid').textContent = (rival * 0.88).toFixed(1);
+  document.getElementById('bidHigh').textContent = (rival * 0.96).toFixed(1);
+  document.getElementById('missionBar').style.width = '0%';
+  document.getElementById('missionStatus').textContent = "Awaiting your bid—undercut the rival NPC to win escrow!";
+}
+
+function bidQuest(mult, winProb, label) {
+  if (!state.activeQuest || state.missionActive) return;
+  const q = state.activeQuest;
+  const yourBid = +(q.rival * mult).toFixed(2);
+  if (state.cpc < q.netCost) {
+    logEvent(`Insufficient CPC-COIN (${state.cpc.toFixed(2)} CPC) to cover ${q.netCost} CPC transit core prep.`);
+    return;
+  }
+  // Reputation improves negotiation win odds up to +12%
+  const finalProb = Math.min(0.99, winProb + (state.rep - 100) * 0.0005);
+  if (Math.random() <= finalProb) {
+    state.cpc -= q.netCost;
+    state.missionActive = true;
+    state.missionProg = 0;
+    state.missionPayout = yourBid;
+    state.missionNetProfit = +(yourBid - q.netCost).toFixed(2);
+    state.missionLabel = label;
+    document.getElementById('missionStatus').textContent =
+      `DEAL WON (${label} @ ${yourBid} CPC vs Rival ${q.rival} CPC)! Executing interplanetary transit...`;
+    logEvent(`Contract Won! Undercut rival NPC by ${(q.rival - yourBid).toFixed(1)} CPC. Transit pod underway...`);
+  } else {
+    document.getElementById('missionStatus').textContent =
+      `NPC client picked a cheaper bidder than ${yourBid} CPC! Try a sharper undercut or roll a new contract.`;
+    logEvent(`Bid Rejected (${yourBid} CPC). Rival NPC undercut your offer—try Aggressive or Balanced bid!`);
+  }
+  updateHUD();
+}
+
+// --- CORE ACTIONS & DEFI ---
+function setTier(t) {
+  state.tier = t;
+  document.querySelectorAll('.tier-btn').forEach((b, i) => b.classList.toggle('active', i === t));
+  document.getElementById('fpsTag').textContent = `60 FPS • ${TIER_NAMES[t].split(':')[0]}`;
+  if (state.activeQuest) {
+    const disc = TIER_FUEL_DISCOUNT[t];
+    state.activeQuest.netCost = +(state.activeQuest.baseCost * (1 - disc)).toFixed(1);
+    document.getElementById('qFuelCost').textContent = `Your CPC Core Cost: ${state.activeQuest.netCost.toFixed(1)} CPC`;
+    document.getElementById('qBonus').textContent = `Rig Heat-Recovery Discount: -${Math.round(disc*100)}%`;
+  }
+  logEvent(`Switched hardware profile to ${TIER_NAMES[t]}. Continuous player state preserved.`);
+}
+
+function deployCore() {
+  if (state.cpc < 15) { logEvent("Need 15.00 CPC to fabricate a new Sanctuary Cool Power Core™."); return; }
+  state.cpc -= 15;
+  state.cores += 1;
+  state.rep += 10;
+  logEvent(`Deployed Core #${state.cores} (+382.93 Wth harvested, +342.4 We net export, +12.96 L/day pure H2O).`);
+  updateHUD();
+}
+
+function depositUSD() {
+  const minted = +(100 / state.nav).toFixed(2);
+  state.cpc += minted;
+  logEvent(`Deposited $100 USDC into CPC Reserve Basket → Minted +${minted} CPC @ $${state.nav.toFixed(4)} NAV.`);
+  updateHUD();
+}
+
+function claimETF() {
+  if (state.divPool < 0.01) return;
+  const cpcBonus = +(state.divPool / state.nav).toFixed(2);
+  state.cpc += cpcBonus;
+  logEvent(`Claimed $${state.divPool.toFixed(2)} SCHD/JEPI/VOO/SGOV ETF dividends (+${cpcBonus} CPC added to wallet).`);
+  state.divPool = 0.00;
+  updateHUD();
+}
+
+function exportSync() {
+  const payload = btoa(JSON.stringify({ cpc: state.cpc.toFixed(2), cores: state.cores, rep: state.rep, tier: state.tier }));
+  const token = `CPC-SYNC://${payload}`;
+  navigator.clipboard?.writeText(token);
+  logEvent(`Cross-device save token copied: ${token.slice(0, 38)}...`);
+}
+
+function copyAddr(a) {
+  navigator.clipboard?.writeText(a);
+  logEvent(`Copied verified address to clipboard: ${a}`);
+}
+
+function logEvent(txt) {
+  document.getElementById('eventLog').textContent = txt;
+}
+
+function updateHUD() {
+  document.getElementById('cpcBal').textContent = `${state.cpc.toFixed(2)} CPC`;
+  document.getElementById('cpcNav').textContent = `$${state.nav.toFixed(4)}`;
+  const kw = (state.cores * 0.3424).toFixed(2);
+  document.getElementById('coreCount').textContent = `${state.cores} Cores (+${kw} kWe)`;
+  const rank = state.rep >= 300 ? "Master Architect" : state.rep >= 180 ? "Sanctuary Captain" : "Apprentice";
+  document.getElementById('repRank').textContent = `${rank} (${state.rep})`;
+  document.getElementById('divPool').textContent = `$${state.divPool.toFixed(2)}`;
+}
+
+// --- AI COUNCIL (GEMINI, VENICE, GAME MASTER) ---
+function setPersona(p) {
+  state.persona = p;
+  const names = { gemini: "✦ Gemini AI (google.com)", venice: "◈ Venice.ai", gm: "❖ Game Master AI" };
+  appendChat(p, `Channel active: ${names[p]}. How can I assist your mission?`);
+}
+
+function appendChat(who, text) {
+  const box = document.getElementById('chatLog');
+  const labels = { gemini: '<b class="gem">✦ Gemini AI:</b>', venice: '<b class="ven">◈ Venice.ai:</b>', gm: '<b class="gm">❖ Game Master AI:</b>' };
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = `${labels[who]} ${text}`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.pitch = who === 'gemini' ? 1.08 : who === 'venice' ? 0.92 : 1.0;
+    u.rate = 1.04;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function sendChat() {
+  const inp = document.getElementById('chatIn');
+  const q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  const ql = q.toLowerCase();
+  let reply = "";
+  if (state.persona === 'gemini') {
+    reply = ql.includes('quest') || ql.includes('deal') || ql.includes('transport')
+      ? "Because each Cool Power Core™ harvests 382.93 Wth of transit & braking heat via 90°C CVD-graphene cavitation and 33.6 kV plasma, your fuel overhead is nearly zero—allowing you to undercut chemical-rocket NPCs by 12%–22% profitably!"
+      : "Every Cool Power Core™ bridges a 90°C cavitation reservoir against a cold sink to export +342.4 We continuous power and 12.96 L/day of <1 ppm distilled water. Upgrade to Tier 2 or Tier 3 rigs to cut transit energy costs by up to 40%.";
+  } else if (state.persona === 'venice') {
+    reply = ql.includes('coin') || ql.includes('dividend') || ql.includes('etf')
+      ? "CPC-COIN is backed by the combined value of all deposited reserve currencies plus automated compounding across Aerodrome Base gauges, Lido wstETH, Beefy.com vaults, and SCHD/JEPI/VOO/SGOV ETF dividends on Robinhood Chain L2—never diluted!"
+      : "Your Tier 3 Brain Hat is protected by 7-layer zero-RF hardware isolation, Mu-Metal Faraday shielding (>115 dB), and unidirectional optical diodes—100% immune to remote takeover.";
+  } else {
+    reply = `You currently hold ${state.cpc.toFixed(2)} CPC and ${state.cores} active cores. Use the NPC Task Board to undercut rival quotes on interplanetary passenger & cargo runs—each completed contract boosts your Reputation and pays real-backed CPC-COIN!`;
+  }
+  appendChat(state.persona, reply);
+}
+
+function startVoice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { logEvent("Voice input unavailable in this browser; type your question above."); return; }
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.onresult = (e) => {
+    document.getElementById('chatIn').value = e.results[0][0].transcript;
+    sendChat();
+  };
+  rec.start();
+  logEvent("Listening via microphone... speak your question to the AI Council.");
+}
+
+// --- 60 FPS 3D WEBGL RAY-MARCHED PROCEDURAL PLANET & TRANSIT RING ---
+const canvas = document.getElementById('glCanvas');
+const gl = canvas.getContext('webgl');
+
+const vsSrc = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`;
+const fsSrc = `
+precision highp float;
+uniform vec2 uRes;
+uniform float uTime;
+uniform vec2 uRot;
+uniform float uCores;
+uniform float uShipProg;
+
+mat2 rot(float a){ float s=sin(a), c=cos(a); return mat2(c,-s,s,c); }
+
+float hash(vec3 p){
+  p = fract(p * 0.3183099 + 0.1);
+  p *= 17.0;
+  return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
+}
+
+float noise(vec3 x){
+  vec3 i = floor(x);
+  vec3 f = fract(x);
+  f = f*f*(3.0-2.0*f);
+  return mix(
+    mix(mix(hash(i+vec3(0,0,0)), hash(i+vec3(1,0,0)), f.x),
+        mix(hash(i+vec3(0,1,0)), hash(i+vec3(1,1,0)), f.x), f.y),
+    mix(mix(hash(i+vec3(0,0,1)), hash(i+vec3(1,0,1)), f.x),
+        mix(hash(i+vec3(0,1,1)), hash(i+vec3(1,1,1)), f.x), f.y), f.z);
+}
+
+float fbm(vec3 p){
+  float v = 0.0, a = 0.5;
+  for(int i=0; i<4; i++){ v += a * noise(p); p *= 2.05; a *= 0.5; }
+  return v;
+}
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes.xy) / uRes.y;
+  vec3 ro = vec3(0.0, 0.0, 3.15);
+  vec3 rd = normalize(vec3(uv, -1.45));
+
+  // Starfield
+  vec3 col = vec3(0.015, 0.028, 0.06);
+  float star = pow(hash(floor(rd * 260.0)), 28.0);
+  col += vec3(0.7, 0.88, 1.0) * star * 1.4;
+
+  // Planet sphere intersection
+  float r = 1.08;
+  float b = dot(ro, rd);
+  float c = dot(ro, ro) - r*r;
+  float h = b*b - c;
+
+  vec3 light = normalize(vec3(0.75, 0.55, 0.85));
+
+  if(h > 0.0){
+    float t = -b - sqrt(h);
+    vec3 pos = ro + rd * t;
+    vec3 nor = normalize(pos);
+
+    vec3 pRot = nor;
+    pRot.xz *= rot(uRot.y + uTime * 0.14);
+    pRot.yz *= rot(uRot.x);
+
+    float elev = fbm(pRot * 3.4);
+    vec3 ocean = vec3(0.03, 0.22, 0.45);
+    vec3 land  = mix(vec3(0.08, 0.46, 0.28), vec3(0.62, 0.42, 0.24), smoothstep(0.52, 0.82, elev));
+    vec3 ice   = vec3(0.85, 0.95, 1.0);
+    vec3 surf  = elev < 0.47 ? ocean : land;
+    surf = mix(surf, ice, smoothstep(0.72, 0.92, abs(pRot.y)));
+
+    // Glowing 21.5C ETFE Sanctuary City Domes on land
+    float cityGrid = smoothstep(0.86, 0.96, noise(pRot * (10.0 + uCores * 0.15))) * step(0.48, elev);
+    surf += vec3(0.0, 0.95, 1.0) * cityGrid * 1.35;
+
+    float diff = max(dot(nor, light), 0.12);
+    float fres = pow(1.0 - max(dot(nor, -rd), 0.0), 3.0);
+    col = surf * diff + vec3(0.05, 0.65, 1.0) * fres * 0.55;
+  } else {
+    // Atmospheric limb glow
+    float dist = length(cross(ro, rd));
+    float glow = exp(-12.0 * max(dist - r, 0.0));
+    col += vec3(0.0, 0.68, 0.95) * glow * 0.65;
+  }
+
+  // Orbital CPC-LOOP Maglev Ring & Active Quest Transport Pod
+  float ringPlane = abs(rd.y * cos(uRot.x) - rd.z * sin(uRot.x));
+  if(ringPlane < 0.014){
+    float rDist = length(uv);
+    if(rDist > 0.44 && rDist < 0.49){
+      col += vec3(0.96, 0.62, 0.04) * 0.75;
+    }
+  }
+  if(uShipProg > 0.0){
+    float ang = uShipProg * 6.28318;
+    vec2 podPos = vec2(cos(ang) * 0.465, sin(ang) * 0.16);
+    float dPod = length(uv - podPos);
+    col += vec3(0.06, 0.95, 0.65) * exp(-55.0 * dPod);
+  }
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+function compileShader(type, src) {
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src);
+  gl.compileShader(s);
+  return s;
+}
+const prog = gl.createProgram();
+gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSrc));
+gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSrc));
+gl.linkProgram(prog);
+gl.useProgram(prog);
+
+const buf = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(prog, 'p');
+gl.enableVertexAttribArray(loc);
+gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+const uRes = gl.getUniformLocation(prog, 'uRes');
+const uTime = gl.getUniformLocation(prog, 'uTime');
+const uRot = gl.getUniformLocation(prog, 'uRot');
+const uCores = gl.getUniformLocation(prog, 'uCores');
+const uShipProg = gl.getUniformLocation(prog, 'uShipProg');
+
+// Drag-to-orbit pointer events
+let dragging = false, lastX = 0, lastY = 0;
+canvas.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+window.addEventListener('pointerup', () => dragging = false);
+window.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  state.rotY += (e.clientX - lastX) * 0.008;
+  state.rotX = Math.max(-1.2, Math.min(1.2, state.rotX + (e.clientY - lastY) * 0.008));
+  lastX = e.clientX; lastY = e.clientY;
+});
+
+let lastTick = performance.now();
+function loop(now) {
+  const dt = (now - lastTick) / 1000;
+  lastTick = now;
+
+  // Background AI Merchant swap-fee compounding + ETF dividend accrual
+  state.nav += 0.000018 * dt;
+  state.divPool += 0.0045 * dt;
+
+  // Progress active NPC transport mission
+  if (state.missionActive) {
+    state.missionProg += dt * 0.22; // ~4.5 sec transit flight
+    document.getElementById('missionBar').style.width = `${Math.min(100, state.missionProg * 100)}%`;
+    if (state.missionProg >= 1.0) {
+      state.missionActive = false;
+      state.missionProg = 0;
+      state.cpc += state.missionPayout;
+      state.rep += state.activeQuest.repGain;
+      document.getElementById('missionStatus').textContent =
+        `MISSION COMPLETE! Collected ${state.missionPayout.toFixed(2)} CPC (Net Profit: +${state.missionNetProfit.toFixed(2)} CPC, +${state.activeQuest.repGain} Rep).`;
+      logEvent(`Transit Delivered! +${state.missionPayout.toFixed(2)} CPC credited to wallet. Roll another NPC contract!`);
+    }
+  }
+  updateHUD();
+
+  // Render WebGL
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+  gl.viewport(0, 0, canvas.width, canvas.height);
+  gl.uniform2f(uRes, canvas.width, canvas.height);
+  gl.uniform1f(uTime, now * 0.001);
+  gl.uniform2f(uRot, state.rotX, state.rotY);
+  gl.uniform1f(uCores, state.cores);
+  gl.uniform1f(uShipProg, state.missionActive ? state.missionProg : 0.0);
+  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+  requestAnimationFrame(loop);
+}
+
+rollNewQuest();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

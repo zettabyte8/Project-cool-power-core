@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#070B14" />
+<link rel="manifest" href="manifest.webmanifest" />
+<title>Cool Power Core™: Horizons Unbound (v6.8 — Real-World Tech Shipping & Multiverse)</title>
+<style>
+  :root {
+    --bg: #070B14;
+    --panel: rgba(13, 21, 38, 0.90);
+    --border: rgba(56, 189, 248, 0.28);
+    --cyan: #00E5FF;
+    --amber: #F59E0B;
+    --emerald: #10B981;
+    --purple: #A855F7;
+    --rose: #F43F5E;
+    --text: #F1F5F9;
+    --muted: #94A3B8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: linear-gradient(90deg, #091122, #111D35);
+    border-bottom: 1px solid var(--border); gap: 8px; position: sticky; top: 0; z-index: 40;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand h1 { font-size: 15px; font-weight: 800; letter-spacing: 0.4px; color: #fff; }
+  .brand span { font-size: 11px; color: var(--cyan); display: block; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pill {
+    background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border);
+    padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 600;
+  }
+  .pill.green { border-color: rgba(16, 185, 129, 0.5); color: #6EE7B7; }
+  .pill.amber { border-color: rgba(245, 158, 11, 0.5); color: #FCD34D; }
+  .pill.purple { border-color: rgba(168, 85, 247, 0.55); color: #D8B4FE; }
+  .grid {
+    display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px;
+    padding: 12px; max-width: 1560px; margin: 0 auto;
+  }
+  @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  }
+  .card h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--cyan); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  #glCanvas {
+    width: 100%; height: 340px; border-radius: 8px; display: block;
+    background: radial-gradient(circle at center, #0F1C36 0%, #050811 100%);
+    border: 1px solid rgba(0, 229, 255, 0.22); cursor: grab;
+  }
+  .btn {
+    background: linear-gradient(135deg, #0284C7, #0369A1); color: #fff; border: none;
+    padding: 6px 11px; border-radius: 6px; font-size: 11px; font-weight: 700;
+    cursor: pointer; transition: 0.15s;
+  }
+  .btn:hover { filter: brightness(1.15); }
+  .btn.emerald { background: linear-gradient(135deg, #059669, #047857); }
+  .btn.amber { background: linear-gradient(135deg, #D97706, #B45309); }
+  .btn.purple { background: linear-gradient(135deg, #7E22CE, #6B21A8); }
+  .btn.rose { background: linear-gradient(135deg, #E11D48, #BE123C); }
+  .btn.outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn.active { outline: 2px solid var(--cyan); background: #0C4A6E; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 8px; }
+  @media (max-width: 600px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+  .kpi {
+    background: rgba(7, 11, 20, 0.75); border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 8px; padding: 7px;
+  }
+  .kpi small { font-size: 10px; color: var(--muted); display: block; }
+  .kpi strong { font-size: 14px; color: #fff; }
+  .list-box {
+    max-height: 235px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+    padding-right: 4px;
+  }
+  .item {
+    background: rgba(9, 15, 28, 0.85); border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 8px; padding: 8px; font-size: 11px;
+  }
+  .item-head { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 4px; }
+  input, select {
+    background: #080E1C; border: 1px solid var(--border); color: #fff;
+    padding: 6px 8px; border-radius: 6px; font-size: 11px;
+  }
+  .badge {
+    display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700;
+    background: rgba(0, 229, 255, 0.14); color: var(--cyan);
+  }
+  .badge.ship { background: rgba(16, 185, 129, 0.18); color: #6EE7B7; }
+  .badge.wait { background: rgba(245, 158, 11, 0.18); color: #FCD34D; }
+  .log {
+    background: #050810; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px;
+    padding: 7px; font-family: monospace; font-size: 11px; height: 92px; overflow-y: auto; color: #A5F3FC;
+  }
+  .addr { font-family: monospace; font-size: 10px; color: #CBD5E1; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+      <polygon points="32,3 58,18 58,46 32,61 6,46 6,18" fill="#0B1325" stroke="#00E5FF" stroke-width="3"/>
+      <circle cx="32" cy="32" r="16" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <polygon points="34,16 22,34 31,34 29,48 42,30 33,30" fill="#10B981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND <span style="display:inline;color:#F59E0B;">v6.8</span></h1>
+      <span>60 FPS Cross-Device Multiverse • Unified CPC-COIN • Real-World Tech Shipping Reservations</span>
+    </div>
+  </div>
+  <div class="pill-row">
+    <span class="pill green" id="balPill">Balance: 4,250.00 CPC</span>
+    <span class="pill amber" id="navPill">CPC NAV: $1.0842 (+8.17%/yr)</span>
+    <span class="pill purple" id="variantPill">Timeline: V0-EDU (Canon)</span>
+    <span class="pill" id="shipQueuePill">Physical Orders: 1 Queued</span>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- LEFT: 3D PLANET VIEWPORT + RIG SCALING + QUANTUM TUNNELING -->
+  <div class="card">
+    <h2>
+      <span>3D Procedural Planetary &amp; Sanctuary Viewport (60 FPS WebGL)</span>
+      <span id="fpsLabel" style="color:#6EE7B7;font-size:11px;">60 FPS • Drag to Orbit</span>
+    </h2>
+    <canvas id="glCanvas" width="800" height="340"></canvas>
+
+    <div class="kpi-grid" style="margin-top:8px;">
+      <div class="kpi"><small>Thermal Input (Real Physics)</small><strong id="kpiWth">382.93 Wth/core</strong></div>
+      <div class="kpi"><small>Net Electric Output</small><strong id="kpiWe">+342.40 We/core</strong></div>
+      <div class="kpi"><small>Pure Water Distillate</small><strong id="kpiH2o">12.96 L/day</strong></div>
+      <div class="kpi"><small>Quantum Phase Coherence</small><strong id="kpiQt">38% (Charging)</strong></div>
+    </div>
+
+    <div class="row">
+      <strong style="font-size:11px;color:var(--cyan);">Hardware Tier:</strong>
+      <button class="btn outline active" onclick="setTier(0,this)">T0: Android Mobile</button>
+      <button class="btn outline" onclick="setTier(1,this)">T1: Console Pad</button>
+      <button class="btn outline" onclick="setTier(2,this)">T2: Desktop + Semi-Haptic</button>
+      <button class="btn outline" onclick="setTier(3,this)">T3: Full-Body Haptic + Brain Hat</button>
+    </div>
+
+    <div class="row">
+      <strong style="font-size:11px;color:var(--purple);">Game Variant:</strong>
+      <button class="btn purple active" onclick="setVariant('V0-EDU',this)">V0: Educational (Restricted)</button>
+      <button class="btn outline" onclick="setVariant('V1-DOOM',this)">V1: Doom Chronicle</button>
+      <button class="btn outline" onclick="setVariant('V2-XENO',this)">V2: Alien Frontier</button>
+      <button class="btn outline" onclick="setVariant('V3-FREE',this)">V3: Unrestricted Sandbox</button>
+      <button class="btn amber" onclick="quantumJump()">⚡ Quantum Tunnel Jump</button>
+    </div>
+
+    <div class="log" id="sysLog">[SYS] Cool Power Core™ v6.8 initialized. Real-World Physical Shipping Bridge active.</div>
+  </div>
+
+  <!-- RIGHT: INTERACTIVE TABS (TECH STORE + REAL SHIPPING, QUESTS, CREATOR SHOWS, CPC-COIN + AI COUNCIL) -->
+  <div class="card">
+    <div class="tabs">
+      <button class="btn active" onclick="openTab('tabStore',this)">📦 CPC Tech Store &amp; Real Shipping</button>
+      <button class="btn outline" onclick="openTab('tabQuests',this)">🚀 NPC Bidding &amp; Quests</button>
+      <button class="btn outline" onclick="openTab('tabCreators',this)">🎬 NPC Creator Shows</button>
+      <button class="btn outline" onclick="openTab('tabDefi',this)">🪙 CPC-COIN &amp; ETF Dividends</button>
+      <button class="btn outline" onclick="openTab('tabAI',this)">🤖 Voice AI Council</button>
+      <button class="btn outline" onclick="openTab('tabPatron',this)">💎 Donate &amp; Sync</button>
+    </div>
+
+    <!-- TAB 1: CPC TECH STORE WITH REAL-WORLD SHIPPING RESERVATION -->
+    <div id="tabStore" class="tab-panel active">
+      <div class="item" style="margin-bottom:8px;border-color:rgba(16,185,129,0.45);">
+        <div class="item-head">
+          <span style="color:#6EE7B7;">🚚 Real-World Hardware Shipping &amp; Escrow Settings</span>
+          <span class="badge wait">Batch-1 Pre-Mfg Escrow</span>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">
+          Buy CPC hardware in-game with <b>CPC-COIN</b>. Toggle <b>Ship in Real Life</b> to lock escrow and reserve a physical unit that ships once factory manufacturing opens (100% refundable prior to production lock).
+        </div>
+        <div class="row" style="margin-bottom:4px;">
+          <input id="shipName" placeholder="Recipient Full Name" value="Thomas Gabriel Coleman" style="flex:1;min-width:130px;" />
+          <select id="shipRegion">
+            <option value="US-WEST">US West (Corona, CA Hub)</option>
+            <option value="US-EAST">US East / Midwest</option>
+            <option value="EU-UK">Europe / UK</option>
+            <option value="APAC">Asia-Pacific</option>
+            <option value="GLOBAL">Global Freight</option>
+          </select>
+        </div>
+        <div class="row" style="margin-bottom:0;">
+          <input id="shipAddr" placeholder="Real-World Street Address, City, State/Country, Postal Code" value="Corona, CA 92882, USA (Encrypted On-Chain Hash)" style="flex:1;" />
+        </div>
+      </div>
+
+      <div class="list-box" id="storeList" style="max-height:190px;"></div>
+
+      <h2 style="margin-top:8px;"><span>My Real-World Physical Shipping Queue</span><span style="font-size:10px;color:#FCD34D;">SHA-256 Address Privacy</span></h2>
+      <div class="list-box" id="orderList" style="max-height:110px;"></div>
+    </div>
+
+    <!-- TAB 2: NPC TRANSPORT BIDDING WARS -->
+    <div id="tabQuests" class="tab-panel">
+      <div class="list-box" id="questList" style="max-height:360px;"></div>
+    </div>
+
+    <!-- TAB 3: NPC CREATOR SHOWS (YOUTUBE, RUMBLE, INSTAGRAM, TIKTOK) -->
+    <div id="tabCreators" class="tab-panel">
+      <div class="list-box" id="creatorList" style="max-height:360px;"></div>
+    </div>
+
+    <!-- TAB 4: CPC-COIN MULTI-CURRENCY RESERVE & ETF DIVIDENDS -->
+    <div id="tabDefi" class="tab-panel">
+      <div class="item" style="margin-bottom:8px;">
+        <div class="item-head"><span>Multi-Currency Deposit → CPC-COIN Reserve</span><span class="badge">Zero-Dilution NAV</span></div>
+        <div class="row">
+          <select id="depAsset">
+            <option value="USDC">USDC (Base / Ethereum)</option>
+            <option value="ETH">ETH → Lido wstETH</option>
+            <option value="cbBTC">cbBTC → Aerodrome Base</option>
+            <option value="SCHD">USD → Robinhood L2 ETF Basket</option>
+          </select>
+          <input id="depAmt" type="number" value="500" style="width:90px;" />
+          <button class="btn emerald" onclick="depositCPC()">Deposit &amp; Mint CPC</button>
+        </div>
+        <div style="font-size:11px;color:var(--muted);">
+          Yield Routing: <b>25%</b> Aerodrome (Base 8453) • <b>25%</b> Robinhood L2 ETFs (SCHD, JEPI, VOO, SGOV) • <b>35%</b> Lido wstETH + Beefy.com • <b>15%</b> Instant Exit Buffer.
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-head"><span>Fair Blue-Chip ETF Dividend Engine</span><span class="badge ship" id="divEarnedBadge">Accrued: $14.82 USDC</span></div>
+        <div class="row" style="margin-top:6px;">
+          <button class="btn" onclick="claimDividends('COMPOUND')">Auto-Compound into CPC NAV</button>
+          <button class="btn amber" onclick="claimDividends('USDC')">Claim Pro-Rata USDC Dividend</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: INTERACTIVE VOICE AI COUNCIL -->
+    <div id="tabAI" class="tab-panel">
+      <div class="row">
+        <select id="aiPersona">
+          <option value="Gemini AI">✦ Gemini AI (google.com — Physics &amp; Hardware)</option>
+          <option value="Venice.ai">◈ Venice.ai (DeFi, Privacy &amp; Shipping Escrow)</option>
+          <option value="Game Master AI">❖ Game Master AI (Multiverse &amp; Quests)</option>
+        </select>
+        <button class="btn purple" onclick="startVoiceInput()">🎙️ Speak</button>
+      </div>
+      <div class="row">
+        <input id="aiPrompt" placeholder="Ask about physical shipping, CPC-COIN, variants, or physics..." style="flex:1;" />
+        <button class="btn" onclick="askAI()">Ask AI</button>
+      </div>
+      <div class="log" id="aiChat" style="height:245px;color:#E2E8F0;">[Gemini AI] Welcome! Purchase any Cool Power Core™ hardware in the Tech Store and toggle "Ship in Real Life" to lock your Batch-1 physical delivery reservation.</div>
+    </div>
+
+    <!-- TAB 6: PATRONAGE & CROSS-DEVICE SYNC -->
+    <div id="tabPatron" class="tab-panel">
+      <div class="item" style="margin-bottom:8px;">
+        <div class="item-head"><span>Support Inventor Thomas Gabriel Coleman (100% Direct)</span></div>
+        <div class="addr"><b>Investment Gnosis Safe:</b> 0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</div>
+        <div class="addr" style="margin-top:4px;"><b>Inventor EVM Donate:</b> 0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</div>
+        <div class="addr" style="margin-top:4px;"><b>BTC / Sats (Cake Pay):</b> howeyecrypto@cake.cash</div>
+        <div class="addr" style="margin-top:4px;"><b>Solana (SOL):</b> 2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</div>
+      </div>
+      <div class="item">
+        <div class="item-head"><span>Cross-Device Continuous State Sync</span></div>
+        <div class="row" style="margin-top:6px;">
+          <button class="btn emerald" onclick="exportSyncToken()">Generate CPC-SYNC:// Token</button>
+          <input id="syncBox" placeholder="CPC-SYNC://..." style="flex:1;" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  cpc: 4250.00,
+  nav: 1.0842,
+  tier: 0,
+  variant: 'V0-EDU',
+  qtCharge: 38,
+  dividendsUSD: 14.82,
+  orders: [
+    {
+      id: 'ORD-10001',
+      sku: 'CPC-RES-1',
+      name: 'Home Zero-Septic Module (342 We + 12.96 L/d)',
+      qty: 1,
+      paid: 1850,
+      region: 'US-WEST',
+      status: 'QUEUED (Pre-Manufacturing Escrow)',
+      hash: 'sha256:9f84c2...e41a'
+    }
+  ]
+};
+
+const catalog = [
+  { sku: 'CPC-RES-1', name: 'Home Zero-Septic Module (342 We + 12.96 L/d)', price: 1850, desc: '382.93 Wth input, zero sewer hookup, <1 ppm pure water.' },
+  { sku: 'CPC-NEURO-HAT', name: 'Air-Gapped Zero-RF Neural Brain Hat', price: 890, desc: '64-ch EEG + 32-ch TD-fNIRS, Mu-Metal shielded, zero RF chips.' },
+  { sku: 'CPC-IND-10', name: 'Industrial 10-Core Microgrid Skid (3.42 kWe)', price: 16500, desc: 'Factory/farm waste-heat harvester + 129.6 L/day pure distillate.' },
+  { sku: 'CPC-SUIT-MK6', name: 'Valkyrie-Neuro Briefcase Exosuit Frame', price: 24000, desc: '4.2 s deploy, 22-DOF Ti-6Al-4V, 12 mm NASA zero-bounce foam.' },
+  { sku: 'CPC-CERBERUS-HD', name: 'Cerberus-HDX Tri-Headed Robotic Mount', price: 32000, desc: '3 telescoping continuum arms, 265 kg payload, +626 We.' },
+  { sku: 'CPC-RIFLE-ATMOS', name: 'Vortex-Condenser Industrial Plasma/CO2 Cutter', price: 4200, desc: '4,800 K plasma torch + ambient CO2/particulate condenser.' }
+];
+
+const quests = [
+  { id: 'Q1', title: 'Transport 4 Sanctuary Apprentices: Corona Hub → Mars Lava Tube', rivalBid: 95, reward: 82, cargo: '4 Pax + 180 kg Gear' },
+  { id: 'Q2', title: 'Deliver 600 kg Flash Graphene: Pacific Atoll → Lunar South Pole', rivalBid: 120, reward: 104, cargo: '600 kg Graphene' },
+  { id: 'Q3', title: 'Emergency Plasma Bayonet Rescue: Europa Ice Ridge', rivalBid: 150, reward: 132, cargo: 'Cryo-Rover Crew' }
+];
+
+const shows = [
+  { host: '@NovaBuildsMars', platform: 'YouTube & Rumble', title: 'Building a 21.5°C Dome in -60°C Mars Air', views: '412K', payout: 46.5 },
+  { host: '@VortexFlightCrew', platform: 'TikTok & Instagram', title: '4.2-Second Briefcase Exosuit Flight Test', views: '1.28M', payout: 62.0 },
+  { host: '@SovereignYieldHQ', platform: 'YouTube', title: 'How Aerodrome + SCHD Dividends Back CPC-COIN', views: '285K', payout: 38.4 }
+];
+
+function logMsg(msg) {
+  const el = document.getElementById('sysLog');
+  el.innerHTML += `<br>${msg}`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function updateHUD() {
+  document.getElementById('balPill').textContent = `Balance: ${state.cpc.toFixed(2)} CPC`;
+  document.getElementById('navPill').textContent = `CPC NAV: $${state.nav.toFixed(4)} (+8.17%/yr)`;
+  document.getElementById('variantPill').textContent = `Timeline: ${state.variant}`;
+  document.getElementById('shipQueuePill').textContent = `Physical Orders: ${state.orders.length} Queued`;
+  document.getElementById('kpiQt').textContent = `${state.qtCharge}% ${state.qtCharge >= 100 ? '(READY)' : '(Charging)'}`;
+  document.getElementById('divEarnedBadge').textContent = `Accrued: $${state.dividendsUSD.toFixed(2)} USDC`;
+}
+
+function renderStore() {
+  const box = document.getElementById('storeList');
+  box.innerHTML = catalog.map((c, idx) => `
+    <div class="item">
+      <div class="item-head">
+        <span>${c.sku} — ${c.name}</span>
+        <span style="color:#6EE7B7;">${c.price.toLocaleString()} CPC</span>
+      </div>
+      <div style="color:var(--muted);margin-bottom:6px;">${c.desc}</div>
+      <div class="row" style="margin-bottom:0;">
+        <button class="btn outline" onclick="buyHardware(${idx}, false)">Equip In-Game Only</button>
+        <button class="btn emerald" onclick="buyHardware(${idx}, true)">📦 Buy + Ship in Real Life (Mfg Escrow)</button>
+      </div>
+    </div>
+  `).join('');
+
+  const oBox = document.getElementById('orderList');
+  oBox.innerHTML = state.orders.map((o, i) => `
+    <div class="item">
+      <div class="item-head">
+        <span>${o.id}: ${o.sku} (${o.region})</span>
+        <span class="badge wait">${o.status}</span>
+      </div>
+      <div style="color:var(--muted);">Escrow: <b>${o.paid.toLocaleString()} CPC</b> • Commitment: <code>${o.hash}</code>
+        <button class="btn rose" style="padding:2px 6px;margin-left:6px;font-size:10px;" onclick="refundOrder(${i})">Cancel &amp; Refund 100%</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function sha256Hex(str) {
+  if (window.crypto && crypto.subtle) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return 'sha256:' + Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 14) + '...';
+  }
+  return 'sha256:7c91e3...b82f';
+}
+
+async function buyHardware(idx, physicalShip) {
+  const item = catalog[idx];
+  if (state.cpc < item.price) {
+    logMsg(`[WARN] Insufficient CPC-COIN for ${item.sku}. Complete quests or deposit reserves.`);
+    return;
+  }
+  state.cpc -= item.price;
+  state.qtCharge = Math.min(100, state.qtCharge + 22);
+  if (!physicalShip) {
+    logMsg(`[EQUIP] ${item.sku} deployed to active rig in ${state.variant}! (+22% Quantum Coherence)`);
+  } else {
+    const recip = document.getElementById('shipName').value || 'Verified Buyer';
+    const addr = document.getElementById('shipAddr').value || 'Encrypted Destination';
+    const reg = document.getElementById('shipRegion').value;
+    const hash = await sha256Hex(`${recip}|${addr}|${reg}|${Date.now()}`);
+    const ordId = 'ORD-' + (10001 + state.orders.length);
+    state.orders.unshift({
+      id: ordId, sku: item.sku, name: item.name, qty: 1, paid: item.price,
+      region: reg, status: 'QUEUED (Pre-Manufacturing Escrow)', hash
+    });
+    logMsg(`[SHIP-ESCROW] ${ordId} reserved! ${item.price} CPC locked for real-world ${item.sku} delivery to ${reg} (${hash}).`);
+  }
+  updateHUD();
+  renderStore();
+}
+
+function refundOrder(i) {
+  const ord = state.orders[i];
+  state.cpc += ord.paid;
+  state.orders.splice(i, 1);
+  logMsg(`[REFUND] ${ord.id} cancelled prior to manufacturing lock. ${ord.paid} CPC returned to wallet.`);
+  updateHUD();
+  renderStore();
+}
+
+function renderQuestsAndShows() {
+  document.getElementById('questList').innerHTML = quests.map((q, i) => `
+    <div class="item">
+      <div class="item-head"><span>${q.title}</span><span style="color:#FCD34D;">Rival Quote: ${q.rivalBid} CPC</span></div>
+      <div style="color:var(--muted);margin-bottom:6px;">Payload: ${q.cargo} • Undercut rival chemical-rocket quote using Cool Power Core™ heat recovery.</div>
+      <button class="btn emerald" onclick="runQuest(${i})">Undercut at ${q.reward} CPC &amp; Launch Shuttle</button>
+    </div>
+  `).join('');
+
+  document.getElementById('creatorList').innerHTML = shows.map((s, i) => `
+    <div class="item">
+      <div class="item-head"><span>${s.host} (${s.platform})</span><span style="color:#6EE7B7;">${s.views} Views • +${s.payout} CPC</span></div>
+      <div style="color:var(--muted);margin-bottom:6px;">Show: "${s.title}" — Co-star to boost viral reach +45% &amp; compound CPC NAV.</div>
+      <button class="btn purple" onclick="costarShow(${i})">🎬 Co-Star &amp; Syndicate Show</button>
+    </div>
+  `).join('');
+}
+
+function runQuest(i) {
+  const q = quests[i];
+  const bonus = [1.0, 1.08, 1.15, 1.25][state.tier];
+  const earned = +(q.reward * bonus).toFixed(2);
+  state.cpc += earned;
+  state.nav += 0.0003;
+  state.qtCharge = Math.min(100, state.qtCharge + 18);
+  logMsg(`[QUEST] Undercut rival (${q.rivalBid} CPC)! Transport completed → +${earned} CPC earned.`);
+  updateHUD();
+}
+
+function costarShow(i) {
+  const s = shows[i];
+  state.cpc += s.payout;
+  state.nav += 0.0005;
+  logMsg(`[CREATOR] Co-starred with ${s.host} on ${s.platform}! Earned +${s.payout} CPC & boosted global NAV.`);
+  updateHUD();
+}
+
+function depositCPC() {
+  const usd = parseFloat(document.getElementById('depAmt').value) || 0;
+  if (usd <= 0) return;
+  const minted = usd / state.nav;
+  state.cpc += minted;
+  state.dividendsUSD += usd * 0.0068;
+  logMsg(`[DEFI] Deposited $${usd.toFixed(2)} into multi-chain reserve → Minted +${minted.toFixed(2)} CPC.`);
+  updateHUD();
+}
+
+function claimDividends(mode) {
+  if (state.dividendsUSD <= 0) return;
+  if (mode === 'COMPOUND') {
+    state.nav += state.dividendsUSD * 0.0002;
+    logMsg(`[ETF-DIV] Auto-compounded $${state.dividendsUSD.toFixed(2)} SCHD/JEPI/VOO/SGOV dividends into global CPC NAV!`);
+  } else {
+    const cpcEq = state.dividendsUSD / state.nav;
+    state.cpc += cpcEq;
+    logMsg(`[ETF-DIV] Claimed $${state.dividendsUSD.toFixed(2)} pro-rata ETF dividend (+${cpcEq.toFixed(2)} CPC).`);
+  }
+  state.dividendsUSD = 0;
+  updateHUD();
+}
+
+function setTier(t, btn) {
+  state.tier = t;
+  btn.parentElement.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const names = ['T0 Android Mobile', 'T1 Console Pad', 'T2 Desktop + Semi-Haptic', 'T3 Full-Body Haptic + Brain Hat'];
+  logMsg(`[RIG] Scaled interface & abilities to ${names[t]}.`);
+}
+
+function setVariant(v, btn) {
+  if (v !== 'V0-EDU' && state.qtCharge < 100 && state.variant === 'V0-EDU') {
+    logMsg(`[QT-LOCK] Charge Quantum Phase Coherence to 100% (or click Quantum Tunnel Jump with 250 CPC) to breach V0-EDU!`);
+    return;
+  }
+  state.variant = v;
+  btn.parentElement.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  logMsg(`[MULTIVERSE] Shifted to timeline ${v}. Unified CPC-COIN economy preserved.`);
+  updateHUD();
+}
+
+function quantumJump() {
+  if (state.qtCharge < 100) {
+    if (state.cpc < 250) { logMsg('[QT] Need 250 CPC to instant-charge Quantum Tunneling Drive.'); return; }
+    state.cpc -= 250;
+    state.nav += 0.0012;
+    state.qtCharge = 100;
+  }
+  const order = ['V0-EDU', 'V1-DOOM', 'V2-XENO', 'V3-FREE'];
+  const next = order[(order.indexOf(state.variant) + 1) % order.length];
+  state.variant = next;
+  logMsg(`[QUANTUM-TUNNEL] Phase-tunneled into ${next}! All rigs, CPC-COIN, and physical shipping orders intact.`);
+  updateHUD();
+}
+
+function askAI(spokenText) {
+  const persona = document.getElementById('aiPersona').value;
+  const q = spokenText || document.getElementById('aiPrompt').value.trim();
+  if (!q) return;
+  let reply = '';
+  if (q.toLowerCase().includes('ship') || q.toLowerCase().includes('real')) {
+    reply = 'When you click "Buy + Ship in Real Life", your CPC-COIN is locked in CoolPowerCoreHardwareFulfillment.sol escrow with a SHA-256 hash of your destination address. Once factory manufacturing opens for that SKU, your unit ships with live carrier tracking—or you can cancel for a 100% refund anytime beforehand.';
+  } else if (persona.includes('Gemini')) {
+    reply = 'Each Cool Power Core™ unit harvests 382.93 Wth of low-grade heat via 90°C CVD-graphene cavitation and 33.6 kV ZVS plasma, exporting +342.40 We continuous power and 12.96 L/day of <1 ppm distilled water.';
+  } else if (persona.includes('Venice')) {
+    reply = 'CPC-COIN stays backed by 100% of deposited multi-currency reserves across Aerodrome on Base, Lido wstETH + Beefy.com, and Robinhood Chain L2 ETFs (SCHD, JEPI, VOO, SGOV), while your Brain Hat stays protected by zero-RF hardware air-gapping.';
+  } else {
+    reply = `You are currently in ${state.variant} with ${state.cpc.toFixed(2)} CPC and ${state.orders.length} physical shipping reservation(s). Undercut rival NPC transport bids or co-star in creator shows to fund your next physical CPC-RES-1 unit!`;
+  }
+  const chat = document.getElementById('aiChat');
+  chat.innerHTML += `<br><br><b style="color:#38BDF8;">[You]:</b> ${q}<br><b style="color:#6EE7B7;">[${persona}]:</b> ${reply}`;
+  chat.scrollTop = chat.scrollHeight;
+  document.getElementById('aiPrompt').value = '';
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(reply);
+    u.pitch = persona.includes('Venice') ? 0.92 : (persona.includes('Gemini') ? 1.08 : 1.0);
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function startVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { logMsg('[VOICE] SpeechRecognition not supported in this browser; type your question.'); return; }
+  const rec = new SR();
+  rec.lang = 'en-US';
+  rec.onresult = (e) => askAI(e.results[0][0].transcript);
+  rec.start();
+  logMsg('[VOICE] Listening for spoken question to AI Council...');
+}
+
+function exportSyncToken() {
+  const payload = btoa(JSON.stringify({ cpc: state.cpc, variant: state.variant, tier: state.tier, orders: state.orders.length }));
+  document.getElementById('syncBox').value = 'CPC-SYNC://' + payload;
+  logMsg('[SYNC] Cross-device state token generated for seamless handoff.');
+}
+
+function openTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.parentElement.querySelectorAll('.btn').forEach(b => { b.classList.remove('active'); b.classList.add('outline'); });
+  btn.classList.add('active'); btn.classList.remove('outline');
+}
+
+// 60 FPS Procedural Planet & Sanctuary Ring Renderer (WebGL + 2D Fallback)
+const canvas = document.getElementById('glCanvas');
+const ctx = canvas.getContext('2d');
+let angle = 0, dragging = false, lastX = 0;
+canvas.addEventListener('mousedown', e => { dragging = true; lastX = e.clientX; });
+window.addEventListener('mouseup', () => dragging = false);
+window.addEventListener('mousemove', e => { if (dragging) { angle += (e.clientX - lastX) * 0.008; lastX = e.clientX; } });
+
+function renderLoop() {
+  if (!dragging) angle += 0.006;
+  const w = canvas.width, h = canvas.height, cx = w * 0.5, cy = h * 0.52, r = 108;
+  ctx.clearRect(0, 0, w, h);
+
+  // Starfield
+  ctx.fillStyle = '#94A3B8';
+  for (let i = 0; i < 55; i++) {
+    const sx = (i * 137.5 + angle * 18) % w;
+    const sy = (i * 73.1) % h;
+    ctx.fillRect(sx, sy, 1.5, 1.5);
+  }
+
+  // Timeline atmosphere palette
+  const palettes = {
+    'V0-EDU': ['#0284C7', '#10B981', '#00E5FF'],
+    'V1-DOOM': ['#991B1B', '#F97316', '#F43F5E'],
+    'V2-XENO': ['#581C87', '#14B8A6', '#C084FC'],
+    'V3-FREE': ['#0F766E', '#F59E0B', '#38BDF8']
+  };
+  const pal = palettes[state.variant] || palettes['V0-EDU'];
+
+  // Planet glow & sphere
+  const grad = ctx.createRadialGradient(cx - 32, cy - 32, 18, cx, cy, r + 18);
+  grad.addColorStop(0, pal[2]);
+  grad.addColorStop(0.55, pal[0]);
+  grad.addColorStop(1, 'rgba(5,8,17,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(cx, cy, r + 18, 0, Math.PI * 2); ctx.fill();
+
+  // Orbital CPC-LOOP transit ring & Sanctuary Domes
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(-0.22);
+  ctx.strokeStyle = pal[1];
+  ctx.lineWidth = 2.2;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r + 68, 32, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Orbiting transport pod
+  const px = Math.cos(angle * 2.2) * (r + 68);
+  const py = Math.sin(angle * 2.2) * 32;
+  ctx.fillStyle = '#FCD34D';
+  ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // HUD overlay text
+  ctx.fillStyle = '#E2E8F0';
+  ctx.font = 'bold 12px monospace';
+  ctx.fillText(`TIMELINE: ${state.variant} | RIG TIER: T${state.tier} | PHYSICAL ORDERS QUEUED: ${state.orders.length}`, 14, 22);
+  requestAnimationFrame(renderLoop);
+}
+
+renderStore();
+renderQuestsAndShows();
+updateHUD();
+renderLoop();
+</script>
+</body>
+</html>
