@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patent-application-append docket="CPC-PAT-2026-015-CIP" pct-parent="CPC-PCT-2026-001-WO" inventor="Thomas Gabriel Coleman">
+  <claims id="claims-cip15" lang="en" pct-rule="6.2(b)">
+    <claim id="c0084" num="84" type="independent" figure="FIG. 29">
+      <claim-text>84. A self-powered ecological remediation apparatus comprising: a closed-loop thermal-cavitation-plasma core (100) operating at a 90 degree Celsius fluid loop via zero-voltage-switched nanosecond pulsed plasma (114) and chemical-vapor-deposited graphene cavitation (112); an intake manifold (2902) configured to receive fugitive methane gas or shredded polymeric waste; a plasma-pyrolysis dissociation chamber (2906) energized by said nanosecond pulsed plasma (114) to dissociate hydrocarbons into solid turbostratic graphite or graphene (2910) and gaseous hydrogen (2912); and a thermoelectric-magnetohydrodynamic generator (120) bridging process heat against an ambient cold sink (2916) to export net continuous electrical power exceeding 330 watts per core and condensed distilled water below 1 ppm total dissolved solids without external electrical grid power.</claim-text>
+    </claim>
+    <claim id="c0085" num="85" type="dependent" parent="84" figure="FIG. 29">
+      <claim-text>85. The self-powered ecological remediation apparatus of claim 84, wherein the intake manifold (2902) comprises a pressure-sealed wellhead clamping collar (2904) mounted onto an uncapped orphan oil or natural gas wellhead, utilizing a 10 percent catalytic micro-oxidizer slipstream (2905) to supply continuous 382.93 Wth per core thermal offset while converting 90 percent of captured methane into solid carbon and hydrogen.</claim-text>
+    </claim>
+    <claim id="c0086" num="86" type="dependent" parent="84" figure="FIG. 30">
+      <claim-text>86. The self-powered ecological remediation apparatus of claim 84, mounted aboard an autonomous twin-hull river-estuary catamaran (3000) equipped with a rotary macro-plastic skimmer (3002), an electro-precipitation struvite reactor (3008) recovering magnesium ammonium phosphate fertilizer from eutrophic surface water, and electric azimuth thrusters (3014) powered continuously by said generator (120).</claim-text>
+    </claim>
+    <claim id="c0087" num="87" type="independent">
+      <claim-text>87. A rapid-deployment airliftable disaster-relief sanctuary pod comprising: two 463L palletized structural chassis (3020) unfolding within 48 hours to erect a multi-layer ethylene tetrafluoroethylene pneumatic canopy (3022) enclosing a climate-controlled habitat; and a 60-core closed-loop utility array (100) providing continuous electrical microgrid power, 98.5 percent closed-loop greywater and blackwater distillation to potable water, 99.5 percent medical-grade oxygen generation, and 6-Log plasma air sterilization.</claim-text>
+    </claim>
+    <claim id="c0088" num="88" type="dependent" parent="87">
+      <claim-text>88. The rapid-deployment airliftable disaster-relief sanctuary pod of claim 87, wherein the 60-core closed-loop utility array (100) dynamically switches between heat rejection and ambient thermal harvesting to maintain an interior habitat temperature of 21.5 degrees Celsius and 48 percent relative humidity across external ambient temperatures ranging from minus 35 degrees Celsius to plus 48 degrees Celsius.</claim-text>
+    </claim>
+    <claim id="c0089" num="89" type="dependent" parent="87">
+      <claim-text>89. The rapid-deployment airliftable disaster-relief sanctuary pod of claim 87, further comprising a floodwater and raw-sewage intake clarifier (3026) coupled to a 33.6 kV nanosecond plasma mineralizer (114) configured to destroy per- and polyfluoroalkyl substances and waterborne pathogens to below 1 part per trillion.</claim-text>
+    </claim>
+  </claims>
+</patent-application-append>

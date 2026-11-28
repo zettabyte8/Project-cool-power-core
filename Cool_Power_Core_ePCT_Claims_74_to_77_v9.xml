@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<claims id="claims-cip13" lang="en" pct-rule="6.2(b)" docket="CPC-PAT-2026-013-CIP">
+  <claim id="c-0074" num="0074" claim-type="independent">
+    <claim-text>An atmospheric-condensing directed-energy and projectile weapon (2600), comprising: an upper barrel assembly (2602) configured to aspirate ambient atmospheric gases and particulates, solidify said gases and particulates inside a cryogenic plasma-sintering mold (2604) cooled by a closed-loop Cool Power Core (2606), and launch solidified slugs (2608), plasma bolts, or laser pulses; and a quick-detach under-barrel plasma bayonet (2610) comprising a hybrid Sm2Co17 Halbach array (2612) and electromagnet (2614) generating a distal magnetic mirror pinch (2616) to confine a 0.38 m chisel-point plasma blade (2618).</claim-text>
+  </claim>
+  <claim id="c-0075" num="0075" claim-type="dependent">
+    <claim-text>The weapon (2600) of <claim-ref idref="c-0074">claim 74</claim-ref>, wherein waste thermal energy from the electromagnet (2614) is thermally coupled to a 90 degree Celsius graphene-cavitated reservoir of the Cool Power Core (2606) to generate continuous electrical power (+318.4 We to +348.0 We) and sustain sub-zero cooling of the cryogenic mold (2604).</claim-text>
+  </claim>
+  <claim id="c-0076" num="0076" claim-type="dependent">
+    <claim-text>The weapon (2600) of <claim-ref idref="c-0074">claim 74</claim-ref>, further comprising a coaxial vapor aspiration shroud (2620) surrounding a proximal base of the plasma blade (2618) to recycle dissociated plasma gases back into the cryogenic mold (2604).</claim-text>
+  </claim>
+  <claim id="c-0077" num="0077" claim-type="dependent">
+    <claim-text>The weapon (2600) of <claim-ref idref="c-0074">claim 74</claim-ref>, further comprising a 48 VDC inductive smart-grip interface (2622) receiving harvested ballistic and directed-energy surge power from an exoskeleton power armor suit and executing a less than 0.9 ms capacitive deadman magnetic quench upon loss of operator contact.</claim-text>
+  </claim>
+</claims>
