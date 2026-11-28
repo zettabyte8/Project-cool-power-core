@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cool Power Core™: Horizons Unbound — 60 FPS Cross-Device & AI Advisors</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpolygon points='60,6 108,33 108,87 60,114 12,87 12,33' fill='%230B1324' stroke='%2300E5FF' stroke-width='6'/%3E%3Ccircle cx='60' cy='60' r='30' fill='none' stroke='%23F59E0B' stroke-width='5' stroke-dasharray='18 8'/%3E%3Cpolygon points='64,34 44,62 58,62 54,86 76,56 62,56' fill='%2310B981'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #070B14;
+    --panel: #0F172A;
+    --border: #1E293B;
+    --cyan: #00E5FF;
+    --amber: #F59E0B;
+    --emerald: #10B981;
+    --violet: #8B5CF6;
+    --rose: #F43F5E;
+    --text: #F8FAFC;
+    --muted: #94A3B8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 18px; background: linear-gradient(90deg, #091122 0%, #111D38 100%);
+    border-bottom: 1px solid var(--border); gap: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  @keyframes spinCW { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes spinCCW { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+  .spin-cw { transform-origin: 60px 60px; animation: spinCW 14s linear infinite; }
+  .spin-ccw { transform-origin: 60px 60px; animation: spinCCW 9s linear infinite; }
+  .brand-title h1 { font-size: 1.05rem; letter-spacing: 0.5px; color: var(--cyan); }
+  .brand-title p { font-size: 0.72rem; color: var(--muted); }
+  .tier-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tier-btn {
+    background: #131F3A; color: var(--muted); border: 1px solid var(--border);
+    padding: 6px 10px; border-radius: 6px; font-size: 0.74rem; cursor: pointer; font-weight: 600;
+  }
+  .tier-btn.active { background: rgba(0,229,255,0.16); color: var(--cyan); border-color: var(--cyan); }
+  .main-grid {
+    display: grid; grid-template-columns: 1.35fr 1fr; gap: 12px; padding: 12px; max-width: 1600px; margin: 0 auto;
+  }
+  @media (max-width: 1080px) { .main-grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  }
+  .card h2 { font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.7px; color: var(--cyan); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  canvas {
+    width: 100%; height: 390px; background: radial-gradient(circle at 50% 35%, #112240 0%, #050811 100%);
+    border-radius: 8px; border: 1px solid #1E3A5F; display: block; touch-action: none;
+  }
+  .controls-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .btn {
+    background: #172544; color: var(--text); border: 1px solid #2B4170;
+    padding: 7px 11px; border-radius: 6px; font-size: 0.76rem; font-weight: 600; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-amber { border-color: var(--amber); color: var(--amber); }
+  .btn-emerald { border-color: var(--emerald); color: var(--emerald); }
+  .btn-violet { border-color: var(--violet); color: var(--violet); }
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px;
+  }
+  @media (max-width: 600px) { .stats-strip { grid-template-columns: repeat(2, 1fr); } }
+  .stat-box { background: #0B1222; border: 1px solid var(--border); border-radius: 6px; padding: 8px; }
+  .stat-label { font-size: 0.68rem; color: var(--muted); }
+  .stat-val { font-size: 0.96rem; font-weight: 700; color: var(--emerald); margin-top: 2px; }
+  .ai-tabs { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+  .ai-tab {
+    flex: 1; min-width: 110px; padding: 8px; border-radius: 7px; border: 1px solid var(--border);
+    background: #0B1222; color: var(--muted); cursor: pointer; text-align: left;
+  }
+  .ai-tab.active-gemini { border-color: #38BDF8; background: rgba(56,189,248,0.12); color: #E0F2FE; }
+  .ai-tab.active-venice { border-color: #A855F7; background: rgba(168,85,247,0.12); color: #F3E8FF; }
+  .ai-tab.active-gm { border-color: #F59E0B; background: rgba(245,158,11,0.12); color: #FEF3C7; }
+  .ai-tab strong { display: block; font-size: 0.8rem; }
+  .ai-tab span { font-size: 0.67rem; opacity: 0.85; }
+  .chat-log {
+    height: 225px; overflow-y: auto; background: #070C17; border: 1px solid var(--border);
+    border-radius: 7px; padding: 10px; display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;
+  }
+  .msg { padding: 8px 10px; border-radius: 7px; line-height: 1.4; max-width: 94%; }
+  .msg-user { align-self: flex-end; background: #1D3557; color: #F8FAFC; border: 1px solid #3B82F6; }
+  .msg-gemini { align-self: flex-start; background: #0C2438; border-left: 3px solid #38BDF8; }
+  .msg-venice { align-self: flex-start; background: #211238; border-left: 3px solid #A855F7; }
+  .msg-gm { align-self: flex-start; background: #291D0B; border-left: 3px solid #F59E0B; }
+  .msg-meta { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; opacity: 0.9; }
+  .quick-prompts { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+  .chip {
+    background: #131E36; border: 1px solid #283B63; color: #CBD5E1; border-radius: 99px;
+    padding: 4px 9px; font-size: 0.7rem; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--cyan); color: var(--cyan); }
+  .chat-input-row { display: flex; gap: 6px; }
+  .chat-input-row input {
+    flex: 1; background: #080E1C; border: 1px solid var(--border); color: var(--text);
+    padding: 8px 10px; border-radius: 6px; font-size: 0.8rem;
+  }
+  .sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 720px) { .sub-grid { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; font-size: 0.74rem; }
+  th, td { padding: 5px 6px; border-bottom: 1px solid var(--border); text-align: left; }
+  th { color: var(--muted); font-weight: 600; }
+  .wallet-row {
+    display: flex; justify-content: space-between; align-items: center; background: #09101F;
+    border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; font-size: 0.72rem;
+  }
+  .wallet-addr { font-family: monospace; color: var(--cyan); overflow: hidden; text-overflow: ellipsis; max-width: 210px; }
+  .sync-box {
+    width: 100%; background: #070C17; color: var(--emerald); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px; font-family: monospace; font-size: 0.7rem; margin-top: 6px;
+  }
+  .footer-note { text-align: center; font-size: 0.72rem; color: var(--muted); padding: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg width="46" height="46" viewBox="0 0 120 120" aria-label="Cool Power Core Logo">
+      <defs>
+        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#070B14" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="60" cy="60" r="56" fill="url(#coreGlow)"/>
+      <polygon points="60,6 108,33 108,87 60,114 12,87 12,33" fill="#0B1324" stroke="#00E5FF" stroke-width="5"/>
+      <g class="spin-cw">
+        <circle cx="60" cy="60" r="35" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="16 8"/>
+      </g>
+      <g class="spin-ccw">
+        <circle cx="60" cy="60" r="24" fill="none" stroke="#00E5FF" stroke-width="3.5" stroke-dasharray="10 6"/>
+      </g>
+      <polygon points="64,34 45,62 58,62 54,86 76,56 62,56" fill="#10B981"/>
+    </svg>
+    <div class="brand-title">
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND</h1>
+      <p>60 FPS Cross-Device Adaptive Sandbox • Invented by Thomas Gabriel Coleman • AI Advisor Council Active</p>
+    </div>
+  </div>
+  <div class="tier-bar" id="tierBar">
+    <button class="tier-btn active" onclick="setTier(0)">Tier 0: Android Mobile</button>
+    <button class="tier-btn" onclick="setTier(1)">Tier 1: Console / Gamepad</button>
+    <button class="tier-btn" onclick="setTier(2)">Tier 2: Desktop + Semi-Haptics</button>
+    <button class="tier-btn" onclick="setTier(3)">Tier 3: Full Haptic Suit + Brain Hat</button>
+  </div>
+</header>
+
+<div class="main-grid">
+  <!-- LEFT COLUMN: 60 FPS SIMULATION + ECONOMY -->
+  <div>
+    <div class="card">
+      <h2>
+        <span>Live 60 FPS Sanctuary & Rig Simulation</span>
+        <span id="fpsBadge" style="color:var(--emerald);font-size:0.75rem;">60 FPS • TIER 0</span>
+      </h2>
+      <canvas id="simCanvas" width="820" height="390"></canvas>
+      <div class="controls-row">
+        <button class="btn btn-emerald" onclick="deployNode()">+ Deploy Sanctuary CPC Pod (25 CPC)</button>
+        <button class="btn btn-amber" onclick="fireAbility()">⚡ Trigger Rig Ability (Vortex / Plasma / Mind-Link)</button>
+        <button class="btn" onclick="cycleRig()">🤖 Switch Rig (<span id="rigName">On-Foot Engineer</span>)</button>
+        <button class="btn btn-violet" onclick="exportSync()">🔄 Cross-Device Sync Token</button>
+      </div>
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-label">Thermal Harvest (382.93 Wth/core)</div>
+          <div class="stat-val" id="statPower">+342.4 We</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Distilled Pure Water (&lt;1 ppm)</div>
+          <div class="stat-val" id="statWater">12.96 L/day</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Player CPC-COIN Balance</div>
+          <div class="stat-val" id="statCPC" style="color:var(--cyan);">150.00 CPC</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">CPC-COIN Reserve NAV (USD)</div>
+          <div class="stat-val" id="statNAV" style="color:var(--amber);">$1.0842</div>
+        </div>
+      </div>
+      <textarea id="syncToken" class="sync-box" rows="2" readonly placeholder="Click 'Cross-Device Sync Token' to generate a portable state snapshot for Android, Console, Desktop, or Brain-Hat Suit..."></textarea>
+    </div>
+
+    <div class="sub-grid">
+      <!-- STOCK MARKET & CPC-COIN -->
+      <div class="card">
+        <h2><span>Subterranean Stock & CPC-COIN Exchange</span></h2>
+        <table id="stockTable">
+          <thead>
+            <tr><th>Ticker</th><th>Real-World Mirror</th><th>24h</th><th>Action</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="controls-row" style="margin-top:8px;">
+          <button class="btn btn-emerald" onclick="depositCPC(50)">+ Deposit $50 Basket → Mint CPC</button>
+          <button class="btn" onclick="npcTradeTick()">🤖 Trigger 2,048 AI Merchants (+0.25% Fee)</button>
+        </div>
+        <p style="font-size:0.68rem;color:var(--muted);margin-top:6px;">
+          Yield Stack: Aerodrome Base (8453) • Lido wstETH + Beefy.com • Robinhood Chain (46630) • 100% swap fees compound into NAV.
+        </p>
+      </div>
+
+      <!-- INVENTOR PATRONAGE -->
+      <div class="card">
+        <h2><span>Support Inventor Thomas Gabriel Coleman</span></h2>
+        <div class="wallet-row">
+          <span><strong>EVM Donate:</strong> <span class="wallet-addr">0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</span></span>
+          <button class="btn" onclick="copyText('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf', 'Thomas EVM Donate')">Copy</button>
+        </div>
+        <div class="wallet-row">
+          <span><strong>BTC / Cake:</strong> <span class="wallet-addr">howeyecrypto@cake.cash</span></span>
+          <button class="btn" onclick="copyText('howeyecrypto@cake.cash', 'BTC / Cake Pay')">Copy</button>
+        </div>
+        <div class="wallet-row">
+          <span><strong>Solana (SOL):</strong> <span class="wallet-addr">2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</span></span>
+          <button class="btn" onclick="copyText('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr', 'Solana SOL')">Copy</button>
+        </div>
+        <div class="wallet-row">
+          <span><strong>Gnosis Safe:</strong> <span class="wallet-addr">0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</span></span>
+          <button class="btn" onclick="copyText('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37', 'CPC Investment Gnosis Safe')">Copy</button>
+        </div>
+        <p id="copyToast" style="font-size:0.7rem;color:var(--emerald);min-height:16px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: INTERACTIVE AI CHARACTERS (GEMINI AI, VENICE.AI, GAME MASTER AI) -->
+  <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;">
+    <div>
+      <h2>
+        <span>Interactive AI Character Council</span>
+        <span style="font-size:0.7rem;color:var(--muted);">Ask Anything In-World</span>
+      </h2>
+
+      <div class="ai-tabs">
+        <button class="ai-tab active-gemini" id="tab-gemini" onclick="selectAI('gemini')">
+          <strong>✦ Gemini AI (google.com)</strong>
+          <span>Lead Systems &amp; Physics Mentor</span>
+        </button>
+        <button class="ai-tab" id="tab-venice" onclick="selectAI('venice')">
+          <strong>◈ Venice.ai</strong>
+          <span>Sovereign DeFi &amp; Privacy Architect</span>
+        </button>
+        <button class="ai-tab" id="tab-gm" onclick="selectAI('gm')">
+          <strong>❖ Game Master AI</strong>
+          <span>Sanctuary Lore, Quests &amp; World Director</span>
+        </button>
+      </div>
+
+      <div class="chat-log" id="chatLog"></div>
+
+      <div class="quick-prompts" id="quickPrompts"></div>
+
+      <div class="chat-input-row">
+        <input type="text" id="aiInput" placeholder="Ask Gemini AI, Venice.ai, or Game Master AI a question..." onkeydown="if(event.key==='Enter') sendAIQuestion()">
+        <button class="btn btn-cyan" style="border-color:var(--cyan);color:var(--cyan);" onclick="sendAIQuestion()">Ask AI</button>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:0.74rem;color:var(--muted);">
+      <strong style="color:var(--text);">Optional Live API Bridge (BYOK):</strong> Connect your own API endpoint/key below to route questions live, or use the built-in offline Cool Power Core™ neural knowledge engine immediately.
+      <div style="display:flex;gap:6px;margin-top:6px;">
+        <input type="password" id="liveApiKey" placeholder="Optional API Key (Gemini / Venice / Custom)" style="flex:1;background:#080E1C;border:1px solid var(--border);color:var(--text);padding:6px 8px;border-radius:6px;font-size:0.74rem;">
+        <button class="btn" onclick="saveKeyNote()">Save Key Locally</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  Cool Power Core™ (CPC) Educational &amp; Engineering Sandbox • Designed by Thomas Gabriel Coleman (Corona, CA) • Interactive Characters: Gemini AI (google.com), Venice.ai &amp; Game Master AI
+</div>
+
+<script>
+const RIGS = [
+  { name: "On-Foot Engineer", power: 342.4, water: 12.96, ability: "Deploy CPC-RES-1 Zero-Septic Pod" },
+  { name: "MK-6 Briefcase Flight Suit", power: 684.8, water: 25.92, ability: "Hybrid Plasma + EHD Ion Boost & Vortex Shot" },
+  { name: "Cerberus Tri-Head Mount", power: 642.0, water: 20.20, ability: "3-Arm Continuum Rescue & 38.5°C Saddle Surge" },
+  { name: "Octo-EXO 4-Arm Leg Rig", power: 615.0, water: 19.80, ability: "340 kg Quad-Tentacle Micro-Plasma Cut" },
+  { name: "CPC-LOOP 920 km/h Pod", power: 1376.0, water: 51.84, ability: "Sub-Surface Maglev Vacuum-Pump Harvest" }
+];
+
+const STOCKS = [
+  { sym: "SPY", name: "S&P 500 ETF", price: 594.20, chg: 0.64 },
+  { sym: "NVDA", name: "NVIDIA Corp", price: 148.50, chg: 1.85 },
+  { sym: "AAPL", name: "Apple Inc", price: 236.40, chg: 0.42 },
+  { sym: "TSLA", name: "Tesla Inc", price: 342.10, chg: -0.58 },
+  { sym: "GLD", name: "SPDR Gold", price: 249.80, chg: 0.31 }
+];
+
+let state = {
+  tier: 0,
+  rigIdx: 0,
+  nodes: 2,
+  cpcBalance: 150.00,
+  cpcNAV: 1.0842,
+  activeAI: "gemini",
+  pulse: 0,
+  particles: [],
+  pods: [
+    { x: 180, y: 260, label: "CPC-RES-1" },
+    { x: 460, y: 245, label: "SANCTUARY AGORA" }
+  ]
+};
+
+const AI_PROFILES = {
+  gemini: {
+    name: "Gemini AI (google.com)",
+    badgeClass: "msg-gemini",
+    greeting: "Hello! I am Gemini AI (google.com), your Lead Systems & Physics Mentor. Ask me how the Cool Power Core™ harvests 382.93 Wth/core via 90°C CVD-graphene acoustic cavitation and 33.6 kV ZVS plasma, or how to scale your Sanctuary City and flight rigs!",
+    prompts: [
+      "How does the Cool Power Core work in real life?",
+      "Explain the MK-6 Briefcase Flight Suit & Vortex Rifle",
+      "How do Sanctuary Cities keep 21.5°C climate control?",
+      "How does my device tier scale graphics and controls?"
+    ]
+  },
+  venice: {
+    name: "Venice.ai",
+    badgeClass: "msg-venice",
+    greeting: "Greetings, Architect. I am Venice.ai—your sovereign DeFi, privacy, and multi-chain liquidity strategist. Ask me how CPC-COIN compounds yield across Aerodrome on Base, Lido wstETH, Beefy.com, and Robinhood Chain without token dilution, or how the Brain Hat stays air-gapped!",
+    prompts: [
+      "How does CPC-COIN increase in value over time?",
+      "Explain Aerodrome Base, Lido & Robinhood Chain staking",
+      "How is the Brain Hat protected from outside takeover?",
+      "How can players donate to Thomas Gabriel Coleman?"
+    ]
+  },
+  gm: {
+    name: "Game Master AI",
+    badgeClass: "msg-gm",
+    greeting: "Welcome to Horizons Unbound, Pioneer! I am your Game Master AI. I orchestrate the 2,048 AI Merchant NPCs, procedural planetary anomalies, and cooperative Sanctuary City quests. Ask for your next mission or market tip!",
+    prompts: [
+      "Give me my next Sanctuary City quest!",
+      "What are the 2,048 AI Merchant NPCs trading right now?",
+      "Describe the Martian Plasma Saber & Lava-Tube City",
+      "How do I unlock Tier 3 Full Haptic Suit + Brain Hat?"
+    ]
+  }
+};
+
+function appendMessage(roleKey, sender, text) {
+  const log = document.getElementById("chatLog");
+  const div = document.createElement("div");
+  div.className = "msg " + (roleKey === "user" ? "msg-user" : AI_PROFILES[roleKey].badgeClass);
+  div.innerHTML = `<div class="msg-meta">${sender}</div><div>${text}</div>`;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function selectAI(key) {
+  state.activeAI = key;
+  document.getElementById("tab-gemini").className = "ai-tab" + (key === "gemini" ? " active-gemini" : "");
+  document.getElementById("tab-venice").className = "ai-tab" + (key === "venice" ? " active-venice" : "");
+  document.getElementById("tab-gm").className = "ai-tab" + (key === "gm" ? " active-gm" : "");
+  renderQuickPrompts();
+  appendMessage(key, AI_PROFILES[key].name, AI_PROFILES[key].greeting);
+}
+
+function renderQuickPrompts() {
+  const box = document.getElementById("quickPrompts");
+  box.innerHTML = "";
+  AI_PROFILES[state.activeAI].prompts.forEach(q => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.textContent = q;
+    b.onclick = () => { document.getElementById("aiInput").value = q; sendAIQuestion(); };
+    box.appendChild(b);
+  });
+}
+
+function generateAIResponse(aiKey, qRaw) {
+  const q = qRaw.toLowerCase();
+  const rig = RIGS[state.rigIdx];
+  if (aiKey === "gemini") {
+    if (q.includes("work") || q.includes("physics") || q.includes("core") || q.includes("cavitation")) {
+      return `<strong>Gemini AI (Physics Engine):</strong> Each Cool Power Core™ bridges a <strong>90°C</strong> internal reservoir against an ambient cold sink (<strong>382.93 Wth/core</strong> enthalpy input). A CVD-graphene vortex cavitator (15.1 W) and 33.6 kV ZVS nanosecond plasma reactor (15.3 W) mineralize contaminants into inert ash, returning <strong>+342.4 We/core</strong> net continuous electricity and <strong>12.96 L/day</strong> of &lt;1 ppm TDS distilled water. You currently have <strong>${state.nodes} active cores</strong> producing <strong>+${(state.nodes * rig.power).toFixed(1)} We</strong>!`;
+    }
+    if (q.includes("suit") || q.includes("rifle") || q.includes("vortex") || q.includes("blade")) {
+      return `<strong>Gemini AI (Hardware Lab):</strong> The <strong>MK-6 Briefcase Flight Suit</strong> unfolds in 4.2s from a 17.45 kg carry-on case into a 22-DOF exosuit with 1,880 N hybrid magnetoplasma + EHD ion thrust. Its forearm <strong>Vortex-Condenser Rifle</strong> intakes ambient gas/dust at 18,000 RPM and cryo-sinters solid 14.5 g slugs on demand—plus a 0.42 m magnetic-mirror plasma blade!`;
+    }
+    if (q.includes("city") || q.includes("climate") || q.includes("21.5")) {
+      return `<strong>Gemini AI (Civic Engineering):</strong> Every Sanctuary City is enclosed beneath a triple-layer pneumatic <strong>ETFE canopy</strong> maintaining a constant <strong>21.5°C (71°F) / 48% RH</strong> microclimate. Whether outside weather hits +48°C desert heat or -35°C blizzards, the core harvests that thermal differential (ΔT) as clean power while housing 1,000+ residents with zero curfews and tuition-free academies.`;
+    }
+    return `<strong>Gemini AI (google.com):</strong> Across your current <strong>Tier ${state.tier}</strong> interface and <strong>${rig.name}</strong>, your array is generating <strong>+${(state.nodes * rig.power).toFixed(1)} We</strong> and <strong>${(state.nodes * rig.water).toFixed(1)} L/day</strong> of pure water. Ask me about specific thermodynamics, Mars plasma tools, or linear ridge cities!`;
+  }
+  if (aiKey === "venice") {
+    if (q.includes("coin") || q.includes("value") || q.includes("nav") || q.includes("aerodrome") || q.includes("lido") || q.includes("robinhood")) {
+      return `<strong>Venice.ai (Reserve Protocol):</strong> <strong>CPC-COIN</strong> (currently <strong>$${state.cpcNAV.toFixed(4)} NAV</strong>) is backed by the sum value of all deposited currencies (USDC, ETH, wstETH, cbBTC, EURC). 85% of reserves compound across <strong>Aerodrome Finance gauges on Base (8453)</strong>, <strong>Lido wstETH + Beefy.com</strong>, and <strong>Robinhood Chain L2 (46630)</strong>, while 15% stays liquid for instant redemption. Every 0.25% swap fee from the 2,048 AI Merchants recycles directly into holder NAV with zero token inflation!`;
+    }
+    if (q.includes("brain") || q.includes("hat") || q.includes("hijack") || q.includes("takeover") || q.includes("security")) {
+      return `<strong>Venice.ai (Zero-Trust Security):</strong> The <strong>CPC-NEURO-HELM / Brain Hat</strong> has <strong>zero RF/Bluetooth/Wi-Fi transceivers</strong>, dual-wall Mu-Metal Faraday shielding (&gt;115 dB), unidirectional optical diodes (brain-to-suit only), NIST ML-KEM-1024 hardware signing, and a 0.4 ms somatic muscle override—making remote takeover physically impossible.`;
+    }
+    if (q.includes("donate") || q.includes("thomas") || q.includes("address")) {
+      return `<strong>Venice.ai (Direct Patronage):</strong> You can support inventor <strong>Thomas Gabriel Coleman</strong> directly via EVM (<code>0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</code>), Bitcoin/Cake Pay (<code>howeyecrypto@cake.cash</code>), or Solana (<code>2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</code>)—or pledge an optional yield-stream share while keeping 100% of your CPC-COIN principal.`;
+    }
+    return `<strong>Venice.ai:</strong> Your wallet holds <strong>${state.cpcBalance.toFixed(2)} CPC</strong> worth <strong>$${(state.cpcBalance * state.cpcNAV).toFixed(2)} USD</strong>. Try depositing a simulated $50 basket or triggering the AI Merchants to watch real-time non-dilutive NAV compounding!`;
+  }
+  // Game Master AI
+  if (q.includes("quest") || q.includes("mission")) {
+    return `<strong>Game Master AI (World Director):</strong> <em>Active Quest — "Oasis on the Alkali Playa":</em> Deploy <strong>3 additional Sanctuary CPC Pods</strong> to stabilize microclimate humidity at 48% RH, execute one trade on the subterranean Stock Exchange, and test your <strong>${rig.name}</strong> ability. Reward: <strong>+75 CPC-COIN</strong> &amp; Master Architect XP!`;
+  }
+  if (q.includes("merchant") || q.includes("npc") || q.includes("trade")) {
+    return `<strong>Game Master AI (Agora Pulse):</strong> All <strong>2,048 AI Merchant NPCs</strong> are active! Guild Brokers in Ward 2 are buying distilled water credits, Thermal Arbitragers are balancing Base/Robinhood liquidity pools, and Frontier Quartermasters just stocked blueprints for the <strong>Martian Lava-Tube Resort</strong>.`;
+  }
+  if (q.includes("mars") || q.includes("saber") || q.includes("lava")) {
+    return `<strong>Game Master AI (Frontier Lore):</strong> On Mars (610 Pa CO₂, -60°C), low atmospheric convection cuts plasma heat loss by 94%—allowing the handheld <strong>CPC-SABER-MARS</strong> to sustain a 0.92 m, 4,200 K magnetic-mirror blade while regenerating +142.0 We from cryo-fins, while 55 m basalt lava tubes house 18,500 sunlit terraced suites!`;
+  }
+  return `<strong>Game Master AI:</strong> You are currently operating in <strong>Tier ${state.tier}</strong> mode with <strong>${state.nodes} Sanctuary Pods</strong> active. Switch to Tier 3 to preview full-body 64-zone haptics + neural thought-casting, or export a <code>CPC-SYNC://</code> token to continue on any device!`;
+}
+
+function sendAIQuestion() {
+  const input = document.getElementById("aiInput");
+  const text = input.value.trim();
+  if (!text) return;
+  appendMessage("user", "You (Pioneer)", text);
+  input.value = "";
+  const reply = generateAIResponse(state.activeAI, text);
+  setTimeout(() => appendMessage(state.activeAI, AI_PROFILES[state.activeAI].name, reply), 180);
+}
+
+function saveKeyNote() {
+  const val = document.getElementById("liveApiKey").value.trim();
+  appendMessage(state.activeAI, AI_PROFILES[state.activeAI].name, val ? "Local session API key stored in browser memory (never transmitted to third-party servers)." : "No key entered; continuing with built-in Cool Power Core™ Neural Knowledge Engine.");
+}
+
+function setTier(t) {
+  state.tier = t;
+  document.querySelectorAll(".tier-btn").forEach((b, i) => b.className = "tier-btn" + (i === t ? " active" : ""));
+  document.getElementById("fpsBadge").textContent = `60 FPS • TIER ${t}`;
+  if (navigator.vibrate) navigator.vibrate(25 + t * 15);
+  updateStats();
+}
+
+function cycleRig() {
+  state.rigIdx = (state.rigIdx + 1) % RIGS.length;
+  document.getElementById("rigName").textContent = RIGS[state.rigIdx].name;
+  updateStats();
+}
+
+function deployNode() {
+  if (state.cpcBalance < 25) {
+    appendMessage("gm", "Game Master AI", "Insufficient CPC-COIN! Deposit a currency basket below to mint more CPC-COIN.");
+    return;
+  }
+  state.cpcBalance -= 25;
+  state.nodes += 1;
+  state.pods.push({
+    x: 110 + ((state.nodes * 137) % 600),
+    y: 190 + ((state.nodes * 73) % 140),
+    label: `POD #${state.nodes}`
+  });
+  state.pulse = 1.0;
+  updateStats();
+}
+
+function fireAbility() {
+  state.pulse = 1.4;
+  for (let i = 0; i < 24; i++) {
+    state.particles.push({
+      x: 410, y: 185,
+      vx: (Math.random() - 0.5) * (6 + state.tier * 2),
+      vy: (Math.random() - 0.5) * (6 + state.tier * 2),
+      life: 1.0,
+      color: state.tier === 3 ? "#A855F7" : (state.tier >= 1 ? "#00E5FF" : "#10B981")
+    });
+  }
+  if (navigator.vibrate) navigator.vibrate([30, 20, 40]);
+}
+
+function depositCPC(usdAmount) {
+  const minted = usdAmount / state.cpcNAV;
+  state.cpcBalance += minted;
+  state.cpcNAV *= 1.0008;
+  updateStats();
+}
+
+function npcTradeTick() {
+  state.cpcNAV *= 1.0015;
+  STOCKS.forEach(s => {
+    const delta = (Math.random() - 0.48) * 1.4;
+    s.price = Math.max(10, s.price + delta);
+    s.chg = +(s.chg + delta * 0.15).toFixed(2);
+  });
+  renderStocks();
+  updateStats();
+}
+
+function tradeStock(sym) {
+  if (state.cpcBalance >= 10) {
+    state.cpcBalance -= 10;
+    state.cpcNAV *= 1.0005;
+    appendMessage("venice", "Venice.ai", `Executed synthetic mirror allocation on <strong>${sym}</strong> via Robinhood Chain L2 sub-cent settlement; 0.25% fee recycled into CPC-COIN NAV.`);
+    updateStats();
+  }
+}
+
+function exportSync() {
+  const payload = btoa(JSON.stringify({
+    v: "CPC-V6", tier: state.tier, rig: state.rigIdx, nodes: state.nodes,
+    cpc: +state.cpcBalance.toFixed(2), nav: +state.cpcNAV.toFixed(4), ts: Date.now()
+  }));
+  document.getElementById("syncToken").value = "CPC-SYNC://" + payload;
+}
+
+function copyText(txt, label) {
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+  document.getElementById("copyToast").textContent = `Copied ${label} address to clipboard!`;
+}
+
+function updateStats() {
+  const rig = RIGS[state.rigIdx];
+  document.getElementById("statPower").textContent = `+${(state.nodes * rig.power).toFixed(1)} We`;
+  document.getElementById("statWater").textContent = `${(state.nodes * rig.water).toFixed(2)} L/day`;
+  document.getElementById("statCPC").textContent = `${state.cpcBalance.toFixed(2)} CPC`;
+  document.getElementById("statNAV").textContent = `$${state.cpcNAV.toFixed(4)}`;
+}
+
+function renderStocks() {
+  const tbody = document.querySelector("#stockTable tbody");
+  tbody.innerHTML = "";
+  STOCKS.forEach(s => {
+    const tr = document.createElement("tr");
+    const color = s.chg >= 0 ? "#10B981" : "#F43F5E";
+    tr.innerHTML = `<td><strong>${s.sym}</strong></td><td>$${s.price.toFixed(2)}</td><td style="color:${color};">${s.chg >= 0 ? "+" : ""}${s.chg}%</td><td><button class="btn" style="padding:3px 7px;font-size:0.68rem;" onclick="tradeStock('${s.sym}')">Mirror 10 CPC</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// 60 FPS Canvas Loop
+const canvas = document.getElementById("simCanvas");
+const ctx = canvas.getContext("2d");
+let tAnim = 0;
+
+function drawLoop() {
+  tAnim += 0.025;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Adaptive Tier Sky / Volumetric Illumination
+  if (state.tier >= 2) {
+    const grad = ctx.createRadialGradient(410, 120, 20, 410, 180, 380);
+    grad.addColorStop(0, state.tier === 3 ? "rgba(168,85,247,0.22)" : "rgba(0,229,255,0.18)");
+    grad.addColorStop(1, "rgba(7,11,20,0)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // ETFE 21.5°C Biospheric Canopy Arc
+  ctx.strokeStyle = state.tier === 3 ? "#A855F7" : "#00E5FF";
+  ctx.lineWidth = 2 + state.tier * 0.6;
+  ctx.beginPath();
+  ctx.ellipse(410, 330, 360, 235, 0, Math.PI, 0);
+  ctx.stroke();
+
+  // Ground Line
+  ctx.strokeStyle = "#1E3A5F";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(30, 330); ctx.lineTo(790, 330);
+  ctx.stroke();
+
+  // Sanctuary Pods & Thermal Energy Beams
+  state.pods.forEach(p => {
+    ctx.strokeStyle = "rgba(16,185,129,0.38)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y); ctx.lineTo(410, 185);
+    ctx.stroke();
+
+    ctx.fillStyle = "#0F172A";
+    ctx.strokeStyle = "#10B981";
+    ctx.lineWidth = 2;
+    ctx.fillRect(p.x - 28, p.y - 16, 56, 32);
+    ctx.strokeRect(p.x - 28, p.y - 16, 56, 32);
+    ctx.fillStyle = "#E2E8F0";
+    ctx.font = "bold 9px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(p.label, p.x, p.y + 3);
+  });
+
+  // Central Rotating Cool Power Core Reactor Emblem
+  const cx = 410, cy = 185;
+  const rOuter = 38 + Math.sin(tAnim * 2) * 2 + state.pulse * 8;
+  state.pulse *= 0.92;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(tAnim * 0.8);
+  ctx.strokeStyle = "#F59E0B";
+  ctx.lineWidth = 3;
+  ctx.setLineDash([12, 6]);
+  ctx.beginPath(); ctx.arc(0, 0, rOuter, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(-tAnim * 1.3);
+  ctx.strokeStyle = "#00E5FF";
+  ctx.lineWidth = 2.5;
+  ctx.setLineDash([8, 5]);
+  ctx.beginPath(); ctx.arc(0, 0, 24, 0, Math.PI * 2); ctx.stroke();
+  ctx.restore();
+
+  // Core Center
+  ctx.fillStyle = "#10B981";
+  ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
+
+  // Particles
+  state.particles.forEach(pt => {
+    pt.x += pt.vx; pt.y += pt.vy; pt.life -= 0.025;
+    ctx.fillStyle = pt.color;
+    ctx.globalAlpha = Math.max(0, pt.life);
+    ctx.beginPath(); ctx.arc(pt.x, pt.y, 3 + state.tier, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1.0;
+  });
+  state.particles = state.particles.filter(pt => pt.life > 0);
+
+  // HUD Overlay
+  ctx.fillStyle = "#94A3B8";
+  ctx.font = "11px monospace";
+  ctx.textAlign = "left";
+  ctx.fillText(`BIOME: 21.5°C / 48% RH ETFE DOME | RIG: ${RIGS[state.rigIdx].name.toUpperCase()} | AI COUNCIL: ${AI_PROFILES[state.activeAI].name.toUpperCase()}`, 18, 22);
+
+  requestAnimationFrame(drawLoop);
+}
+
+renderStocks();
+updateStats();
+selectAI("gemini");
+drawLoop();
+</script>
+</body>
+</html>

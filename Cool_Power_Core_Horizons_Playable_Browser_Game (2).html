@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#00E5FF" />
+<title>Cool Power Core™: Horizons Unbound (60 FPS Adaptive & AI Council)</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<style>
+  :root {
+    --bg: #060B14; --panel: #0D1626; --border: #1E3252;
+    --cyan: #00E5FF; --amber: #F59E0B; --emerald: #10B981; --text: #E2E8F0; --muted: #94A3B8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    padding: 10px 16px; background: #09111E; border-bottom: 1px solid var(--border); gap: 10px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand h1 { font-size: 16px; font-weight: 800; letter-spacing: 0.4px; color: #fff; }
+  .brand span { font-size: 11px; color: var(--cyan); display: block; }
+  .controls-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  select, button, input {
+    background: #101D33; color: #fff; border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 10px; font-size: 12px;
+  }
+  button { cursor: pointer; font-weight: 600; transition: 0.15s; }
+  button:hover { border-color: var(--cyan); background: #162846; }
+  button.primary { background: linear-gradient(135deg, #0284C7, #0EA5E9); border-color: #38BDF8; }
+  button.emerald { background: linear-gradient(135deg, #059669, #10B981); border-color: #34D399; }
+  button.amber { background: linear-gradient(135deg, #B45309, #F59E0B); border-color: #FBBF24; color: #060B14; }
+  .grid {
+    display: grid; grid-template-columns: 1.45fr 1fr; gap: 12px; padding: 12px; max-width: 1480px; margin: 0 auto;
+  }
+  @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+  }
+  .card h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--cyan);
+    margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+  }
+  canvas {
+    width: 100%; height: 340px; background: #040810; border-radius: 8px;
+    border: 1px solid #1B2E4B; display: block; touch-action: none;
+  }
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+  @media (max-width: 600px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { background: #08101E; border: 1px solid #182944; border-radius: 6px; padding: 7px; }
+  .kpi label { font-size: 10px; color: var(--muted); display: block; }
+  .kpi strong { font-size: 14px; color: #fff; }
+  .chat-log {
+    height: 170px; overflow-y: auto; background: #070D19; border: 1px solid #172742;
+    border-radius: 6px; padding: 8px; font-size: 12px; line-height: 1.45; margin-bottom: 8px;
+  }
+  .msg { margin-bottom: 6px; }
+  .msg b.gemini { color: #38BDF8; }
+  .msg b.venice { color: #C084FC; }
+  .msg b.gm { color: #34D399; }
+  .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .addr-box {
+    display: flex; justify-content: space-between; align-items: center; background: #08101D;
+    border: 1px solid #1A2D4C; border-radius: 6px; padding: 6px 8px; margin-bottom: 5px; font-size: 11px;
+  }
+  .addr-box code { color: #7DD3FC; word-break: break-all; margin-right: 6px; }
+  .badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #132542; color: var(--cyan); }
+  .touch-pad { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg width="36" height="36" viewBox="0 0 64 64">
+      <polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" fill="#0B1628" stroke="#00E5FF" stroke-width="3"/>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="18 8"/>
+      <polygon points="34,16 22,34 31,34 29,48 42,30 33,30" fill="#10B981"/>
+    </svg>
+    <div>
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND</h1>
+      <span>60 FPS Cross-Device Simulation • Thomas Gabriel Coleman • v6.1 PWA</span>
+    </div>
+  </div>
+  <div class="controls-bar">
+    <select id="tierSelect" title="Hardware Interface Tier">
+      <option value="0">Tier 0: Handheld Android / Mobile Web</option>
+      <option value="1">Tier 1: Console / TV + Gamepad Rumble</option>
+      <option value="2" selected>Tier 2: Desktop + Controller & Semi-Haptics</option>
+      <option value="3">Tier 3: Full-Body Haptic Suit + Brain Hat (Zero-RF)</option>
+    </select>
+    <button class="primary" onclick="exportSyncToken()">Export CPC-SYNC://</button>
+    <button onclick="importSyncToken()">Import Sync</button>
+    <button class="emerald" id="installBtn" style="display:none;" onclick="installPWA()">Install App</button>
+  </div>
+</header>
+
+<div class="grid">
+  <div>
+    <div class="card">
+      <h2>
+        <span>Sanctuary City & Rig Telemetry (60 FPS Locked)</span>
+        <span class="badge" id="tierBadge">Tier 2: MK-6 Flight Suit + 2-Arm Octo-Exo</span>
+      </h2>
+      <canvas id="simCanvas" width="760" height="340"></canvas>
+      <div class="touch-pad">
+        <button class="primary" onmousedown="state.thrust=true" onmouseup="state.thrust=false" ontouchstart="state.thrust=true" ontouchend="state.thrust=false">▲ Plasma/Ion Thrust (W / Up)</button>
+        <button class="emerald" onclick="deployCore()">+ Deploy CPC Core (382.93 Wth)</button>
+        <button class="amber" onclick="fireVortex()">⚡ Fire Vortex-Condenser</button>
+        <button onclick="syncMultiplayer()">🌐 Sync Shared World</button>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi"><label>Active CPC Cores</label><strong id="kpiCores">12</strong></div>
+        <div class="kpi"><label>Net Export Power</label><strong id="kpiPower">+4.11 kWe</strong></div>
+        <div class="kpi"><label>Pure Water Output</label><strong id="kpiWater">155.5 L/day</strong></div>
+        <div class="kpi"><label>Supercap Charge</label><strong id="kpiCap">100.0%</strong></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h2>
+        <span>CPC-COIN Multi-Chain Reserve & Real-World Stock Mirror</span>
+        <span class="badge">Aerodrome (Base) • Lido+Beefy • Robinhood L2</span>
+      </h2>
+      <div class="kpi-row">
+        <div class="kpi"><label>CPC-COIN NAV (USD)</label><strong id="kpiNav">$1.0842</strong></div>
+        <div class="kpi"><label>Your CPC Balance</label><strong id="kpiBal">250.00 CPC</strong></div>
+        <div class="kpi"><label>AI Merchant 24h Vol</label><strong id="kpiVol">$2.88M</strong></div>
+        <div class="kpi"><label>SPY / NVDA Mirror</label><strong id="kpiStocks">$618.40 / $162.85</strong></div>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <select id="depositAsset">
+          <option value="USDC">USDC (Base / Arbitrum)</option>
+          <option value="ETH">ETH → Lido wstETH</option>
+          <option value="cbBTC">cbBTC → Aerodrome Pool</option>
+          <option value="USDS">USDS → Sky + Beefy Vault</option>
+        </select>
+        <input type="number" id="depositAmt" value="100" min="1" style="width:90px;" />
+        <button class="emerald" onclick="depositReserve()">Deposit & Mint CPC</button>
+        <button onclick="redeemReserve()">Instant Any-Currency Redeem</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>
+        <span>Interactive AI Advisor Council (Voice + Text)</span>
+        <span class="badge" id="voiceStatus">Voice Ready</span>
+      </h2>
+      <div class="row" style="margin-bottom:8px;">
+        <button class="primary" onclick="selectAdvisor('gemini')">✦ Gemini AI (google.com)</button>
+        <button onclick="selectAdvisor('venice')">◈ Venice.ai</button>
+        <button class="emerald" onclick="selectAdvisor('gm')">❖ Game Master AI</button>
+      </div>
+      <div class="chat-log" id="chatLog">
+        <div class="msg"><b class="gemini">✦ Gemini AI:</b> Welcome to Cool Power Core™: Horizons Unbound! Ask me about the 382.93 Wth/core thermodynamic cycle, MK-6 Briefcase Suit, or Sanctuary Cities.</div>
+        <div class="msg"><b class="venice">◈ Venice.ai:</b> Ask me about CPC-COIN's non-dilutive reserve backing across Aerodrome (Base), Lido wstETH, Beefy.com, and Robinhood Chain, or the zero-RF Brain Hat security.</div>
+        <div class="msg"><b class="gm">❖ Game Master AI:</b> 2,048 AI Merchant NPCs are actively compounding 0.25% swap fees. Click Speak or type a question below!</div>
+      </div>
+      <div class="row">
+        <input type="text" id="chatInput" placeholder="Ask Gemini, Venice.ai, or Game Master..." style="flex:1;" onkeydown="if(event.key==='Enter')sendChat()" />
+        <button class="primary" onclick="sendChat()">Ask</button>
+        <button class="amber" id="micBtn" onclick="toggleVoiceInput()">🎙️ Speak</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+      <h2><span>Inventor Patronage & Treasury Endpoints (100% Direct)</span></h2>
+      <div class="addr-box">
+        <div><strong>Thomas Donate EVM:</strong><br/><code>0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</code></div>
+        <button onclick="copyText('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy</button>
+      </div>
+      <div class="addr-box">
+        <div><strong>Donate BTC / Sat (Cake):</strong><br/><code>howeyecrypto@cake.cash</code></div>
+        <button onclick="copyText('howeyecrypto@cake.cash')">Copy</button>
+      </div>
+      <div class="addr-box">
+        <div><strong>Donate Solana (SOL):</strong><br/><code>2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</code></div>
+        <button onclick="copyText('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy</button>
+      </div>
+      <div class="addr-box">
+        <div><strong>Investment Gnosis Safe:</strong><br/><code>0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</code></div>
+        <button onclick="copyText('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37')">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const state = {
+  tier: 2, cores: 12, cap: 100.0, nav: 1.0842, cpcBal: 250.0,
+  vol: 2880000, spy: 618.40, nvda: 162.85,
+  x: 160, y: 210, vy: 0, thrust: false, bolts: [],
+  advisor: 'gemini', serverUrl: 'http://localhost:8080'
+};
+
+const tierDescriptions = [
+  "Tier 0: Android Mobile Touch + Single-Shot Vortex",
+  "Tier 1: Console Gamepad + Tri-Mode Vortex & 0.42m Blade",
+  "Tier 2: MK-6 Briefcase Flight Suit + 2-Arm Octo-Exo",
+  "Tier 3: Full-Body Haptic Suit + Zero-RF Brain Hat + 4 Tentacles"
+];
+
+// Auto-detect mobile touch device
+if ('ontouchstart' in window && window.innerWidth < 768) {
+  state.tier = 0;
+  document.getElementById('tierSelect').value = "0";
+}
+
+document.getElementById('tierSelect').addEventListener('change', (e) => {
+  state.tier = Number(e.target.value);
+  document.getElementById('tierBadge').textContent = tierDescriptions[state.tier];
+  triggerHaptic(35);
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') state.thrust = true;
+  if (e.key === ' ') fireVortex();
+});
+window.addEventListener('keyup', (e) => {
+  if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') state.thrust = false;
+});
+
+function triggerHaptic(ms) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+function deployCore() {
+  state.cores += 1;
+  triggerHaptic(25);
+  updateKPIs();
+}
+
+function fireVortex() {
+  if (state.cap < 4) return;
+  state.cap = Math.max(0, state.cap - 4);
+  const count = state.tier === 3 ? 3 : (state.tier >= 1 ? 2 : 1);
+  for (let i = 0; i < count; i++) {
+    state.bolts.push({ x: state.x + 28, y: state.y - 6 + i * 7, vx: 9.5 + state.tier * 1.5 });
+  }
+  triggerHaptic(45);
+}
+
+function depositReserve() {
+  const amt = Math.max(1, Number(document.getElementById('depositAmt').value || 100));
+  const minted = amt / state.nav;
+  state.cpcBal += minted;
+  state.vol += amt;
+  updateKPIs();
+}
+
+function redeemReserve() {
+  if (state.cpcBal <= 0) return;
+  const payout = (state.cpcBal * state.nav).toFixed(2);
+  alert(`Instant Any-Currency Redemption Simulated: $${payout} USD equivalent returned with 0% exit penalty.`);
+  state.cpcBal = 0;
+  updateKPIs();
+}
+
+function updateKPIs() {
+  document.getElementById('kpiCores').textContent = state.cores;
+  document.getElementById('kpiPower').textContent = `+${(state.cores * 0.3424).toFixed(2)} kWe`;
+  document.getElementById('kpiWater').textContent = `${(state.cores * 12.96).toFixed(1)} L/day`;
+  document.getElementById('kpiCap').textContent = `${state.cap.toFixed(1)}%`;
+  document.getElementById('kpiNav').textContent = `$${state.nav.toFixed(4)}`;
+  document.getElementById('kpiBal').textContent = `${state.cpcBal.toFixed(2)} CPC`;
+  document.getElementById('kpiVol').textContent = `$${(state.vol / 1e6).toFixed(2)}M`;
+  document.getElementById('kpiStocks').textContent = `$${state.spy.toFixed(2)} / $${state.nvda.toFixed(2)}`;
+}
+
+// 60 FPS Simulation Loop
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+let tick = 0;
+
+function loop() {
+  tick++;
+  // CPC thermodynamic recharge (382.93 Wth/core)
+  state.cap = Math.min(100, state.cap + 0.03 * (1 + state.cores * 0.05));
+
+  if (state.thrust && state.cap > 0.5) {
+    state.vy -= (0.42 + state.tier * 0.06);
+    state.cap = Math.max(0, state.cap - 0.12);
+  } else {
+    state.vy += 0.24;
+  }
+  state.vy *= 0.94;
+  state.y = Math.max(40, Math.min(265, state.y + state.vy));
+
+  // Periodic AI Merchant 0.25% fee compounding
+  if (tick % 120 === 0) {
+    state.vol += 3200;
+    state.nav += 0.0001;
+    state.spy += (Math.random() - 0.49) * 0.35;
+    state.nvda += (Math.random() - 0.49) * 0.25;
+    updateKPIs();
+  }
+
+  // Render scene
+  ctx.fillStyle = '#040810';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ETFE 21.5°C Sanctuary Dome Arch
+  ctx.strokeStyle = 'rgba(0, 229, 255, 0.32)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(380, 310, 330, Math.PI, 0);
+  ctx.stroke();
+
+  // Ground & Modular Sanctuary Pods
+  ctx.fillStyle = '#0B192C';
+  ctx.fillRect(0, 290, canvas.width, 50);
+  for (let i = 0; i < Math.min(state.cores, 18); i++) {
+    const px = 45 + i * 38;
+    ctx.fillStyle = i % 2 === 0 ? '#10B981' : '#0284C7';
+    ctx.fillRect(px, 266, 26, 24);
+    ctx.fillStyle = '#F59E0B';
+    ctx.fillRect(px + 9, 272, 8, 8);
+  }
+
+  // Player Rig (scales visually by Hardware Tier 0..3)
+  ctx.save();
+  ctx.translate(state.x, state.y);
+  ctx.fillStyle = state.tier === 3 ? '#F59E0B' : '#00E5FF';
+  ctx.fillRect(-12, -18, 24, 34);
+  // Tentacles / Wings for Tier 2 & 3
+  if (state.tier >= 2) {
+    ctx.strokeStyle = '#10B981';
+    ctx.lineWidth = 3;
+    const arms = state.tier === 3 ? 4 : 2;
+    for (let a = 0; a < arms; a++) {
+      ctx.beginPath();
+      ctx.moveTo(-10, -8 + a * 6);
+      ctx.quadraticCurveTo(-35, -25 + Math.sin(tick * 0.08 + a) * 14, -52, -10 + a * 10);
+      ctx.stroke();
+    }
+  }
+  if (state.thrust) {
+    ctx.fillStyle = '#F59E0B';
+    ctx.beginPath();
+    ctx.moveTo(-8, 16); ctx.lineTo(8, 16); ctx.lineTo(0, 34 + Math.random() * 10);
+    ctx.fill();
+  }
+  ctx.restore();
+
+  // Vortex-Condenser Projectiles
+  ctx.fillStyle = '#38BDF8';
+  state.bolts = state.bolts.filter(b => b.x < canvas.width);
+  for (const b of state.bolts) {
+    b.x += b.vx;
+    ctx.fillRect(b.x, b.y, 14, 4);
+  }
+
+  // HUD Overlay
+  ctx.fillStyle = '#94A3B8';
+  ctx.font = '12px monospace';
+  ctx.fillText(`SANCTUARY DOME: 21.5°C / 48% RH | 60 FPS | TIER ${state.tier}`, 14, 22);
+  requestAnimationFrame(loop);
+}
+updateKPIs();
+requestAnimationFrame(loop);
+
+// AI Advisor Council (Text + Web Speech API)
+function selectAdvisor(who) {
+  state.advisor = who;
+  document.getElementById('voiceStatus').textContent = `Active: ${who.toUpperCase()}`;
+}
+
+function appendChat(who, text) {
+  const log = document.getElementById('chatLog');
+  const label = who === 'gemini' ? '✦ Gemini AI' : (who === 'venice' ? '◈ Venice.ai' : '❖ Game Master AI');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = `<b class="${who}">${label}:</b> ${text}`;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+  speakResponse(who, text);
+}
+
+function speakResponse(who, text) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.pitch = who === 'gemini' ? 1.08 : (who === 'venice' ? 0.94 : 0.86);
+  utter.rate = 1.04;
+  window.speechSynthesis.speak(utter);
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  const ql = q.toLowerCase();
+  let reply = '';
+  if (state.advisor === 'gemini' || ql.includes('core') || ql.includes('physics') || ql.includes('suit')) {
+    reply = `Each Cool Power Core™ harvests 382.93 Wth via 90°C CVD-graphene cavitation and 33.6 kV ZVS plasma, exporting +342.4 We and 12.96 L/day of <1 ppm TDS pure water. Your rig is currently on Tier ${state.tier}.`;
+  } else if (state.advisor === 'venice' || ql.includes('coin') || ql.includes('base') || ql.includes('robinhood') || ql.includes('hack')) {
+    reply = `CPC-COIN compounds yield across Aerodrome on Base (25%), Lido wstETH + Beefy.com + Sky sUSDS (45%), and Robinhood Chain L2 (15%), with 15% liquid reserve and zero-RF Mu-Metal Brain Hat isolation.`;
+  } else {
+    reply = `Sanctuary City Corona-01 is running ${state.cores} active CPC cores at 21.5°C. All 2,048 AI Merchant NPCs have generated $${(state.vol/1e6).toFixed(2)}M in swap volume, pushing CPC-COIN NAV to $${state.nav.toFixed(4)}.`;
+  }
+  appendChat(state.advisor, reply);
+}
+
+function toggleVoiceInput() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    alert('Web Speech Recognition is not supported in this browser; please type your question.');
+    return;
+  }
+  const rec = new SR();
+  rec.lang = 'en-US';
+  document.getElementById('voiceStatus').textContent = 'Listening...';
+  rec.onresult = (e) => {
+    document.getElementById('chatInput').value = e.results[0][0].transcript;
+    document.getElementById('voiceStatus').textContent = 'Voice Ready';
+    sendChat();
+  };
+  rec.onerror = () => { document.getElementById('voiceStatus').textContent = 'Voice Ready'; };
+  rec.start();
+}
+
+// Cross-Device Sync & Shared Server
+function exportSyncToken() {
+  const payload = btoa(JSON.stringify({ cores: state.cores, cpcBal: state.cpcBal, tier: state.tier }));
+  const token = `CPC-SYNC://${payload}`;
+  copyText(token);
+  alert(`Cross-Device State Token copied to clipboard:
+${token}`);
+}
+
+function importSyncToken() {
+  const raw = prompt('Paste your CPC-SYNC:// token from another device:');
+  if (!raw || !raw.startsWith('CPC-SYNC://')) return;
+  try {
+    const data = JSON.parse(atob(raw.replace('CPC-SYNC://', '')));
+    state.cores = Number(data.cores || state.cores);
+    state.cpcBal = Number(data.cpcBal || state.cpcBal);
+    updateKPIs();
+    alert('Cross-device game state restored!');
+  } catch (e) { alert('Invalid sync token.'); }
+}
+
+async function syncMultiplayer() {
+  try {
+    const res = await fetch(`${state.serverUrl}/api/sync`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: tierDescriptions[state.tier], x: state.x, y: state.y })
+    });
+    const json = await res.json();
+    if (json.ok && json.worldState) {
+      state.nav = json.worldState.cpcCoinNavUSD;
+      updateKPIs();
+      appendChat('gm', `Synced with Shared Sanctuary Server (${json.worldState.cityName}). Global cores: ${json.worldState.totalCpcCores}.`);
+    }
+  } catch (e) {
+    appendChat('gm', 'Offline PWA mode active — run `node server.js` locally or deploy to cloud to connect live multiplayer.');
+  }
+}
+
+function copyText(txt) {
+  if (navigator.clipboard) navigator.clipboard.writeText(txt);
+}
+
+// PWA Service Worker & Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'inline-block';
+});
+function installPWA() {
+  if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
+}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>

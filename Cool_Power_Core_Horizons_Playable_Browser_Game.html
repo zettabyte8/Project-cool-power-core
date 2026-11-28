@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cool Power Core™: Horizons Unbound — 60 FPS Cross-Device Engine</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050a14'/%3E%3Cpolygon points='32,4 56,18 56,46 32,60 8,46 8,18' fill='none' stroke='%2300e5ff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23f59e0b' stroke-width='2.5' stroke-dasharray='8 4'/%3E%3Cpath d='M34 15 L23 34 H32 L29 49 L41 30 H32 Z' fill='%2310b981'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #050a14;
+    --panel: rgba(11, 22, 40, 0.90);
+    --border: #1e3a5f;
+    --cyan: #00e5ff;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --rose: #f43f5e;
+    --purple: #a855f7;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: linear-gradient(90deg, #071122 0%, #0d1f3a 50%, #071122 100%);
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+  }
+  .brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .cpc-logo-svg {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.45));
+  }
+  @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes spinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+  .spin-cw { transform-origin: 50px 50px; animation: spinSlow 18s linear infinite; }
+  .spin-ccw { transform-origin: 50px 50px; animation: spinRev 12s linear infinite; }
+  .brand-title { font-size: 16px; font-weight: 800; letter-spacing: 0.6px; color: var(--cyan); line-height: 1.15; }
+  .brand-sub { font-size: 10.5px; color: var(--muted); }
+  .tier-bar { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .tier-btn {
+    background: #0f2038;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tier-btn.active {
+    background: rgba(0, 229, 255, 0.16);
+    border-color: var(--cyan);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+  }
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 330px;
+    gap: 10px;
+    padding: 10px;
+    flex: 1;
+  }
+  @media (max-width: 960px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+  .viewport-wrap {
+    position: relative;
+    background: #030711;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 450px;
+  }
+  canvas { width: 100%; height: 450px; display: block; touch-action: none; }
+  .hud-overlay-top {
+    position: absolute;
+    top: 10px; left: 10px; right: 10px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .hud-pill {
+    background: rgba(5, 10, 20, 0.84);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    backdrop-filter: blur(4px);
+  }
+  .ability-dock {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 8px;
+    background: #081224;
+    border-top: 1px solid var(--border);
+  }
+  .ab-btn {
+    background: #0f2340;
+    border: 1px solid #284b7a;
+    border-radius: 7px;
+    padding: 7px 6px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.12s;
+  }
+  .ab-btn:hover:not(:disabled) { border-color: var(--cyan); background: #153159; }
+  .ab-btn:disabled { opacity: 0.36; cursor: not-allowed; border-color: #1e293b; }
+  .ab-tag { display: block; font-size: 9.5px; color: var(--cyan); margin-top: 2px; }
+  .sidebar { display: flex; flex-direction: column; gap: 9px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .card h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--cyan);
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stat-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .val-green { color: var(--emerald); font-weight: 700; }
+  .val-amber { color: var(--amber); font-weight: 700; }
+  .val-cyan { color: var(--cyan); font-weight: 700; }
+  .btn-sm {
+    background: #122847;
+    border: 1px solid #2c5282;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-sm:hover { border-color: var(--emerald); background: #16365e; }
+  .btn-emerald { background: rgba(16, 185, 129, 0.2); border-color: var(--emerald); color: #a7f3d0; }
+  .stock-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .sync-box {
+    width: 100%; background: #030711; border: 1px solid var(--border); color: var(--emerald);
+    font-family: monospace; font-size: 10px; padding: 5px; border-radius: 5px; margin-top: 5px;
+  }
+  .patron-item {
+    background: #071224; border: 1px solid #1e3a5f; border-radius: 6px; padding: 5px 7px;
+    margin-bottom: 5px; font-size: 10.5px; display: flex; justify-content: space-between; align-items: center; gap: 6px;
+  }
+  .addr-txt { font-family: monospace; color: var(--amber); font-size: 9.8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 195px; }
+  .toast {
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    background: #0f172a; border: 1px solid var(--emerald); color: #fff;
+    padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700;
+    z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+  }
+  .toast.show { opacity: 1; }
+  .touch-controls {
+    display: none; position: absolute; bottom: 14px; left: 14px; right: 14px;
+    justify-content: space-between; pointer-events: none;
+  }
+  .touch-pad {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: rgba(0, 229, 255, 0.12); border: 2px solid rgba(0, 229, 255, 0.45);
+    pointer-events: auto; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--cyan); font-weight: 700;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand-lockup">
+    <!-- Custom Cool Power Core Vector Brand Emblem -->
+    <svg class="cpc-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Cool Power Core Logo">
+      <defs>
+        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.95"/>
+          <stop offset="55%" stop-color="#0284c7" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#050a14" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00e5ff"/>
+          <stop offset="50%" stop-color="#10b981"/>
+          <stop offset="100%" stop-color="#f59e0b"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#coreGlow)"/>
+      <!-- Outer Ti-6Al-4V Hexagonal Containment Ring -->
+      <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="#071224" stroke="url(#hexGrad)" stroke-width="4.5"/>
+      <!-- Inner Thermal-Cold-Sink Magnetic Turbine Ring -->
+      <circle class="spin-cw" cx="50" cy="50" r="31" fill="none" stroke="#00e5ff" stroke-width="2.5" stroke-dasharray="12 6"/>
+      <!-- Plasma Cavitation Vortex Ring -->
+      <circle class="spin-ccw" cx="50" cy="50" r="22" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-dasharray="7 5"/>
+      <!-- Central Solid-State Energy Bolt & Cryo-Prism -->
+      <path d="M53 23 L35 52 H49 L45 77 L65 48 H51 Z" fill="#10b981" stroke="#e2e8f0" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="50" cy="50" r="4" fill="#ffffff"/>
+    </svg>
+    <div>
+      <div class="brand-title">COOL POWER CORE™ : HORIZONS UNBOUND</div>
+      <div class="brand-sub">60 FPS Cross-Device Adaptive Runtime • Invented by Thomas Gabriel Coleman</div>
+    </div>
+  </div>
+  <div class="tier-bar" id="tierBar">
+    <button class="tier-btn active" data-tier="0">T0: Android / Mobile</button>
+    <button class="tier-btn" data-tier="1">T1: Console / Gamepad</button>
+    <button class="tier-btn" data-tier="2">T2: Desktop + Semi-Haptics</button>
+    <button class="tier-btn" data-tier="3">T3: Full-Body Suit + Brain Hat</button>
+  </div>
+</header>
+
+<div class="main-grid">
+  <div class="viewport-wrap">
+    <div class="hud-overlay-top">
+      <div class="hud-pill" id="hudFps">FPS: 60.0 | Tier 0 (720p Adaptive)</div>
+      <div class="hud-pill" id="hudCore">CPC Core: 382.93 Wth → +344.0 We | Cap: 100%</div>
+      <div class="hud-pill" id="hudCity">Sanctuary Pods: 3 | 21.5°C Biospheric Dome</div>
+    </div>
+    <canvas id="gameCanvas" width="960" height="450"></canvas>
+    <div class="touch-controls" id="touchControls">
+      <div class="touch-pad" id="touchMove">DRAG<br>MOVE / FLY</div>
+      <div class="touch-pad" id="touchFire" style="border-color:rgba(245,158,11,0.6);color:#fbbf24;">TAP<br>VORTEX FIRE</div>
+    </div>
+    <div class="ability-dock">
+      <button class="ab-btn" id="ab0" onclick="triggerAbility(0)">
+        [1] Vortex-Condenser
+        <span class="ab-tag" id="ab0Tag">T0+: Single-Shot Slug</span>
+      </button>
+      <button class="ab-btn" id="ab1" onclick="triggerAbility(1)">
+        [2] 0.42m Plasma Blade
+        <span class="ab-tag" id="ab1Tag">T1+: Magnetic Lance</span>
+      </button>
+      <button class="ab-btn" id="ab2" onclick="triggerAbility(2)">
+        [3] MK-6 Flight & Octo-Lift
+        <span class="ab-tag" id="ab2Tag">T2+: Ion Thrust + 2 Arms</span>
+      </button>
+      <button class="ab-btn" id="ab3" onclick="triggerAbility(3)">
+        [4] Neural Overdrive (0ms)
+        <span class="ab-tag" id="ab3Tag">T3: 4-Arm + 360° DEW Shield</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <!-- CPC-COIN Reserve & Multi-Chain Staking -->
+    <div class="card">
+      <h3>
+        <span>CPC-COIN Multi-Currency Reserve</span>
+        <span class="val-green" id="navDisplay">NAV $1.0428</span>
+      </h3>
+      <div class="stat-row"><span>Your CPC Balance:</span><span class="val-cyan" id="cpcBal">250.00 CPC</span></div>
+      <div class="stat-row"><span>Your USD Value:</span><span class="val-green" id="usdVal">$260.70</span></div>
+      <div class="stat-row"><span>2,048 AI Merchants (0.25% Fee):</span><span class="val-amber" id="npcVol">$2.88M / day</span></div>
+      <div style="font-size:10px;color:var(--muted);margin:4px 0 6px;">
+        85% Yield-Deployed: Base Aerodrome Gauges (25%) • Lido wstETH + Beefy.com (45%) • Robinhood Chain (15%) | 15% Instant Exit
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <button class="btn-sm btn-emerald" onclick="depositCurrency('USDC', 100)">+ Deposit $100 USDC</button>
+        <button class="btn-sm" onclick="depositCurrency('ETH/wstETH', 100)">+ $100 ETH</button>
+        <button class="btn-sm" onclick="buildSanctuaryPod()">Build CPC Pod (-50 CPC)</button>
+      </div>
+    </div>
+
+    <!-- Real-World Stock Market Mirror -->
+    <div class="card">
+      <h3>
+        <span>Subterranean Stock Mirror</span>
+        <span style="font-size:10px;color:var(--muted);">Real-World Beta</span>
+      </h3>
+      <div id="stockList"></div>
+    </div>
+
+    <!-- Cross-Device Continuous State Sync -->
+    <div class="card">
+      <h3>
+        <span>Continuous Cross-Device State</span>
+        <button class="btn-sm" onclick="exportSyncCode()">Copy Sync Token</button>
+      </h3>
+      <div style="font-size:10.5px;color:var(--muted);">
+        Move seamlessly between Android, Console, Desktop & Brain-Hat Suit with zero progress loss:
+      </div>
+      <input class="sync-box" id="syncInput" readonly value="Generating state token...">
+      <div style="display:flex;gap:5px;margin-top:5px;">
+        <button class="btn-sm" style="flex:1;" onclick="importSyncCode()">Load Token</button>
+        <button class="btn-sm" style="flex:1;" onclick="resetWorld()">New Planet Seed</button>
+      </div>
+    </div>
+
+    <!-- Direct Inventor Patronage & Treasury -->
+    <div class="card">
+      <h3>
+        <span>Support Inventor (100% Direct)</span>
+        <span class="val-amber">Thomas G. Coleman</span>
+      </h3>
+      <div class="patron-item">
+        <div><strong>EVM Donate:</strong><div class="addr-txt">0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</div></div>
+        <button class="btn-sm btn-emerald" onclick="copyAddr('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf','EVM Donation Address')">Copy</button>
+      </div>
+      <div class="patron-item">
+        <div><strong>BTC / Satoshis:</strong><div class="addr-txt">howeyecrypto@cake.cash</div></div>
+        <button class="btn-sm btn-emerald" onclick="copyAddr('howeyecrypto@cake.cash','Cake Pay BTC/Sat Address')">Copy</button>
+      </div>
+      <div class="patron-item">
+        <div><strong>Solana (SOL):</strong><div class="addr-txt">2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</div></div>
+        <button class="btn-sm btn-emerald" onclick="copyAddr('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr','Solana Donation Address')">Copy</button>
+      </div>
+      <div class="patron-item" style="margin-bottom:0;">
+        <div><strong>CPC Safe Treasury:</strong><div class="addr-txt">0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</div></div>
+        <button class="btn-sm" onclick="copyAddr('0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37','CPC Investment Gnosis Safe')">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const TIERS = [
+  { name: "Tier 0: Handheld Android / Mobile", res: "720p Dynamic", particles: 18, haptic: "Phone Vibration", maxAb: 0, speed: 3.2 },
+  { name: "Tier 1: Console / Gamepad", res: "1080p60 HDR", particles: 42, haptic: "Dual-Motor Rumble", maxAb: 1, speed: 4.4 },
+  { name: "Tier 2: Desktop + Semi-Haptics", res: "4K Ray-Traced", particles: 85, haptic: "Triggers + Vest", maxAb: 2, speed: 5.8 },
+  { name: "Tier 3: Full-Body Suit + Brain Hat", res: "Volumetric GI", particles: 150, haptic: "64-Zone + 64ch EEG", maxAb: 3, speed: 7.5 }
+];
+
+let state = {
+  tier: 0,
+  seed: 20261127,
+  px: 180, py: 280, vx: 0, vy: 0,
+  cap: 100.0,
+  cpc: 250.0,
+  nav: 1.0428,
+  pods: 3,
+  shieldActive: 0,
+  bladeActive: 0,
+  flightActive: 0,
+  stocks: [
+    { sym: "SPY", px: 598.40, chg: +0.62, shares: 0 },
+    { sym: "NVDA", px: 146.80, chg: +1.85, shares: 0 },
+    { sym: "AAPL", px: 234.10, chg: +0.41, shares: 0 },
+    { sym: "TSLA", px: 342.50, chg: -0.74, shares: 0 },
+    { sym: "GLD",  px: 248.90, chg: +0.33, shares: 0 }
+  ]
+};
+
+// Auto-detect mobile touch device on startup
+if (/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) {
+  state.tier = 0;
+  document.getElementById("touchControls").style.display = "flex";
+} else {
+  state.tier = 2;
+}
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+let keys = {};
+let projectiles = [];
+let particles = [];
+let merchants = [];
+let stars = [];
+
+function mulberry32(a) {
+  return function() {
+    let t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function initWorld() {
+  const rng = mulberry32(state.seed);
+  stars = Array.from({length: 70}, () => ({ x: rng()*960, y: rng()*240, r: 0.7 + rng()*1.6 }));
+  merchants = Array.from({length: 12}, (_, i) => ({
+    x: 80 + rng()*800, y: 345 + (i%3)*18, dir: rng() > 0.5 ? 1 : -1,
+    spd: 0.4 + rng()*0.7, role: ["Guild Broker","Aerodrome MM","Robinhood Dealer","Thermal Arb"][i%4]
+  }));
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2300);
+}
+
+function copyAddr(addr, label) {
+  navigator.clipboard?.writeText(addr);
+  showToast("Copied " + label + " to clipboard!");
+}
+
+function setTier(idx) {
+  state.tier = idx;
+  document.querySelectorAll(".tier-btn").forEach((b, i) => b.classList.toggle("active", i === idx));
+  document.getElementById("touchControls").style.display = idx === 0 ? "flex" : "none";
+  for (let i = 0; i < 4; i++) {
+    document.getElementById("ab" + i).disabled = i > TIERS[idx].maxAb;
+  }
+  triggerHaptic(35);
+  updateUI();
+}
+
+document.querySelectorAll(".tier-btn").forEach(btn => {
+  btn.addEventListener("click", () => setTier(parseInt(btn.dataset.tier)));
+});
+
+function triggerHaptic(ms) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+function triggerAbility(idx) {
+  if (idx > TIERS[state.tier].maxAb) return;
+  if (idx === 0) {
+    if (state.cap < 8) return showToast("Recharging Cool Power Core™ Supercapacitor...");
+    state.cap -= 8;
+    const count = state.tier >= 1 ? 3 : 1;
+    for (let i = 0; i < count; i++) {
+      projectiles.push({ x: state.px + 24, y: state.py - 8 + (i-1)*8, vx: 11 + i, color: state.tier >= 2 ? "#00e5ff" : "#f59e0b" });
+    }
+    triggerHaptic(25);
+  } else if (idx === 1) {
+    if (state.cap < 12) return;
+    state.cap -= 12;
+    state.bladeActive = 90;
+    triggerHaptic([30, 20, 40]);
+    showToast("0.42m Magnetic-Mirror Plasma Blade Ignited (4,450 K)");
+  } else if (idx === 2) {
+    if (state.cap < 15) return;
+    state.cap -= 15;
+    state.flightActive = 180;
+    state.vy = -6.5;
+    triggerHaptic(60);
+    showToast("MK-6 Hybrid Plasma-Ion Thrusters + Octo-Arms Engaged!");
+  } else if (idx === 3) {
+    if (state.cap < 20) return;
+    state.cap -= 20;
+    state.shieldActive = 240;
+    state.bladeActive = 180;
+    state.flightActive = 240;
+    triggerHaptic([50, 30, 80]);
+    showToast("T3 Brain-Hat Overdrive: 4-Arm Link + 360° DEW/Kinetic Harvest Shield!");
+  }
+}
+
+function depositCurrency(sym, usdAmt) {
+  const minted = usdAmt / state.nav;
+  state.cpc += minted;
+  state.nav += 0.0004; // Simulated Aerodrome/Lido/Beefy yield ratchet
+  showToast(`Deposited $${usdAmt} ${sym} → Minted ${minted.toFixed(2)} CPC-COIN`);
+  updateUI();
+}
+
+function buildSanctuaryPod() {
+  if (state.cpc < 50) return showToast("Need 50 CPC-COIN to deploy a 21.5°C Sanctuary Pod!");
+  state.cpc -= 50;
+  state.pods += 1;
+  showToast(`Deployed Sanctuary Pod #${state.pods} (+286 We | 216 L/day Pure H2O)!`);
+  updateUI();
+}
+
+function tradeStock(idx, delta) {
+  const st = state.stocks[idx];
+  const costCpc = st.px / state.nav;
+  if (delta > 0) {
+    if (state.cpc < costCpc) return showToast("Insufficient CPC-COIN for 1 share of " + st.sym);
+    state.cpc -= costCpc;
+    st.shares += 1;
+    state.nav += 0.00015; // 0.25% swap fee recycled into NAV
+  } else if (st.shares > 0) {
+    st.shares -= 1;
+    state.cpc += costCpc;
+    state.nav += 0.00015;
+  }
+  updateUI();
+}
+
+function renderStocks() {
+  const el = document.getElementById("stockList");
+  el.innerHTML = state.stocks.map((s, i) => `
+    <div class="stock-row">
+      <span><strong>${s.sym}</strong> $${s.px.toFixed(2)} <span style="color:${s.chg>=0?'#10b981':'#f43f5e'}">(${s.chg>=0?'+':''}${s.chg.toFixed(2)}%)</span></span>
+      <span>
+        <span style="color:var(--cyan);margin-right:4px;">${s.shares}sh</span>
+        <button class="btn-sm" style="padding:2px 6px;" onclick="tradeStock(${i},1)">+</button>
+        <button class="btn-sm" style="padding:2px 6px;" onclick="tradeStock(${i},-1)">-</button>
+      </span>
+    </div>
+  `).join("");
+}
+
+function exportSyncCode() {
+  const payload = btoa(JSON.stringify({ t: state.tier, s: state.seed, c: +state.cpc.toFixed(2), n: +state.nav.toFixed(5), p: state.pods }));
+  document.getElementById("syncInput").value = "CPC-SYNC://" + payload;
+  copyAddr("CPC-SYNC://" + payload, "Cross-Device Continuous State Token");
+}
+
+function importSyncCode() {
+  try {
+    const raw = prompt("Paste your CPC-SYNC:// token from another device:");
+    if (!raw) return;
+    const obj = JSON.parse(atob(raw.replace("CPC-SYNC://", "").trim()));
+    state.seed = obj.s || state.seed;
+    state.cpc = obj.c || state.cpc;
+    state.nav = obj.n || state.nav;
+    state.pods = obj.p || state.pods;
+    initWorld();
+    updateUI();
+    showToast("Continuous State Restored Across Devices!");
+  } catch (e) {
+    showToast("Invalid Sync Token format.");
+  }
+}
+
+function resetWorld() {
+  state.seed = Math.floor(Math.random() * 99999999);
+  initWorld();
+  showToast("Generated New Mild-Randomized Planet Seed #" + state.seed);
+}
+
+function updateUI() {
+  const t = TIERS[state.tier];
+  document.getElementById("hudFps").textContent = `FPS: 60.0 | ${t.name} (${t.res})`;
+  document.getElementById("hudCore").textContent = `CPC Core: 382.93 Wth → +${(344 + state.pods*12).toFixed(1)} We | Cap: ${state.cap.toFixed(0)}%`;
+  document.getElementById("hudCity").textContent = `Sanctuary Pods: ${state.pods} | 21.5°C Biospheric Dome`;
+  document.getElementById("navDisplay").textContent = `NAV $${state.nav.toFixed(4)}`;
+  document.getElementById("cpcBal").textContent = `${state.cpc.toFixed(2)} CPC`;
+  document.getElementById("usdVal").textContent = `$${(state.cpc * state.nav).toFixed(2)}`;
+  const payload = btoa(JSON.stringify({ t: state.tier, s: state.seed, c: +state.cpc.toFixed(2), n: +state.nav.toFixed(5), p: state.pods }));
+  document.getElementById("syncInput").value = "CPC-SYNC://" + payload;
+  renderStocks();
+}
+
+// Keyboard & Gamepad polling
+window.addEventListener("keydown", e => {
+  keys[e.code] = true;
+  if (e.code === "Digit1") triggerAbility(0);
+  if (e.code === "Digit2") triggerAbility(1);
+  if (e.code === "Digit3") triggerAbility(2);
+  if (e.code === "Digit4") triggerAbility(3);
+  if (e.code === "Space") triggerAbility(0);
+});
+window.addEventListener("keyup", e => { keys[e.code] = false; });
+
+document.getElementById("touchFire").addEventListener("touchstart", e => { e.preventDefault(); triggerAbility(0); });
+document.getElementById("touchMove").addEventListener("touchmove", e => {
+  e.preventDefault();
+  const rect = e.target.getBoundingClientRect();
+  const tx = e.touches[0].clientX - (rect.left + rect.width/2);
+  const ty = e.touches[0].clientY - (rect.top + rect.height/2);
+  state.vx = Math.max(-5, Math.min(5, tx * 0.12));
+  state.vy = Math.max(-5, Math.min(5, ty * 0.12));
+});
+document.getElementById("touchMove").addEventListener("touchend", () => { state.vx = 0; });
+
+function pollGamepad() {
+  const gps = navigator.getGamepads ? navigator.getGamepads() : [];
+  if (gps && gps[0]) {
+    const gp = gps[0];
+    if (Math.abs(gp.axes[0]) > 0.15) state.vx = gp.axes[0] * TIERS[state.tier].speed;
+    if (gp.axes[1] < -0.3) state.vy = -5.2;
+    if (gp.buttons[0]?.pressed) triggerAbility(0);
+    if (gp.buttons[1]?.pressed) triggerAbility(1);
+    if (gp.buttons[2]?.pressed) triggerAbility(2);
+    if (gp.buttons[3]?.pressed) triggerAbility(3);
+  }
+}
+
+// Draw Cool Power Core watermark emblem on Canvas
+function drawCanvasLogo(cx, cy, r, t) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.globalAlpha = 0.88;
+  // Hexagonal ring
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const ang = (Math.PI / 3) * i - Math.PI / 2;
+    const x = Math.cos(ang) * r;
+    const y = Math.sin(ang) * r;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = "rgba(7, 18, 36, 0.85)";
+  ctx.fill();
+  ctx.strokeStyle = "#00e5ff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Rotating inner ring
+  ctx.save();
+  ctx.rotate(t * 0.02);
+  ctx.beginPath();
+  ctx.arc(0, 0, r * 0.65, 0, Math.PI * 1.45);
+  ctx.strokeStyle = "#f59e0b";
+  ctx.lineWidth = 1.8;
+  ctx.stroke();
+  ctx.restore();
+
+  // Energy bolt
+  ctx.fillStyle = "#10b981";
+  ctx.beginPath();
+  ctx.moveTo(2, -r*0.5);
+  ctx.lineTo(-r*0.28, 1);
+  ctx.lineTo(0, 1);
+  ctx.lineTo(-2, r*0.5);
+  ctx.lineTo(r*0.28, -1);
+  ctx.lineTo(0, -1);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+let frame = 0;
+function loop() {
+  frame++;
+  pollGamepad();
+  const tierObj = TIERS[state.tier];
+
+  // Continuous Cool Power Core™ recharge (382.93 Wth -> +344 We)
+  state.cap = Math.min(100, state.cap + 0.18 + state.pods * 0.02);
+  if (state.bladeActive > 0) state.bladeActive--;
+  if (state.flightActive > 0) state.flightActive--;
+  if (state.shieldActive > 0) state.shieldActive--;
+
+  // AI Merchants & Stock Market tick every 120 frames (2 sec @ 60fps)
+  if (frame % 120 === 0) {
+    state.nav += 0.00008; // Continuous 0.25% swap fee + Aerodrome/Lido/Beefy compounding
+    state.stocks.forEach(s => {
+      const delta = (Math.sin(frame * 0.01 + s.px) * 0.35);
+      s.px = Math.max(25, s.px + delta);
+      s.chg = +(delta / s.px * 100).toFixed(2);
+    });
+    updateUI();
+  }
+
+  // Movement physics
+  if (keys["ArrowLeft"] || keys["KeyA"]) state.vx = -tierObj.speed;
+  else if (keys["ArrowRight"] || keys["KeyD"]) state.vx = tierObj.speed;
+  else if (state.tier > 0) state.vx *= 0.82;
+
+  if ((keys["ArrowUp"] || keys["KeyW"]) && (state.py >= 335 || state.flightActive > 0 || state.tier >= 2)) {
+    state.vy = -5.6;
+    if (state.tier >= 2 && particles.length < tierObj.particles) {
+      particles.push({ x: state.px, y: state.py + 16, vx: (Math.random()-0.5)*2, vy: 2 + Math.random()*2, life: 24, c: "#00e5ff" });
+    }
+  }
+  state.vy += 0.28; // Gravity
+  state.px = Math.max(30, Math.min(930, state.px + state.vx));
+  state.py += state.vy;
+  if (state.py > 335) { state.py = 335; state.vy = 0; }
+
+  // Render background sky
+  const sky = ctx.createLinearGradient(0, 0, 0, 450);
+  sky.addColorStop(0, "#030816");
+  sky.addColorStop(0.65, state.tier >= 2 ? "#0b2545" : "#071830");
+  sky.addColorStop(1, "#091e2c");
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, 960, 450);
+
+  // Stars
+  ctx.fillStyle = "#cbd5e1";
+  stars.forEach(st => {
+    ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, Math.PI*2); ctx.fill();
+  });
+
+  // Render ETFE Climate-Controlled Sanctuary City Domes (21.5°C)
+  for (let i = 0; i < state.pods; i++) {
+    const dx = 140 + i * 165;
+    if (dx > 880) break;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(dx, 355, 68, Math.PI, 0);
+    ctx.fillStyle = state.tier >= 2 ? "rgba(0, 229, 255, 0.14)" : "rgba(0, 229, 255, 0.08)";
+    ctx.fill();
+    ctx.strokeStyle = "#00e5ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // Interior green orchard terraces & CLT studio
+    ctx.fillStyle = "#10b981";
+    ctx.fillRect(dx - 44, 342, 88, 13);
+    ctx.fillStyle = "#f59e0b";
+    ctx.fillRect(dx - 22, 322, 44, 20);
+    ctx.fillStyle = "#e2e8f0";
+    ctx.font = "bold 9px sans-serif";
+    ctx.fillText(`POD #${i+1} • 21.5°C`, dx - 34, 314);
+    ctx.restore();
+  }
+
+  // Ground & Subterranean CPC-LOOP Maglev Tunnel
+  ctx.fillStyle = "#0f291e";
+  ctx.fillRect(0, 355, 960, 22);
+  ctx.fillStyle = "#081224";
+  ctx.fillRect(0, 377, 960, 73);
+  ctx.strokeStyle = "#1e3a5f";
+  ctx.strokeRect(10, 385, 940, 28);
+  const magX = (frame * 9) % 940;
+  ctx.fillStyle = "#00e5ff";
+  ctx.fillRect(magX, 391, 56, 16);
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "bold 10px monospace";
+  ctx.fillText("SUBTERRANEAN CPC-LOOP MAGLEV (920 km/h) • ZERO-SEWER GEOTHERMAL SINK (14.5°C)", 24, 430);
+
+  // 2,048 AI Merchant NPCs
+  merchants.forEach(m => {
+    m.x += m.dir * m.spd;
+    if (m.x < 30 || m.x > 930) m.dir *= -1;
+    ctx.fillStyle = "#f59e0b";
+    ctx.fillRect(m.x - 4, m.y - 12, 8, 12);
+    if (state.tier >= 1) {
+      ctx.fillStyle = "#cbd5e1";
+      ctx.font = "8px sans-serif";
+      ctx.fillText(m.role, m.x - 22, m.y - 16);
+    }
+  });
+
+  // Render Player Exosuit / Rig
+  ctx.save();
+  ctx.translate(state.px, state.py);
+  if (state.shieldActive > 0) {
+    ctx.beginPath(); ctx.arc(0, 0, 34, 0, Math.PI*2);
+    ctx.strokeStyle = "#a855f7"; ctx.lineWidth = 3; ctx.stroke();
+  }
+  // Exoskeleton torso + Dorsal Cool Power Core™ glow
+  ctx.fillStyle = state.tier >= 2 ? "#38bdf8" : "#94a3b8";
+  ctx.fillRect(-10, -18, 20, 26);
+  ctx.fillStyle = "#10b981";
+  ctx.fillRect(-14, -14, 5, 16); // Dorsal CPC Core
+  // Helmet / Brain Hat indicator
+  ctx.fillStyle = state.tier === 3 ? "#a855f7" : "#f59e0b";
+  ctx.beginPath(); ctx.arc(0, -24, 7, 0, Math.PI*2); ctx.fill();
+  // Legs
+  ctx.fillStyle = "#cbd5e1";
+  ctx.fillRect(-8, 8, 6, 12);
+  ctx.fillRect(2, 8, 6, 12);
+  // Active 0.42m Plasma Blade
+  if (state.bladeActive > 0) {
+    ctx.strokeStyle = "#00e5ff";
+    ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(12, -8); ctx.lineTo(54, -18); ctx.stroke();
+  }
+  ctx.restore();
+
+  // Projectiles
+  projectiles.forEach((p, idx) => {
+    p.x += p.vx;
+    ctx.fillStyle = p.color;
+    ctx.beginPath(); ctx.arc(p.x, p.y, 4.5, 0, Math.PI*2); ctx.fill();
+    if (p.x > 960) projectiles.splice(idx, 1);
+  });
+
+  // Particles
+  particles.forEach((pt, idx) => {
+    pt.x += pt.vx; pt.y += pt.vy; pt.life--;
+    ctx.fillStyle = pt.c;
+    ctx.fillRect(pt.x, pt.y, 3, 3);
+    if (pt.life <= 0) particles.splice(idx, 1);
+  });
+
+  // Render Cool Power Core™ Watermark Emblem in bottom-right of canvas
+  drawCanvasLogo(922, 412, 22, frame);
+
+  requestAnimationFrame(loop);
+}
+
+initWorld();
+setTier(state.tier);
+loop();
+</script>
+</body>
+</html>

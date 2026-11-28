@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cool Power Core™: Horizons Unbound — Sanctuary Agora Kiosk & Exchange HUD</title>
+<style>
+  :root {
+    --bg: #070d17; --panel: #0e1829; --border: #1e3352;
+    --cyan: #38bdf8; --emerald: #10b981; --amber: #f59e0b;
+    --purple: #a78bfa; --text: #e2e8f0; --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body { margin: 0; background: var(--bg); color: var(--text); padding: 18px; }
+  .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--cyan); padding-bottom: 12px; margin-bottom: 16px; }
+  .title h1 { margin: 0; font-size: 20px; color: #fff; letter-spacing: 0.4px; }
+  .title p { margin: 3px 0 0; font-size: 12px; color: var(--cyan); }
+  .badges { display: flex; gap: 10px; }
+  .badge { background: #0f253c; border: 1px solid var(--cyan); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: 1.15fr 1fr 1.1fr; gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .card h2 { margin: 0 0 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.6px; color: var(--cyan); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .kpi { background: #091220; border: 1px solid #1b2e4b; border-radius: 6px; padding: 8px; text-align: center; }
+  .kpi .val { font-size: 16px; font-weight: 700; color: var(--emerald); }
+  .kpi .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #172740; }
+  th { color: var(--muted); font-size: 11px; text-transform: uppercase; }
+  .up { color: var(--emerald); font-weight: 600; }
+  .dn { color: #f87171; font-weight: 600; }
+  .endpoint { background: #08111e; border: 1px solid #1e3a5f; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
+  .endpoint .net { font-size: 11px; font-weight: 700; color: var(--amber); }
+  .endpoint .addr { font-family: monospace; font-size: 11.5px; color: #fff; word-break: break-all; margin: 3px 0; }
+  .btn { background: var(--cyan); color: #04101f; border: none; border-radius: 5px; padding: 5px 10px; font-size: 11px; font-weight: 700; cursor: pointer; }
+  .btn:hover { opacity: 0.9; }
+  .btn-em { background: var(--emerald); color: #03150e; }
+  .controls { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+  input[type=number], select { background: #08111e; border: 1px solid #28456e; color: #fff; padding: 6px 8px; border-radius: 5px; font-size: 12px; width: 100%; }
+  .log { background: #050a12; border: 1px solid #16253b; border-radius: 6px; padding: 8px; height: 115px; overflow-y: auto; font-family: monospace; font-size: 11px; color: #cbd5e1; margin-top: 10px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">
+      <h1>COOL POWER CORE™: HORIZONS UNBOUND — SANCTUARY AGORA KIOSK</h1>
+      <p>Architect: Thomas Gabriel Coleman | 60 FPS Deterministic Engine | Climate-Controlled Campus: 21.5°C / 48% RH</p>
+    </div>
+    <div class="badges">
+      <div class="badge" id="fpsBadge">ENGINE: 60.0 FPS (16.67 ms)</div>
+      <div class="badge" style="border-color:#10b981;color:#10b981;" id="navBadge">CPC-COIN NAV: $1.0842 (+8.42%)</div>
+      <div class="badge" style="border-color:#a78bfa;color:#a78bfa;">SECURITY: ZERO-RF AIR-GAPPED</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- PANEL 1: CPC-COIN RESERVE & MULTI-CHAIN STAKING -->
+    <div class="card">
+      <h2>1. CPC-COIN Multi-Currency Reserve & Yield</h2>
+      <div class="kpi-row">
+        <div class="kpi"><div class="val" id="navVal">$1.0842</div><div class="lbl">Live NAV / CPC</div></div>
+        <div class="kpi"><div class="val" id="tvlVal">$14.82M</div><div class="lbl">Global Basket TVL</div></div>
+        <div class="kpi"><div class="val">+7.84%</div><div class="lbl">Base Yield Ratchet</div></div>
+      </div>
+      <table>
+        <tr><th>Protocol Layer</th><th>Chain</th><th>Alloc</th><th>APY</th></tr>
+        <tr><td>Aerodrome Gauges (CPC/USDC)</td><td>Base (8453)</td><td>25%</td><td class="up">11.40%</td></tr>
+        <tr><td>Lido wstETH + Beefy Vaults</td><td>Eth / Base</td><td>45%</td><td class="up">6.85%</td></tr>
+        <tr><td>Robinhood Chain L2 Liquidity</td><td>RH L2 (46630)</td><td>15%</td><td class="up">5.40%</td></tr>
+        <tr><td>Instant Any-Currency Exit Buffer</td><td>Multi-Chain</td><td>15%</td><td>0.00%</td></tr>
+      </table>
+      <div class="controls">
+        <select id="depAsset"><option>USDC</option><option>ETH / wstETH</option><option>EURC</option><option>cbBTC</option></select>
+        <input type="number" id="depAmt" value="1000" min="10">
+        <button class="btn btn-em" onclick="simulateDeposit()">Deposit & Mint CPC</button>
+      </div>
+      <div class="log" id="npcLog">[SYS] 2,048 AI Merchant NPCs active across 37 Sanctuary Cities. Recycling 0.25% swap fees into CPC NAV...</div>
+    </div>
+
+    <!-- PANEL 2: LIVE IN-GAME REAL-WORLD STOCK MARKET MIRROR -->
+    <div class="card">
+      <h2>2. Sanctuary Subterranean Equity Mirror</h2>
+      <table>
+        <thead><tr><th>Ticker</th><th>Sector</th><th>Live Price</th><th>24h</th><th>Action</th></tr></thead>
+        <tbody id="stockBody"></tbody>
+      </table>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;">
+        * Mirrors real-world equity & ETF feeds via Robinhood Chain L2 oracle so learners practice portfolio risk management alongside engineering mastery.
+      </p>
+    </div>
+
+    <!-- PANEL 3: INVENTOR PATRONAGE & DONATION ENDPOINTS -->
+    <div class="card">
+      <h2>3. Direct Inventor Patronage (100% Pass-Through)</h2>
+      <div class="endpoint">
+        <div class="net">EVM DIRECT DONATE (BASE / ETH / ARB / POLYGON / RH L2)</div>
+        <div class="addr">0x1419734ee0d1e213f4496d6bf088cc3b480ccedf</div>
+        <button class="btn" onclick="copyAddr('0x1419734ee0d1e213f4496d6bf088cc3b480ccedf')">Copy EVM Address</button>
+      </div>
+      <div class="endpoint">
+        <div class="net">BITCOIN / CAKE PAY ENDPOINT</div>
+        <div class="addr">howeyecrypto@cake.cash</div>
+        <button class="btn" onclick="copyAddr('howeyecrypto@cake.cash')">Copy BTC Pay ID</button>
+      </div>
+      <div class="endpoint">
+        <div class="net">SOLANA DIRECT DONATE (SOL / USDC-SPL)</div>
+        <div class="addr">2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr</div>
+        <button class="btn" onclick="copyAddr('2eRUANUAcvyWw1fyHnBSS53g4pWURXcE4se1WRW6H3Nr')">Copy Solana Address</button>
+      </div>
+      <div class="endpoint" style="border-color:#38bdf8;">
+        <div class="net" style="color:#38bdf8;">COOL POWER CORE INVESTMENT GNOSIS SAFE</div>
+        <div class="addr">0xB386f10EAd67f6cDd7Ee8662c8749354E8B48b37</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let nav = 1.0842;
+  let tvl = 14820000;
+  const stocks = [
+    { sym: "SPY", name: "S&P 500 ETF", px: 598.40, chg: +0.64 },
+    { sym: "NVDA", name: "NVIDIA Corp", px: 146.25, chg: +1.85 },
+    { sym: "AAPL", name: "Apple Inc", px: 234.10, chg: +0.42 },
+    { sym: "MSFT", name: "Microsoft", px: 432.80, chg: -0.18 },
+    { sym: "TSLA", name: "Tesla Inc", px: 348.50, chg: +2.10 },
+    { sym: "GLD", name: "SPDR Gold", px: 248.90, chg: +0.55 },
+    { sym: "TLT", name: "20+Yr Treasury", px: 92.15, chg: +0.22 }
+  ];
+  const npcNames = ["GuildBroker-042", "ThermalArb-819", "AeroBaseMM-114", "RHDealer-507", "FrontierQM-991"];
+
+  function renderStocks() {
+    const tbody = document.getElementById("stockBody");
+    tbody.innerHTML = stocks.map(s => `
+      <tr>
+        <td><b>${s.sym}</b></td>
+        <td style="color:#94a3b8">${s.name}</td>
+        <td>$${s.px.toFixed(2)}</td>
+        <td class="${s.chg >= 0 ? 'up' : 'dn'}">${s.chg >= 0 ? '+' : ''}${s.chg.toFixed(2)}%</td>
+        <td><button class="btn" onclick="tradeStock('${s.sym}', ${s.px})">Trade</button></td>
+      </tr>
+    `).join("");
+  }
+
+  function simulateDeposit() {
+    const asset = document.getElementById("depAsset").value;
+    const amt = parseFloat(document.getElementById("depAmt").value) || 100;
+    const minted = amt / nav;
+    tvl += amt;
+    document.getElementById("tvlVal").innerText = "$" + (tvl / 1e6).toFixed(2) + "M";
+    appendLog(`[MINT] Deposited ${amt.toFixed(2)} ${asset} -> Minted ${minted.toFixed(4)} CPC-COIN at NAV $${nav.toFixed(4)}.`);
+  }
+
+  function tradeStock(sym, px) {
+    const fee = px * 0.0025;
+    nav += 0.000005;
+    document.getElementById("navVal").innerText = "$" + nav.toFixed(4);
+    document.getElementById("navBadge").innerText = `CPC-COIN NAV: $${nav.toFixed(4)} (+${((nav-1)*100).toFixed(2)}%)`;
+    appendLog(`[EXCHANGE] Executed 1 share ${sym} @ $${px.toFixed(2)} | $${fee.toFixed(4)} swap fee recycled into CPC NAV!`);
+  }
+
+  function copyAddr(txt) {
+    navigator.clipboard?.writeText(txt);
+    appendLog(`[PATRON] Copied inventor endpoint to clipboard: ${txt}`);
+  }
+
+  function appendLog(msg) {
+    const el = document.getElementById("npcLog");
+    el.innerHTML = `<div>${msg}</div>` + el.innerHTML;
+  }
+
+  setInterval(() => {
+    const npc = npcNames[Math.floor(Math.random() * npcNames.length)];
+    const tradeUsd = (250 + Math.random() * 1800).toFixed(0);
+    nav += 0.000002;
+    document.getElementById("navVal").innerText = "$" + nav.toFixed(4);
+    document.getElementById("navBadge").innerText = `CPC-COIN NAV: $${nav.toFixed(4)} (+${((nav-1)*100).toFixed(2)}%)`;
+    const idx = Math.floor(Math.random() * stocks.length);
+    stocks[idx].px *= (1 + (Math.random() - 0.495) * 0.004);
+    renderStocks();
+    appendLog(`[NPC] ${npc} routed $${tradeUsd} Aerodrome/RH swap -> 0.25% fee compounded into CPC NAV.`);
+  }, 3200);
+
+  renderStocks();
+</script>
+</body>
+</html>
